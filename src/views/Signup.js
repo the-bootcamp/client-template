@@ -1,13 +1,16 @@
 import React from "react";
-import { signup } from "../services/userService";
+import { signup } from "../services/authService";
 
 class Signup extends React.Component {
   state = {
     username: "",
     email: "",
     password: "",
+    address: "",
+    phone: "",
     errorMessage: "",
   };
+
   handleChange = (event) => {
     const { name, value } = event.target;
     this.setState({
@@ -21,6 +24,8 @@ class Signup extends React.Component {
       username: this.state.username,
       email: this.state.email,
       password: this.state.password,
+      address: this.state.address,
+      phone: this.state.phone,
     })
       .then((response) =>
         response.accessToken
@@ -35,7 +40,14 @@ class Signup extends React.Component {
   };
 
   render() {
-    const { username, email, password, errorMessage } = this.state;
+    const {
+      username,
+      email,
+      password,
+      address,
+      phone,
+      errorMessage,
+    } = this.state;
     return (
       <div>
         {errorMessage !== "" && errorMessage}
@@ -61,6 +73,21 @@ class Signup extends React.Component {
             name="password"
             type="password"
             value={password}
+            onChange={this.handleChange}
+            required={true}
+          />
+          <label>Address: </label>
+          <input
+            name="address"
+            type="address"
+            value={address}
+            onChange={this.handleChange}
+          />
+          <label>Phone: </label>
+          <input
+            name="phone"
+            type="phone"
+            value={phone}
             onChange={this.handleChange}
             required={true}
           />
