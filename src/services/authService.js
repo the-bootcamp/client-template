@@ -1,14 +1,14 @@
 import axios from "axios";
 
 /**
- *
+ * create base url for axios
  */
 const service = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
 });
 
 /**
- *
+ * validate sessionToken
  * @param {*} accessToken
  */
 export const validateSession = (accessToken) => {
@@ -23,9 +23,23 @@ export const validateSession = (accessToken) => {
  * signup service
  * @param {*} param0
  */
-export const signup = ({ username, email, password, address, phone }) => {
+export const signup = ({
+  username,
+  email,
+  password,
+  address,
+  phone,
+  userrole,
+}) => {
   return service
-    .post("/auth/signup", { username, email, password, address, phone })
+    .post("/auth/signup", {
+      username,
+      email,
+      password,
+      address,
+      phone,
+      userrole,
+    })
     .then((response) => {
       console.log(" Signup response from axios call: ", response);
       return response.data;
@@ -34,20 +48,23 @@ export const signup = ({ username, email, password, address, phone }) => {
 };
 
 /**
- *
+ * Login
  * @param {*} param0
  */
 export const login = ({ email, password }) => {
   return service
     .post("/auth/login", { email, password })
-    .then((response) => response.data)
+    .then((response) => {
+      console.log("Login response from server:", response);
+      return response.data;
+    })
     .catch((err) => {
       console.log(err);
     });
 };
 
 /**
- *
+ * Logout
  * @param {*} accessToken
  */
 export const logout = (accessToken) => {

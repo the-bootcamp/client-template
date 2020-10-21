@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
-const PrivateRoute = ({
+const ManagerRoute = ({
   component: Component,
   authenticated,
   user,
@@ -10,7 +10,7 @@ const PrivateRoute = ({
   return (
     <Route
       render={(props) =>
-        authenticated ? (
+        authenticated && user.userrole === "manager" ? (
           <Component {...props} user={user} {...rest} />
         ) : (
           <Redirect to="/login" />
@@ -20,4 +20,5 @@ const PrivateRoute = ({
     />
   );
 };
-export default PrivateRoute;
+
+export default ManagerRoute;

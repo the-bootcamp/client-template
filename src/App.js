@@ -3,10 +3,15 @@ import { BrowserRouter, Link, Switch } from "react-router-dom";
 import "./App.css";
 import AnonRoute from "./components/auth/AnonRoute";
 import PrivateRoute from "./components/auth/PrivateRoute";
+import ManagerRoute from "./components/auth/ManagerRoute";
 import { validateSession, logout } from "./services/authService";
-import Home from "./views/Home";
+import CustomerHome from "./views/CustomerHome";
+import ManagerHome from "./views/ManagerHome";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
+import Footer from "./views/Footer";
+import ListCottages from "./views/ListCottages";
+import "bootstrap/dist/css/bootstrap.css";
 
 class App extends React.Component {
   /** STATE: */
@@ -41,7 +46,7 @@ class App extends React.Component {
   };
 
   /**
-   *
+   * when 'Logout' button clicked
    */
   handleLogout = () => {
     const token = localStorage.getItem("accessToken");
@@ -60,16 +65,19 @@ class App extends React.Component {
   };
 
   /**
-   *
+   * render()
    */
   render() {
     const { authenticated } = this.state;
-
     return (
       <div className="App">
         <BrowserRouter>
           <nav>
             {authenticated && <Link to="/"> Home </Link>}
+            {authenticated && this.state.user.userrole === "manager" && (
+              <Link to="/cottages"> Cottages </Link>
+            )}
+            {authenticated && <Link to="/editprofile"> Edit Profile </Link>}
             {!authenticated && <Link to="/login"> Login </Link>}
             {!authenticated && <Link to="/signup"> Signup </Link>}
             {authenticated && (
@@ -84,7 +92,22 @@ class App extends React.Component {
               path="/"
               user={this.state.user}
               authenticated={authenticated}
-              component={Home}
+              component={CustomerHome}
+            />
+            <ManagerRoute
+              exact
+              path="/cottages"
+              user={this.state.user}
+              authenticated={authenticated}
+              component={ManagerHome}
+            />
+            <PrivateRoute
+              exact
+              path="/editprofile"
+              user={this.state.user}
+              formtype="edit"
+              authenticated={authenticated}
+              component={Signup}
             />
             <AnonRoute
               exact
@@ -98,10 +121,12 @@ class App extends React.Component {
               path="/signup"
               authenticated={authenticated}
               authenticate={this.authenticate}
+              formtype="signup"
               component={Signup}
             />
           </Switch>
         </BrowserRouter>
+        <Footer />
       </div>
     );
   }
