@@ -1,0 +1,118 @@
+import React, { Component } from "react";
+import { getallCottages } from "../services/cottageService";
+import { Link } from "react-router-dom";
+import AddCottage from "./AddCottage";
+
+class CottageList extends Component {
+  state = {
+    user: this.props.user,
+    cottagesList: [],
+    showAddDialog: false,
+    formType: "",
+    editItem: {},
+  };
+
+  /**
+   *
+   */
+  toggleShowAddDialog(type, idx) {
+    console.log(" toggleShowAddDialog: ", idx);
+    this.setState({
+      showAddDialog: !this.state.showAddDialog,
+      formType: type,
+      editItem: this.state.cottagesList[idx],
+    });
+  }
+
+  /**
+   *
+   */
+  updateCottageList = () => {
+    getallCottages(localStorage.getItem("accessToken"))
+      .then((srvrResp) => {
+        console.log(srvrResp.allCottages);
+        const { allCottages: cottagesList } = srvrResp;
+        this.setState({ cottagesList });
+      })
+      .catch((err) => console.log(err));
+  };
+
+  /**
+   *
+   */
+  componentDidMount = () => {
+    this.updateCottageList();
+  };
+
+  /**
+   *
+   */
+  getCottageTypes = () => {
+    return this.state.cottagesList
+      .map((ele) => ele.cottagetype)
+      .filter((item, pos, sameArr) => sameArr.indexOf(item) == pos);
+  };
+
+  deleteCottage = (id) => {
+    console.log("deleteCottage", id);
+  };
+  /**
+   *
+   */
+  render() {
+    console.log(" CottageList -> render() ");
+    console.log(this.state.cottagesList[1]);
+    let cottageTable = this.state.cottagesList.map((ele, idx) => (
+      <tr key={ele._id}>
+        <td>{ele.cottagetype}</td>
+        <td>{ele.costperday}</td>
+        <td>{ele.totalcottages.length}</td>
+        <td>
+          <button onClick={() => this.toggleShowAddDialog("edit", idx)}>
+            Edit{" "}
+          </button>
+        </td>
+        <td>
+          <button onClick={() => this.deleteCottage(ele._id)}> Del </button>
+        </td>
+      </tr>
+    ));
+    return (
+      <div>
+        <h1>
+          welcome{this.state.user.username} ,to the Resortzy manageent system.
+        </h1>
+        <h1> Cottages information </h1>
+        <table className="table">
+          <thead className="thead-light text-center">
+            <tr>
+              <th scope="col">Cottage categoery</th>
+              <th scope="col">Price/day</th>
+              <th scope="col">Count</th>
+              <th scope="col">Edit</th>
+              <th scope="col">Delete</th>
+            </tr>
+          </thead>
+          <tbody>{cottageTable}</tbody>
+        </table>
+        <div>
+          <button onClick={() => this.toggleShowAddDialog("add")}>
+            Add new Cottage
+          </button>
+          {/* <Link to="/manager/add-cottage"> New Cottage </Link> */}
+          {this.state.showAddDialog ? (
+            <AddCottage
+              updateCottageList={() => this.updateCottageList()}
+              cottageCategories={() => this.getCottageTypes()}
+              closePopup={this.toggleShowAddDialog.bind(this)}
+              editInfo={this.state.editItem}
+              formType={this.state.formType}
+            />
+          ) : null}
+        </div>
+      </div>
+    );
+  }
+}
+
+export default CottageList;

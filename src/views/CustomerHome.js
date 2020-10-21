@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class Home extends Component {
+class CustomerHome extends Component {
   state = {
     user: this.props.user,
   };
@@ -18,4 +18,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default CustomerHome;

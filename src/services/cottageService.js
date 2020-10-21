@@ -54,7 +54,7 @@ export const getallCottages = (token) => {
     accessToken: token,
   };
   return service
-    .post("cottage/all", { headers })
+    .get("cottage/all", { headers })
     .then((response) => response.data)
     .catch(console.error);
 };

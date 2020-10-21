@@ -6,11 +6,10 @@ import PrivateRoute from "./components/auth/PrivateRoute";
 import ManagerRoute from "./components/auth/ManagerRoute";
 import { validateSession, logout } from "./services/authService";
 import CustomerHome from "./views/CustomerHome";
-import ManagerHome from "./views/ManagerHome";
+import CottageList from "./views/CottageList";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
 import Footer from "./views/Footer";
-import ListCottages from "./views/ListCottages";
 import "bootstrap/dist/css/bootstrap.css";
 
 class App extends React.Component {
@@ -73,10 +72,10 @@ class App extends React.Component {
       <div className="App">
         <BrowserRouter>
           <nav>
-            {authenticated && <Link to="/"> Home </Link>}
             {authenticated && this.state.user.userrole === "manager" && (
-              <Link to="/cottages"> Cottages </Link>
+              <Link to="/manager"> Cottages </Link>
             )}
+            {authenticated && <Link to="/"> Home </Link>}
             {authenticated && <Link to="/editprofile"> Edit Profile </Link>}
             {!authenticated && <Link to="/login"> Login </Link>}
             {!authenticated && <Link to="/signup"> Signup </Link>}
@@ -96,11 +95,19 @@ class App extends React.Component {
             />
             <ManagerRoute
               exact
-              path="/cottages"
+              path="/manager"
               user={this.state.user}
               authenticated={authenticated}
-              component={ManagerHome}
+              component={CottageList}
             />
+            {/* <ManagerRoute
+              exact
+              path="/manager/add-cottage"
+              user={this.state.user}
+              authenticated={authenticated}
+              component={AddCottage}
+            /> */}
+
             <PrivateRoute
               exact
               path="/editprofile"

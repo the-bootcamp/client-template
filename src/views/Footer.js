@@ -11,7 +11,7 @@ const footer = () => {
           <h4>Contact</h4>
           <hr />
           <p>555-555-5555</p>
-          <p>info@rexortzy.com</p>
+          <p>info@resortzy.com</p>
           <p>Vondelstraat 123 Amsterdam, NL</p>
         </div>
         <div className="about col-md-3 my-3">

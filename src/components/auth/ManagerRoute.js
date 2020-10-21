@@ -13,7 +13,7 @@ const ManagerRoute = ({
         authenticated && user.userrole === "manager" ? (
           <Component {...props} user={user} {...rest} />
         ) : (
-          <Redirect to="/login" />
+          <Redirect to="/" />
         )
       }
       {...rest}

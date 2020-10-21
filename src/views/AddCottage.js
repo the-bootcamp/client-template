@@ -3,16 +3,32 @@ import {
   uploadCottagePictures,
   addNewCottage,
 } from "../services/cottageService";
+import "./AddCottage.css";
 
 class AddCottage extends Component {
   state = {
-    cottagetype: "",
-    cottageimages: [],
-    costperday: "",
-    description: "",
-    cottagestatus: "",
+    cottagetype: this.props.editInfo ? this.props.editInfo.cottagetype : "",
+    cottageimages: this.props.editInfo ? this.props.editInfo.cottageimages : [],
+    costperday: this.props.editInfo ? this.props.editInfo.costperday : "",
+    description: this.props.editInfo ? this.props.editInfo.description : "",
+    cottagestatus: this.props.editInfo ? this.props.editInfo.cottagestatus : "",
+    totalcottages: this.props.editInfo
+      ? this.props.editInfo.totalcottages.length
+      : 0,
+    showAddNext: false,
   };
-
+  // state = {
+  //   cottagetype: "",
+  //   cottageimages: [],
+  //   costperday: "",
+  //   description: "",
+  //   cottagestatus: "",
+  //   showAddNext: false,
+  // };
+  /**
+   *
+   * @param {*} e
+   */
   onImageUpload = (e) => {
     uploadCottagePictures(
       e.target.files,
@@ -25,104 +41,163 @@ class AddCottage extends Component {
     });
   };
 
+  /**
+   *
+   * @param {*} evt
+   */
   addCottage = (evt) => {
     evt.preventDefault();
     addNewCottage(this.state, localStorage.getItem("accessToken")).then(
       (addedCottage) => {
         console.log(addedCottage);
+        this.props.updateCottageList();
+        this.props.closePopup();
       }
     );
     console.log(this.state);
   };
 
+  /**
+   *
+   * @param {*} evt
+   */
   handleChange = (evt) => {
     const { name, value } = evt.target;
+    if (name === "cottagetype") {
+      const existingTypes = this.props.cottageCategories();
+      if (!existingTypes.includes(value)) {
+        this.setState({ showAddNext: true });
+      } else {
+        this.setState({ showAddNext: false });
+      }
+    }
     this.setState({
       [name]: value,
     });
   };
 
+  /**
+   *
+   */
   render() {
-    console.log("AddCottage -> render(): ", this.state);
+    console.log("AddCottage -> render(): ", this.props);
     const {
       cottagetype,
       cottageimages,
       costperday,
       description,
       cottagestatus,
+      totalcottages,
     } = this.state;
 
     return (
-      <div>
-        <h2> Add a new Cottage </h2>
-        {/*  Inage for cottage */}
-        <div className="picture">
-          <img src={cottageimages && cottageimages[0]} width="50" height="50" />
-          <form>
-            <input
-              type="file"
-              name="cottageimage"
-              multiple
-              onChange={this.onImageUpload}
-            />
-          </form>
+      <div className="popup">
+        <div>
+          <button onClick={() => this.props.closePopup()}> X </button>
+          {this.props.formType === "edit" ? (
+            <h2> Edit the Cottage </h2>
+          ) : (
+            <h2> Add a new Cottage </h2>
+          )}
+          <div className="add-rest-part">
+            {/*  Image for cottage */}
+            {(this.state.showAddNext || this.props.formType === "edit") && (
+              <div className="picture">
+                <img
+                  src={cottageimages && cottageimages[0]}
+                  width="50"
+                  height="50"
+                />
+                <form>
+                  <input
+                    type="file"
+                    name="cottageimage"
+                    multiple
+                    onChange={this.onImageUpload}
+                  />
+                </form>
+              </div>
+            )}
+            <form onSubmit={this.addCottage}>
+              <div className="form-group">
+                <label>Choose cottage categeory : </label>
+                <select
+                  value={cottagetype}
+                  name="cottagetype"
+                  className="form-control"
+                  onChange={this.handleChange}
+                >
+                  <option value="">none</option>
+                  <option value="standard">standard</option>
+                  <option value="classic">classic</option>
+                  <option value="superior">superior</option>
+                </select>
+              </div>
+              {/* cost per day */}
+              {(this.state.showAddNext || this.props.formType === "edit") && (
+                <div className="form-group">
+                  <label>Cost per day: </label>
+                  <input
+                    className="form-control"
+                    name="costperday"
+                    value={costperday}
+                    type="text"
+                    required={true}
+                    onChange={this.handleChange}
+                  />
+                </div>
+              )}
+              {/* Cottage description */}
+              {(this.state.showAddNext || this.props.formType === "edit") && (
+                <div className="form-group">
+                  <label>Description: </label>
+                  <textarea
+                    name="description"
+                    type="text"
+                    value={description}
+                    onChange={this.handleChange}
+                    required={true}
+                  ></textarea>
+                </div>
+              )}
+
+              {/*  Cottage Status:  */}
+              {(this.state.showAddNext || this.props.formType === "edit") && (
+                <div className="form-group">
+                  <label>Choose cottage status : </label>
+                  <select
+                    value={cottagestatus}
+                    name="cottagestatus"
+                    className="form-control"
+                    onChange={this.handleChange}
+                  >
+                    <option value="">none</option>
+                    <option value="full">full</option>
+                    <option value="free">free</option>
+                    <option value="disable">disable</option>
+                  </select>
+                </div>
+              )}
+              {this.props.formType === "edit" && (
+                <div className="form-group">
+                  <label>Choose Numner of cottages: </label>
+                  <input
+                    type="number"
+                    value={totalcottages}
+                    name="totalcottages"
+                    min="1"
+                    onChange={this.handleChange}
+                  />
+                </div>
+              )}
+              <button className="btn btn-primary  w-25 justify-content-center">
+                {this.props.formType === "edit"
+                  ? "Update Cottage"
+                  : "Add Cottage"}
+              </button>
+            </form>
+          </div>
         </div>
-        <form onSubmit={this.addCottage}>
-          {/*  Cottage Type:  */}
-          <div className="form-group">
-            <label>Choose cottage categeory : </label>
-            <select
-              value={cottagetype}
-              name="cottagetype"
-              className="form-control"
-              onChange={this.handleChange}
-            >
-              <option value="standard">standard</option>
-              <option value="classic">classic</option>
-              <option value="superior">superior</option>
-            </select>
-          </div>
-          {/* cost per day */}
-          <div className="form-group">
-            <label>Cost per day: </label>
-            <input
-              className="form-control"
-              name="costperday"
-              value={costperday}
-              type="text"
-              required={true}
-              onChange={this.handleChange}
-            />
-          </div>
-          {/* Cottage description */}
-          <label>Description: </label>
-          <textarea
-            name="description"
-            type="text"
-            value={description}
-            onChange={this.handleChange}
-            required={true}
-          ></textarea>
-
-          {/*  Cottage Status:  */}
-          <div className="form-group">
-            <label>Choose cottage status : </label>
-            <select
-              value={cottagestatus}
-              name="cottagestatus"
-              className="form-control"
-              onChange={this.handleChange}
-            >
-              <option value="full">full</option>
-              <option value="free">free</option>
-              <option value="disable">disable</option>
-            </select>
-          </div>
-
-          <button className="btn btn-primary  w-25 justify-content-center">
-            Add Cottage
-          </button>
-        </form>
       </div>
     );
   }

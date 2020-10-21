@@ -21,14 +21,27 @@ class Login extends React.Component {
       email: this.state.email,
       password: this.state.password,
     })
-      .then((response) =>
-        response.accessToken
-          ? (localStorage.setItem("accessToken", response.accessToken),
-            this.props.authenticate(response.user),
-            this.props.history.push("/"))
-          : this.setState({
+      .then(
+        (response) => {
+          if (response.accessToken) {
+            localStorage.setItem("accessToken", response.accessToken);
+            this.props.authenticate(response.user);
+            response.user.userrole === "manager"
+              ? this.props.history.push("/manager")
+              : this.props.history.push("/");
+          } else {
+            this.setState({
               errorMessage: response.errorMessage,
-            })
+            });
+          }
+        }
+        // response.accessToken
+        //   ? (localStorage.setItem("accessToken", response.accessToken),
+        //     this.props.authenticate(response.user),
+        //     response.user.userrole === "manager"? this.props.history.push("/manager"):this.props.history.push("/")
+        //     :this.setState({
+        //       errorMessage: response.errorMessage,
+        //     })
       )
       .catch((err) => {
         console.log(err);

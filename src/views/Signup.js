@@ -4,12 +4,12 @@ import { updateuser } from "../services/userService";
 
 class Signup extends React.Component {
   state = {
-    username: this.props.user.username || "",
-    email: this.props.user.email || "",
-    password: this.props.user.password || "",
-    address: this.props.user.address || "",
-    phone: this.props.user.phone || "",
-    userrole: this.props.user.userrole || "customer",
+    username: this.props.user ? this.props.user.username : "",
+    email: this.props.user ? this.props.user.email : "",
+    password: this.props.user ? this.props.user.password : "",
+    address: this.props.user ? this.props.user.address : "",
+    phone: this.props.user ? this.props.user.phone : "",
+    userrole: this.props.user ? this.props.user.userrole : "customer",
     formtype: this.props.formtype,
     errorMessage: "",
   };
@@ -22,13 +22,13 @@ class Signup extends React.Component {
   };
 
   handleSubmit = (event) => {
-    // console.log(" signup-> handleSubmit(): ", this.state);
+    console.log(" signup-> handleSubmit(): ", this.state);
     event.preventDefault();
     if (this.state.formtype === "edit") {
       // When updateprofile is clicked
       updateuser(this.state, localStorage.getItem("accessToken"))
         .then((editRes) => {
-          // console.log(" Edit profile result: ", editRes);
+          console.log(" Edit profile result: ", editRes);
           if (editRes.accessToken) {
             console.log("profile edited successfully ");
           } else {
