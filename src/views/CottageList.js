@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { getallCottages } from "../services/cottageService";
+import {
+  getallCottages,
+  addNewCottage,
+  removeSingleCottage,
+  deleteCottageCategeory,
+} from "../services/cottageService";
 import { Link } from "react-router-dom";
 import AddCottage from "./AddCottage";
 
@@ -53,9 +58,58 @@ class CottageList extends Component {
       .filter((item, pos, sameArr) => sameArr.indexOf(item) == pos);
   };
 
-  deleteCottage = (id) => {
+  /**
+   *
+   * @param {*} id
+   */
+  deleteFullCottage = (id) => {
     console.log("deleteCottage", id);
+    deleteCottageCategeory(id, localStorage.getItem("accessToken"))
+      .then((deletedCottage) => {
+        console.log(deletedCottage);
+        if (deletedCottage) {
+          this.updateCottageList();
+        }
+      })
+      .catch((error) => console.log(error));
   };
+
+  /**
+   *
+   * @param {*} id
+   */
+  decrementCottageCnt = (id) => {
+    let cottagetoEdit = this.state.cottagesList.find((ele) => ele._id === id);
+    if (cottagetoEdit.totalcottages.length <= 1) {
+      console.log(" ERROR  cannot decrement the number of cottages ...");
+    } else {
+      removeSingleCottage(id, localStorage.getItem("accessToken"))
+        .then((deletedCottage) => {
+          console.log(deletedCottage);
+          if (deletedCottage) {
+            this.updateCottageList();
+          }
+        })
+        .catch((error) => console.log(error));
+    }
+  };
+
+  /**
+   *
+   * @param {*} id
+   */
+  incrementCottageCnt = (id) => {
+    let cottagetoEdit = this.state.cottagesList.find((ele) => ele._id === id);
+    addNewCottage(cottagetoEdit, localStorage.getItem("accessToken"))
+      .then((addedCottage) => {
+        console.log(addedCottage);
+        if (addedCottage) {
+          this.updateCottageList();
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+
   /**
    *
    */
@@ -66,14 +120,18 @@ class CottageList extends Component {
       <tr key={ele._id}>
         <td>{ele.cottagetype}</td>
         <td>{ele.costperday}</td>
-        <td>{ele.totalcottages.length}</td>
+        <td>
+          <button onClick={() => this.decrementCottageCnt(ele._id)}>-</button>
+          {ele.totalcottages.length}
+          <button onClick={() => this.incrementCottageCnt(ele._id)}>+</button>
+        </td>
         <td>
           <button onClick={() => this.toggleShowAddDialog("edit", idx)}>
-            Edit{" "}
+            Edit
           </button>
         </td>
         <td>
-          <button onClick={() => this.deleteCottage(ele._id)}> Del </button>
+          <button onClick={() => this.deleteFullCottage(ele._id)}> Del </button>
         </td>
       </tr>
     ));
@@ -88,7 +146,7 @@ class CottageList extends Component {
             <tr>
               <th scope="col">Cottage categoery</th>
               <th scope="col">Price/day</th>
-              <th scope="col">Count</th>
+              <th scope="col"> Total Cottages </th>
               <th scope="col">Edit</th>
               <th scope="col">Delete</th>
             </tr>

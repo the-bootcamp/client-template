@@ -3,7 +3,7 @@ import {
   uploadCottagePictures,
   addNewCottage,
 } from "../services/cottageService";
-import "./AddCottage.css";
+// import "./AddCottage.css";
 
 class AddCottage extends Component {
   state = {

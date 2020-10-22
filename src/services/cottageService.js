@@ -44,6 +44,37 @@ export const addNewCottage = (cottageInfo, token) => {
 };
 
 /**
+ * remove a cottage ( from the type os cottages)
+ * @param {*} id
+ * @param {*} token
+ */
+export const removeSingleCottage = (id, token) => {
+  console.log("cottageservice -> removeCottage", id);
+  const headers = {
+    accessToken: token,
+  };
+  return service
+    .delete(`cottage/deleteNum/${id}`, { headers })
+    .then((response) => response.data)
+    .catch(console.error);
+};
+
+/**
+ * remove a cottage ( from the type os cottages)
+ * @param {*} id
+ * @param {*} token
+ */
+export const deleteCottageCategeory = (id, token) => {
+  console.log("cottageservice -> deleteCottageCategeory", id);
+  const headers = {
+    accessToken: token,
+  };
+  return service
+    .delete(`cottage/deleteCategory/${id}`, { headers })
+    .then((response) => response.data)
+    .catch(console.error);
+};
+/**
  *  get all cottages
  *
  * @param {*} token
@@ -55,6 +86,22 @@ export const getallCottages = (token) => {
   };
   return service
     .get("cottage/all", { headers })
+    .then((response) => response.data)
+    .catch(console.error);
+};
+
+/**
+ *  create a nre cottage
+ * @param {*} cottageInfo
+ * @param {*} token
+ */
+export const editCottageInfo = (cottageInfo, token) => {
+  console.log("cottageservice -> uploadCottagePictures", cottageInfo);
+  const headers = {
+    accessToken: token,
+  };
+  return service
+    .post("cottage/new", cottageInfo, { headers })
     .then((response) => response.data)
     .catch(console.error);
 };
