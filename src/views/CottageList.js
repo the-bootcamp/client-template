@@ -7,28 +7,34 @@ import {
 } from "../services/cottageService";
 import { Link } from "react-router-dom";
 import AddCottage from "./AddCottage";
+import EditCottage from "./EditCottage";
 
 class CottageList extends Component {
   state = {
     user: this.props.user,
     cottagesList: [],
     showAddDialog: false,
-    formType: "",
+    showEditDialog: false,
     editItem: {},
   };
 
   /**
    *
    */
-  toggleShowAddDialog(type, idx) {
-    console.log(" toggleShowAddDialog: ", idx);
+  toggleShowAddDialog() {
+    console.log(" toggleShowAddDialog: ");
     this.setState({
       showAddDialog: !this.state.showAddDialog,
-      formType: type,
-      editItem: this.state.cottagesList[idx],
     });
   }
 
+  toggleShowEditDialog(idx) {
+    console.log(" toggleShowEditDialog: ", idx);
+    this.setState({
+      showEditDialog: !this.state.showEditDialog,
+      editItem: this.state.cottagesList[idx],
+    });
+  }
   /**
    *
    */
@@ -126,9 +132,7 @@ class CottageList extends Component {
           <button onClick={() => this.incrementCottageCnt(ele._id)}>+</button>
         </td>
         <td>
-          <button onClick={() => this.toggleShowAddDialog("edit", idx)}>
-            Edit
-          </button>
+          <button onClick={() => this.toggleShowEditDialog(idx)}>Edit</button>
         </td>
         <td>
           <button onClick={() => this.deleteFullCottage(ele._id)}> Del </button>
@@ -154,7 +158,7 @@ class CottageList extends Component {
           <tbody>{cottageTable}</tbody>
         </table>
         <div>
-          <button onClick={() => this.toggleShowAddDialog("add")}>
+          <button onClick={() => this.toggleShowAddDialog()}>
             Add new Cottage
           </button>
           {/* <Link to="/manager/add-cottage"> New Cottage </Link> */}
@@ -163,8 +167,17 @@ class CottageList extends Component {
               updateCottageList={() => this.updateCottageList()}
               cottageCategories={() => this.getCottageTypes()}
               closePopup={this.toggleShowAddDialog.bind(this)}
+              // editInfo={this.state.editItem}
+              // formType={this.state.formType}
+            />
+          ) : null}
+          {this.state.showEditDialog ? (
+            <EditCottage
+              updateCottageList={() => this.updateCottageList()}
+              cottageCategories={() => this.getCottageTypes()}
+              closePopup={this.toggleShowEditDialog.bind(this)}
               editInfo={this.state.editItem}
-              formType={this.state.formType}
+              // formType={this.state.formType}
             />
           ) : null}
         </div>

@@ -95,13 +95,13 @@ export const getallCottages = (token) => {
  * @param {*} cottageInfo
  * @param {*} token
  */
-export const editCottageInfo = (cottageInfo, token) => {
-  console.log("cottageservice -> uploadCottagePictures", cottageInfo);
+export const updateCottageInfo = (id, cottageInfo, token) => {
+  console.log("cottageservice -> updateCottageInfo", cottageInfo);
   const headers = {
     accessToken: token,
   };
   return service
-    .post("cottage/new", cottageInfo, { headers })
+    .post(`cottage/update/${id}`, cottageInfo, { headers })
     .then((response) => response.data)
     .catch(console.error);
 };

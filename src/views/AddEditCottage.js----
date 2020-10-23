@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {
   uploadCottagePictures,
   addNewCottage,
+  updateCottageInfo,
 } from "../services/cottageService";
 // import "./AddCottage.css";
 
@@ -30,6 +31,33 @@ class AddCottage extends Component {
       this.setState({
         cottageimages,
       });
+    });
+  };
+
+  /**
+   *
+   * @param {*} evt
+   */
+  updateCottage = (evt) => {
+    evt.preventDefault();
+    console.log(" Update cottage clicked ");
+    const {
+      cottageRecId: id,
+      cottagetype,
+      cottageimages,
+      costperday,
+      description,
+      totalcottages,
+    } = this.state;
+    updateCottageInfo(
+      id,
+      { cottagetype, cottageimages, costperday, description, totalcottages },
+      localStorage.getItem("accessToken")
+    ).then((updatedCottage) => {
+      if (updatedCottage) {
+        this.props.updateCottageList();
+        this.props.closePopup();
+      }
     });
   };
 
@@ -69,6 +97,15 @@ class AddCottage extends Component {
     });
   };
 
+  changeCottageStatus = (evt, id) => {
+    const { name, value } = evt.target;
+    this.setState({
+      totalcottages: this.state.totalcottages.map((el) =>
+        el._id === id ? { ...el, cottagestatus: value } : el
+      ),
+    });
+  };
+
   /**
    *
    */
@@ -83,15 +120,43 @@ class AddCottage extends Component {
       totalcottages,
     } = this.state;
     let cottageTbl;
+    // form cottages table:
+    if (this.props.formType === "edit") {
+      cottageTbl = totalcottages.map(
+        (ele) =>
+          console.log(ele) || (
+            <tr key={ele.cottagenumber}>
+              <td> {ele.cottagenumber}</td>
+              <td>
+                <select
+                  value={ele.cottagestatus}
+                  name="cottagetype"
+                  className="form-control"
+                  onChange={(evt) => this.changeCottageStatus(evt, ele._id)}
+                >
+                  <option value="">none</option>
+                  <option value="full">full</option>
+                  <option value="free">free</option>
+                  <option value="disable">disable</option>
+                </select>
+              </td>
+            </tr>
+          )
+      );
+    }
 
     return (
       <div className="popup">
         <div>
           <button onClick={() => this.props.closePopup()}> X </button>
-          <h2> Add a new Cottage </h2>
+          {this.props.formType === "edit" ? (
+            <h2> Edit the Cottage </h2>
+          ) : (
+            <h2> Add a new Cottage </h2>
+          )}
           <div className="add-rest-part">
             {/*  Image for cottage */}
-            {this.state.showAddNext && (
+            {(this.state.showAddNext || this.props.formType === "edit") && (
               <div className="picture">
                 <img
                   src={cottageimages && cottageimages[0]}
@@ -109,7 +174,13 @@ class AddCottage extends Component {
                 </form>
               </div>
             )}
-            <form onSubmit={this.addCottage}>
+            <form
+              onSubmit={
+                this.props.formType === "edit"
+                  ? this.updateCottage
+                  : this.addCottage
+              }
+            >
               <div className="form-group">
                 <label>Choose cottage categeory : </label>
                 <select
@@ -125,7 +196,7 @@ class AddCottage extends Component {
                 </select>
               </div>
               {/* cost per day */}
-              {this.state.showAddNext && (
+              {(this.state.showAddNext || this.props.formType === "edit") && (
                 <div className="form-group">
                   <label>Cost per day: </label>
                   <input
@@ -139,7 +210,7 @@ class AddCottage extends Component {
                 </div>
               )}
               {/* Cottage description */}
-              {this.state.showAddNext && (
+              {(this.state.showAddNext || this.props.formType === "edit") && (
                 <div className="form-group">
                   <label>Description: </label>
                   <textarea
@@ -169,9 +240,17 @@ class AddCottage extends Component {
                   </select>
                 </div>
               )}
-
+              {this.props.formType === "edit" && (
+                <div className="form-group">
+                  <table>
+                    <tbody>{cottageTbl}</tbody>
+                  </table>
+                </div>
+              )}
               <button className="btn btn-primary  w-25 justify-content-center">
-                Add Cottage
+                {this.props.formType === "edit"
+                  ? "Update Cottage"
+                  : "Add Cottage"}
               </button>
             </form>
           </div>

@@ -10,6 +10,7 @@ import CottageList from "./views/CottageList";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
 import Footer from "./views/Footer";
+import Membership from "./views/MembershipPage";
 import "bootstrap/dist/css/bootstrap.css";
 
 class App extends React.Component {
@@ -100,14 +101,13 @@ class App extends React.Component {
               authenticated={authenticated}
               component={CottageList}
             />
-            {/* <ManagerRoute
+            <PrivateRoute
               exact
-              path="/manager/add-cottage"
+              path="/membership"
               user={this.state.user}
               authenticated={authenticated}
-              component={AddCottage}
-            /> */}
-
+              component={Membership}
+            />
             <PrivateRoute
               exact
               path="/editprofile"

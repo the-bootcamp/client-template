@@ -31,6 +31,7 @@ class Signup extends React.Component {
           console.log(" Edit profile result: ", editRes);
           if (editRes.accessToken) {
             console.log("profile edited successfully ");
+            // Todo  this.setState({});
           } else {
             this.setState({
               errorMessage: editRes.errorMessage,
@@ -41,7 +42,7 @@ class Signup extends React.Component {
     } else if (this.state.formtype === "signup") {
       // When signup is clicked
       signup({
-        username: this.state.user.username,
+        username: this.state.username,
         email: this.state.email,
         password: this.state.password,
         address: this.state.address,
@@ -52,7 +53,7 @@ class Signup extends React.Component {
           response.accessToken
             ? (localStorage.setItem("accessToken", response.accessToken),
               this.props.authenticate(response.user),
-              this.props.history.push("/"))
+              this.props.history.push("/membership"))
             : this.setState({
                 errorMessage: response.errorMessage,
               })
