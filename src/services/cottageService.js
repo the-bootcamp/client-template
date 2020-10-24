@@ -28,7 +28,7 @@ export const uploadCottagePictures = (imagesList, token) => {
 };
 
 /**
- *  create a nre cottage
+ *  create a new cottage
  * @param {*} cottageInfo
  * @param {*} token
  */
@@ -74,6 +74,7 @@ export const deleteCottageCategeory = (id, token) => {
     .then((response) => response.data)
     .catch(console.error);
 };
+
 /**
  *  get all cottages
  *
@@ -91,7 +92,7 @@ export const getallCottages = (token) => {
 };
 
 /**
- *  create a nre cottage
+ * update cottage details
  * @param {*} cottageInfo
  * @param {*} token
  */
@@ -102,6 +103,17 @@ export const updateCottageInfo = (id, cottageInfo, token) => {
   };
   return service
     .post(`cottage/update/${id}`, cottageInfo, { headers })
+    .then((response) => response.data)
+    .catch(console.error);
+};
+
+export const searchAvailabilty = (searchDetails, token) => {
+  console.log("cottageservice -> searchAvailabilty", searchDetails);
+  const headers = {
+    accessToken: token,
+  };
+  return service
+    .post(`cottage/search`, searchDetails, { headers })
     .then((response) => response.data)
     .catch(console.error);
 };

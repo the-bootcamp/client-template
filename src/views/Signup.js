@@ -10,6 +10,8 @@ class Signup extends React.Component {
     address: this.props.user ? this.props.user.address : "",
     phone: this.props.user ? this.props.user.phone : "",
     userrole: this.props.user ? this.props.user.userrole : "customer",
+    membership: this.props.user ? this.props.user.membership : "",
+    defaultcottage: this.props.user ? this.props.user.defaultcottage : "",
     formtype: this.props.formtype,
     errorMessage: "",
   };
@@ -21,11 +23,26 @@ class Signup extends React.Component {
     });
   };
 
+  changeMemberShip = (evt) => {
+    if (this.state.formtype === "edit") {
+      let membership = evt.target.value;
+      // When updateprofile is clicked
+      let defaultcottage =
+        membership.toLowerCase().trim() === "silver"
+          ? "standard"
+          : membership.toLowerCase().trim() === "gold"
+          ? "classic"
+          : "superior";
+      this.setState({ [evt.target.name]: membership, defaultcottage });
+    }
+  };
+
   handleSubmit = (event) => {
-    console.log(" signup-> handleSubmit(): ", this.state);
+    console.log(" signup-> handleSubmit(): ", this.props);
     event.preventDefault();
     if (this.state.formtype === "edit") {
       // When updateprofile is clicked
+
       updateuser(this.state, localStorage.getItem("accessToken"))
         .then((editRes) => {
           console.log(" Edit profile result: ", editRes);
@@ -63,7 +80,8 @@ class Signup extends React.Component {
   };
 
   render() {
-    // console.log(" signup-> render(): ", this.state);
+    console.log(" signup-> render(): ", this.props);
+    console.log(" ", this.state);
     const {
       username,
       email,
@@ -72,6 +90,7 @@ class Signup extends React.Component {
       phone,
       userrole,
       formtype,
+      membership,
       errorMessage,
     } = this.state;
     return (
@@ -110,6 +129,22 @@ class Signup extends React.Component {
             onChange={this.handleChange}
             required={true}
           />
+          {formtype === "edit" && (
+            <div className="form-group">
+              <label>Choose membership: </label>
+              <select
+                value={membership}
+                name="membership"
+                className="form-control"
+                onChange={this.changeMemberShip}
+              >
+                <option value="none">none</option>
+                <option value="silver">Silver</option>
+                <option value="gold">Gold</option>
+                <option value="platinum">Platinum</option>
+              </select>
+            </div>
+          )}
           <label>Address: </label>
           <textarea
             name="address"
@@ -118,7 +153,6 @@ class Signup extends React.Component {
             onChange={this.handleChange}
             required={true}
           ></textarea>
-
           <button type="submit">
             {this.state.formtype === "edit" ? "Update" : "SignUp"}
           </button>

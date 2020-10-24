@@ -4,8 +4,17 @@ import { updateuser } from "./../services/userService";
 
 const membershipPage = (props) => {
   const updateMembership = (membership) => {
-    // evt.preventDefault();
-    updateuser({ membership }, localStorage.getItem("accessToken"))
+    let defaultcottage =
+      membership.toLowerCase().trim() === "silver"
+        ? "standard"
+        : membership.toLowerCase().trim() === "gold"
+        ? "classic"
+        : "superior";
+
+    updateuser(
+      { membership, defaultcottage },
+      localStorage.getItem("accessToken")
+    )
       .then((updatedResult) => {
         console.log(" updated membership result: ");
         console.log(updatedResult);

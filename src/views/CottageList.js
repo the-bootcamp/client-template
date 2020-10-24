@@ -5,7 +5,7 @@ import {
   removeSingleCottage,
   deleteCottageCategeory,
 } from "../services/cottageService";
-import { Link } from "react-router-dom";
+
 import AddCottage from "./AddCottage";
 import EditCottage from "./EditCottage";
 
@@ -61,7 +61,7 @@ class CottageList extends Component {
   getCottageTypes = () => {
     return this.state.cottagesList
       .map((ele) => ele.cottagetype)
-      .filter((item, pos, sameArr) => sameArr.indexOf(item) == pos);
+      .filter((item, pos, sameArr) => sameArr.indexOf(item) === pos);
   };
 
   /**

@@ -12,7 +12,7 @@ class AddCottage extends Component {
     cottageimages: this.props.editInfo ? this.props.editInfo.cottageimages : [],
     costperday: this.props.editInfo ? this.props.editInfo.costperday : "",
     description: this.props.editInfo ? this.props.editInfo.description : "",
-    cottagestatus: this.props.editInfo ? this.props.editInfo.cottagestatus : "",
+    // cottagestatus: this.props.editInfo ? this.props.editInfo.cottagestatus : "",
     totalcottages: this.props.editInfo ? this.props.editInfo.totalcottages : [],
     showAddNext: false,
   };
@@ -79,7 +79,7 @@ class AddCottage extends Component {
       cottageimages,
       costperday,
       description,
-      cottagestatus,
+      // cottagestatus,
       totalcottages,
     } = this.state;
     let cottageTbl;
@@ -153,7 +153,7 @@ class AddCottage extends Component {
               )}
 
               {/*  Cottage Status:  */}
-              {this.state.showAddNext && (
+              {/* {this.state.showAddNext && (
                 <div className="form-group">
                   <label>Choose cottage status : </label>
                   <select
@@ -168,7 +168,7 @@ class AddCottage extends Component {
                     <option value="disable">disable</option>
                   </select>
                 </div>
-              )}
+              )} */}
 
               <button className="btn btn-primary  w-25 justify-content-center">
                 Add Cottage

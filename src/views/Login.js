@@ -23,6 +23,7 @@ class Login extends React.Component {
     })
       .then((response) => {
         if (response.accessToken) {
+          console.log("user record after login:", response.user);
           localStorage.setItem("accessToken", response.accessToken);
           this.props.authenticate(response.user);
           response.user.userrole === "manager"
