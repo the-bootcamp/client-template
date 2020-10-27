@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { addABooking } from "../services/bookingService";
+
 import { searchAvailabilty, getallCottages } from "../services/cottageService";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -29,34 +29,32 @@ class CustomerHome extends Component {
     const {
       checkindate,
       checkoutdate,
+      cottageId,
       user: { defaultcottage },
     } = this.state;
     console.log(defaultcottage);
+    console.log("checkindate:", checkindate);
+    console.log("checkoutdate:", checkoutdate);
 
     searchAvailabilty(
-      { checkindate, checkoutdate, defaultcottage },
+      {
+        checkindate: checkindate.toString(),
+        checkoutdate: checkoutdate.toString(),
+        defaultcottage,
+        cottageId,
+      },
       localStorage.getItem("accessToken")
-    ).then((searchRes) => console.log(searchRes));
-  };
-
-  /**
-   *
-   */
-  addBooking = () => {
-    const booking = {
-      userId: this.state.user._id,
-      checkindate: this.state.checkindate,
-      checkoutdate: this.state.checkindate,
-      bookingdate: new Date(),
-      cottageId: this.state.cottageId,
-      cottageNumber: 1,
-      adults: 2,
-      kids: 2,
-      bookingstatus: "open",
-    };
-    addABooking(booking, localStorage.getItem("accessToken"))
-      .then((bookingRes) => console.log(bookingRes))
-      .catch((error) => console.log(error));
+    ).then((searchRes) => {
+      console.log(searchRes);
+      if (searchRes && searchRes.cottagesAvailability) {
+        console.log(
+          "search avaialbility result :",
+          searchRes.cottagesAvailability
+        );
+        this.props.setCottageSearchRes(searchRes.cottagesAvailability);
+        this.props.history.push("/bookings");
+      }
+    });
   };
 
   /**
@@ -75,7 +73,8 @@ class CustomerHome extends Component {
   };
 
   render() {
-    console.log(" home-> render()-> ", this.state);
+    console.log(" CustomerHome-> render()  cookie-> ", document.cookie);
+    console.log(" CustomerHome-> render()-> ", this.state);
     const { checkoutdate, checkindate } = this.state;
     let { checkOutMinDate } = this.state;
     let minimunDate = new Date();
@@ -92,7 +91,11 @@ class CustomerHome extends Component {
           welcome {this.state.user.username}
           Check for cottage avaialbility{" "}
         </h1>
-        <form onSubmit={this.searchAvailability}>
+        <form
+          autoComplete="off"
+          onSubmit={this.searchAvailability}
+          autoComplete="off"
+        >
           <div className="form-group">
             <label>Check-in date : </label>
 

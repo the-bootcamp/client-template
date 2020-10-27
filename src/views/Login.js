@@ -28,7 +28,7 @@ class Login extends React.Component {
           this.props.authenticate(response.user);
           response.user.userrole === "manager"
             ? this.props.history.push("/manager")
-            : this.props.history.push("/");
+            : this.props.history.push("/home");
         } else {
           this.setState({
             errorMessage: response.errorMessage,
@@ -45,7 +45,7 @@ class Login extends React.Component {
     return (
       <div>
         {errorMessage !== "" && errorMessage}
-        <form onSubmit={this.handleSubmit}>
+        <form autoComplete="off" onSubmit={this.handleSubmit}>
           <label>Email: </label>
           <input
             name="email"

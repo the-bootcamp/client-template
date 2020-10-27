@@ -4,20 +4,25 @@ import "./App.css";
 import AnonRoute from "./components/auth/AnonRoute";
 import PrivateRoute from "./components/auth/PrivateRoute";
 import ManagerRoute from "./components/auth/ManagerRoute";
+import CustomerRoute from "./components/auth/CustomerRoute";
 import { validateSession, logout } from "./services/authService";
 import CustomerHome from "./views/CustomerHome";
 import CottageList from "./views/CottageList";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
 import Footer from "./views/Footer";
-import Membership from "./views/MembershipPage";
+import MembershipPage from "./views/MembershipPage";
 import "bootstrap/dist/css/bootstrap.css";
+import BookingsPage from "./views/BookingsPage";
+import ListBookings from "./views/ListBookings";
 
 class App extends React.Component {
   /** STATE: */
   state = {
     authenticated: false,
     user: {},
+    cottageSearchRes: {},
+    bookingStatus: {},
   };
 
   /**
@@ -34,6 +39,13 @@ class App extends React.Component {
     }
   };
 
+  setCottageSearchRes = (cottageSearchRes) => {
+    this.setState({ cottageSearchRes });
+  };
+
+  setBookingResult = () => {
+    this.setState({ bookingStatus: true });
+  };
   /**
    *
    * @param {*} user
@@ -68,16 +80,20 @@ class App extends React.Component {
    * render()
    */
   render() {
-    const { authenticated } = this.state;
+    console.log(" App-> render()-> ", this.state);
+    const { authenticated, user } = this.state;
     return (
       <div className="App">
         <BrowserRouter>
           <nav>
-            {authenticated && this.state.user.userrole === "manager" && (
+            {authenticated && <Link to="/home"> Home </Link>}
+            {authenticated && <Link to="/editprofile"> Edit Profile </Link>}
+            {authenticated && user.userrole === "manager" && (
               <Link to="/manager"> Cottages </Link>
             )}
-            {authenticated && <Link to="/"> Home </Link>}
-            {authenticated && <Link to="/editprofile"> Edit Profile </Link>}
+            {authenticated && user.userrole === "customer" && (
+              <Link to="/my-bookings"> My Bookings </Link>
+            )}
             {!authenticated && <Link to="/login"> Login </Link>}
             {!authenticated && <Link to="/signup"> Signup </Link>}
             {authenticated && (
@@ -87,33 +103,28 @@ class App extends React.Component {
             )}
           </nav>
           <Switch>
-            <PrivateRoute
-              exact
-              path="/"
-              user={this.state.user}
-              authenticated={authenticated}
-              component={CustomerHome}
-            />
             <ManagerRoute
               exact
               path="/manager"
-              user={this.state.user}
+              user={user}
               authenticated={authenticated}
               component={CottageList}
             />
-            <PrivateRoute
+            <CustomerRoute
               exact
               path="/membership"
-              user={this.state.user}
+              user={user}
               authenticated={authenticated}
-              component={Membership}
+              authenticate={this.authenticate}
+              component={MembershipPage}
             />
             <PrivateRoute
               exact
               path="/editprofile"
-              user={this.state.user}
+              user={user}
               formtype="edit"
               authenticated={authenticated}
+              authenticate={this.authenticate}
               component={Signup}
             />
             <AnonRoute
@@ -130,6 +141,47 @@ class App extends React.Component {
               authenticate={this.authenticate}
               formtype="signup"
               component={Signup}
+            />
+            <CustomerRoute
+              exact
+              path="/bookings"
+              user={user}
+              authenticated={authenticated}
+              setBookingResult={this.setBookingResult}
+              cottageSearchRes={this.state.cottageSearchRes}
+              component={BookingsPage}
+            />
+            <CustomerRoute
+              exact
+              path="/my-bookings"
+              user={user}
+              authenticated={authenticated}
+              listAll={true}
+              component={ListBookings}
+            />
+            <CustomerRoute
+              exact
+              path="/open-bookings"
+              user={user}
+              authenticated={authenticated}
+              listAll={false}
+              component={ListBookings}
+            />
+            {/* <AnonRoute
+              exact
+              path="/"
+              user={user}
+              authenticated={authenticated}
+              setCottageSearchRes={this.setCottageSearchRes}
+              component={CustomerHome}
+            /> */}
+            <CustomerRoute
+              exact
+              path="/home"
+              user={user}
+              authenticated={authenticated}
+              setCottageSearchRes={this.setCottageSearchRes}
+              component={CustomerHome}
             />
           </Switch>
         </BrowserRouter>

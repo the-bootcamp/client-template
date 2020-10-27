@@ -18,9 +18,12 @@ const membershipPage = (props) => {
       .then((updatedResult) => {
         console.log(" updated membership result: ");
         console.log(updatedResult);
-        updatedResult
-          ? props.history.push("/")
-          : console.log("error in choosing ");
+        // updatedResult
+
+        if (updatedResult) {
+          props.authenticate(updatedResult.userInfo);
+          props.history.push("/home");
+        }
       })
       .catch((error) => console.log(error));
   };

@@ -96,7 +96,7 @@ class Signup extends React.Component {
     return (
       <div>
         {errorMessage !== "" && errorMessage}
-        <form onSubmit={this.handleSubmit}>
+        <form autoComplete="off" onSubmit={this.handleSubmit}>
           <label>username: </label>
           <input
             name="username"

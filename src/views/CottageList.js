@@ -41,7 +41,7 @@ class CottageList extends Component {
   updateCottageList = () => {
     getallCottages(localStorage.getItem("accessToken"))
       .then((srvrResp) => {
-        console.log(srvrResp.allCottages);
+        console.log("updateCottageList:", srvrResp.allCottages);
         const { allCottages: cottagesList } = srvrResp;
         this.setState({ cottagesList });
       })
@@ -52,6 +52,7 @@ class CottageList extends Component {
    *
    */
   componentDidMount = () => {
+    console.log("cottageLIst: componentDidMount:");
     this.updateCottageList();
   };
 

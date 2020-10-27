@@ -107,6 +107,11 @@ export const updateCottageInfo = (id, cottageInfo, token) => {
     .catch(console.error);
 };
 
+/**
+ *
+ * @param {*} searchDetails
+ * @param {*} token
+ */
 export const searchAvailabilty = (searchDetails, token) => {
   console.log("cottageservice -> searchAvailabilty", searchDetails);
   const headers = {
@@ -114,6 +119,22 @@ export const searchAvailabilty = (searchDetails, token) => {
   };
   return service
     .post(`cottage/search`, searchDetails, { headers })
+    .then((response) => response.data)
+    .catch(console.error);
+};
+
+/**
+ *
+ * @param {*} cottagetype
+ * @param {*} token
+ */
+export const getCottageDetails = (cottagetype, token) => {
+  console.log("cottageservice -> getCottageDetails", cottagetype);
+  const headers = {
+    accessToken: token,
+  };
+  return service
+    .get(`cottage/get/${cottagetype}`, { headers })
     .then((response) => response.data)
     .catch(console.error);
 };

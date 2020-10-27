@@ -99,7 +99,7 @@ class AddCottage extends Component {
                   height="50"
                   alt=""
                 />
-                <form>
+                <form autoComplete="off">
                   <input
                     type="file"
                     name="cottageimage"
@@ -109,7 +109,7 @@ class AddCottage extends Component {
                 </form>
               </div>
             )}
-            <form onSubmit={this.addCottage}>
+            <form autoComplete="off" onSubmit={this.addCottage}>
               <div className="form-group">
                 <label>Choose cottage categeory : </label>
                 <select

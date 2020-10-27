@@ -20,3 +20,31 @@ export const addABooking = (bookInfo, accesstoken) => {
     .then((response) => response.data)
     .catch((err) => err);
 };
+
+/**
+ * create a booking record
+ * @param {*} accessToken
+ */
+export const getCutomerBookings = (bookingStatus, token) => {
+  const headers = {
+    accessToken: token,
+  };
+  return service
+    .get(`booking/getCustomerBookings/${bookingStatus}`, { headers })
+    .then((response) => response.data)
+    .catch((err) => err);
+};
+
+/**
+ * cancel a booking
+ * @param {*} accessToken
+ */
+export const canceltheBooking = (id, token) => {
+  const headers = {
+    accessToken: token,
+  };
+  return service
+    .delete(`booking/cancel/${id}`, { headers })
+    .then((response) => response.data)
+    .catch((err) => err);
+};
