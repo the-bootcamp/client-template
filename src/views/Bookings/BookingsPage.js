@@ -59,7 +59,12 @@ class BookingsPage extends Component {
             <img key={idx} src={eachImg} />
           ))} */}
         {cottageInfo && cottageInfo.cottageimages && (
-          <img width="50" height="50" src={cottageInfo.cottageimages[0]} />
+          <img
+            width="50"
+            height="50"
+            src={cottageInfo.cottageimages[0]}
+            alt=""
+          />
         )}
         <button onClick={() => this.bookCottage()}> Book Cottage </button>
       </div>

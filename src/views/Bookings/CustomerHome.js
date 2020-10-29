@@ -94,11 +94,7 @@ class CustomerHome extends Component {
           Check for cottage avaialbility{" "}
         </h1>
         {errorMessage !== "" && errorMessage}
-        <form
-          autoComplete="off"
-          onSubmit={this.searchAvailability}
-          autoComplete="off"
-        >
+        <form autoComplete="off" onSubmit={this.searchAvailability}>
           <div className="form-group">
             <label>Check-in date : </label>
 

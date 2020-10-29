@@ -21,3 +21,14 @@ export const updateuser = (editInfo, token) => {
     .then((editResp) => editResp.data)
     .catch((error) => console.log(error));
 };
+
+/**
+ *
+ * @param {*} email
+ */
+export const addSubscriber = (email) => {
+  return service
+    .post(`user/subscribe/${email}`)
+    .then((subscribeResp) => subscribeResp.data)
+    .catch((error) => console.log(error));
+};

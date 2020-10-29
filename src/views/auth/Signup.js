@@ -69,7 +69,7 @@ class Signup extends React.Component {
       address,
       phone,
       // userrole,
-      membership,
+      // membership,
       errorMessage,
     } = this.state;
     return (

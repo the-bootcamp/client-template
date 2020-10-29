@@ -1,7 +1,9 @@
-.common-footer {
-  border: 5px solid deepskyblue;
-  border-radius: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+.main-footer {
+  border: 5px solid white;
+  padding-top: 3em;
+  position: relative;
+  color: white;
+  background-color: lightseagreen;
+  bottom: 0;
+  width: 100%;
 }

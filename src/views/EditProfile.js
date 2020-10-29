@@ -84,8 +84,8 @@ class EditProfile extends React.Component {
       password,
       address,
       phone,
-      userrole,
-      membership,
+      // userrole,
+      // membership,
       errorMessage,
     } = this.state;
     return (
@@ -156,7 +156,7 @@ class EditProfile extends React.Component {
 
   componentWillUnmount = () => {
     if (window.performance) {
-      if (performance.navigation.type == 1) {
+      if (performance.navigation.type === 1) {
         alert("This page is reloaded");
       } else {
         alert("This page is not reloaded");

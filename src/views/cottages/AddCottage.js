@@ -77,9 +77,9 @@ class AddCottage extends Component {
       costperday,
       description,
       // cottagestatus,
-      totalcottages,
+      // totalcottages,
     } = this.state;
-    let cottageTbl;
+    // let cottageTbl;
 
     return (
       <div className="popup">

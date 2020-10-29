@@ -70,7 +70,7 @@ class EditCottage extends Component {
   };
 
   changeCottageStatus = (evt, id) => {
-    const { name, value } = evt.target;
+    const { value } = evt.target;
     this.setState({
       totalcottages: this.state.totalcottages.map((el) =>
         el._id === id ? { ...el, cottagestatus: value } : el
@@ -84,9 +84,10 @@ class EditCottage extends Component {
   render() {
     console.log("AddCottage -> render(): ", this.props);
     console.log("AddCottage -> render(): ", this.state);
-    const { cottagetype, cottageimages, costperday, description } = this.state;
-    let cottageTbl;
+    // const { cottagetype, cottageimages, costperday, description } = this.state;
+    const { cottageimages, costperday, description } = this.state;
 
+    // let cottageTbl;
     // form cottages table:
     // if (this.props.formType === "edit") {
     // cottageTbl = totalcottages.map(
