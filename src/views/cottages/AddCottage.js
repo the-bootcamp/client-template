@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {
   uploadCottagePictures,
   addNewCottage,
-} from "../services/cottageService";
+} from "../../services/cottageService";
 // import "./AddCottage.css";
 
 class AddCottage extends Component {
@@ -26,7 +26,6 @@ class AddCottage extends Component {
       e.target.files,
       localStorage.getItem("accessToken")
     ).then((cottageimages) => {
-      console.log(cottageimages);
       this.setState({
         cottageimages,
       });
@@ -41,12 +40,10 @@ class AddCottage extends Component {
     evt.preventDefault();
     addNewCottage(this.state, localStorage.getItem("accessToken")).then(
       (addedCottage) => {
-        console.log(addedCottage);
-        this.props.updateCottageList();
+        this.props.updateNewCottage(addedCottage.addRes);
         this.props.closePopup();
       }
     );
-    console.log(this.state);
   };
 
   /**

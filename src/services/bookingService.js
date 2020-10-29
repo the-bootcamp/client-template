@@ -48,3 +48,22 @@ export const canceltheBooking = (id, token) => {
     .then((response) => response.data)
     .catch((err) => err);
 };
+
+/**
+ *
+ * @param {*} cotegory
+ * @param {*} cottageNum
+ * @param {*} token
+ */
+export const searchOpenBookings = (category, cottageNumber, accessToken) => {
+  const headers = {
+    accessToken,
+    cottageNumber,
+    category,
+  };
+  console.log("cottageNumber:", cottageNumber);
+  return service
+    .get(`booking/searchOpenBookings/`, { headers })
+    .then((response) => response.data)
+    .catch((err) => err);
+};

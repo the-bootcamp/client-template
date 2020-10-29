@@ -7,10 +7,6 @@ const CustomerRoute = ({
   user,
   ...rest
 }) => {
-  console.log(" customerroute: ", authenticated);
-  console.log(" customerroute: ", user);
-  console.log(" customerroute: ", Component);
-
   return (
     <Route
       render={(props) =>

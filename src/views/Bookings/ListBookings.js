@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import {
   getCutomerBookings,
   canceltheBooking,
-} from "../services/bookingService";
+} from "../../services/bookingService";
 
 class ListBookings extends Component {
   state = {
     bookingsList: [],
   };
+
   /**
    *
    */
@@ -15,11 +16,12 @@ class ListBookings extends Component {
     if (this.props.listAll) {
       getCutomerBookings("all", localStorage.getItem("accessToken"))
         .then((bookingsListResp) => {
-          console.log(bookingsListResp);
           const { bookingsList } = bookingsListResp;
           this.setState({ bookingsList });
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          console.log(error);
+        });
     } else {
       getCutomerBookings("open", localStorage.getItem("accessToken"))
         .then((bookingsListResp) => {
@@ -27,17 +29,26 @@ class ListBookings extends Component {
           const { bookingsList } = bookingsListResp;
           this.setState({ bookingsList });
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          console.log(error);
+        });
     }
   };
 
+  /**
+   *
+   * @param {*} bookingId
+   */
   cancelBooking = (bookingId) => {
-    console.log("cancelBooking", bookingId);
     canceltheBooking(bookingId, localStorage.getItem("accessToken"))
-      .then((bookingsListResp) => {
-        console.log(bookingsListResp);
-        // const { bookingsList } = bookingsListResp;
-        // this.setState({ bookingsList });
+      .then((cancelResult) => {
+        const { updatedbooking: cancelledBooking } = cancelResult;
+
+        let bookingsList = this.state.bookingsList;
+        bookingsList = bookingsList.map((booking) =>
+          booking._id === cancelledBooking._id ? cancelledBooking : booking
+        );
+        this.setState({ bookingsList });
       })
       .catch((error) => console.log(error));
   };

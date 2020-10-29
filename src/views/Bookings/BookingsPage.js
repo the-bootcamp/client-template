@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { getCottageDetails } from "../services/cottageService";
-import { addABooking } from "../services/bookingService";
+import { getCottageDetails } from "../../services/cottageService";
+import { addABooking } from "../../services/bookingService";
 
 class BookingsPage extends Component {
   state = {
@@ -15,7 +15,6 @@ class BookingsPage extends Component {
       localStorage.getItem("accessToken")
     )
       .then((cottageInfo) => {
-        console.log(" BookingPage -- componenetDit mount() => ", cottageInfo);
         this.setState({ cottageInfo: cottageInfo.foundCottages });
       })
       .catch((error) => console.log(error));
@@ -34,7 +33,7 @@ class BookingsPage extends Component {
       cottageNumber: this.state.searchResult.cottagesFree[0],
       bookingstatus: "open",
     };
-    console.log(" booking: ", booking);
+
     addABooking(booking, localStorage.getItem("accessToken"))
       .then((bookingRes) => {
         console.log(bookingRes);

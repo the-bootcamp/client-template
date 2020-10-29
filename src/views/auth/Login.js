@@ -1,5 +1,5 @@
 import React from "react";
-import { login } from "../services/authService";
+import { login } from "../../services/authService";
 
 class Login extends React.Component {
   state = {
@@ -23,7 +23,6 @@ class Login extends React.Component {
     })
       .then((response) => {
         if (response.accessToken) {
-          console.log("user record after login:", response.user);
           localStorage.setItem("accessToken", response.accessToken);
           this.props.authenticate(response.user);
           response.user.userrole === "manager"
@@ -53,6 +52,7 @@ class Login extends React.Component {
             onChange={this.handleChange}
             required={true}
             type="email"
+            autoComplete="off"
           />
           <label>Password: </label>
           <input
@@ -61,6 +61,7 @@ class Login extends React.Component {
             value={password}
             onChange={this.handleChange}
             required={true}
+            autoComplete="off"
           />
           <button type="submit"> Login </button>
         </form>

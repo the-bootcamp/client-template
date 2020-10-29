@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 
-import { searchAvailabilty, getallCottages } from "../services/cottageService";
+import {
+  searchAvailabilty,
+  getallCottages,
+} from "../../services/cottageService";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -12,6 +15,7 @@ class CustomerHome extends Component {
     bookingdate: "",
     cottageId: "",
     checkOutMinDate: "",
+    errorMessage: "",
   };
 
   //temporary
@@ -26,20 +30,20 @@ class CustomerHome extends Component {
 
   searchAvailability = (evt) => {
     evt.preventDefault();
-    const {
+    let {
       checkindate,
       checkoutdate,
       cottageId,
       user: { defaultcottage },
     } = this.state;
-    console.log(defaultcottage);
-    console.log("checkindate:", checkindate);
-    console.log("checkoutdate:", checkoutdate);
+
+    // checkindate = checkindate.toLocaleDateString("de-DE");
+    // checkoutdate = checkoutdate.toLocaleDateString("de-DE");
 
     searchAvailabilty(
       {
-        checkindate: checkindate.toString(),
-        checkoutdate: checkoutdate.toString(),
+        checkindate,
+        checkoutdate,
         defaultcottage,
         cottageId,
       },
@@ -47,12 +51,11 @@ class CustomerHome extends Component {
     ).then((searchRes) => {
       console.log(searchRes);
       if (searchRes && searchRes.cottagesAvailability) {
-        console.log(
-          "search avaialbility result :",
-          searchRes.cottagesAvailability
-        );
         this.props.setCottageSearchRes(searchRes.cottagesAvailability);
         this.props.history.push("/bookings");
+      } else {
+        console.log(" cottage not availbe ", searchRes.error);
+        this.setState({ errorMessage: searchRes.error });
       }
     });
   };
@@ -73,9 +76,8 @@ class CustomerHome extends Component {
   };
 
   render() {
-    console.log(" CustomerHome-> render()  cookie-> ", document.cookie);
     console.log(" CustomerHome-> render()-> ", this.state);
-    const { checkoutdate, checkindate } = this.state;
+    const { checkoutdate, checkindate, errorMessage } = this.state;
     let { checkOutMinDate } = this.state;
     let minimunDate = new Date();
     let maximunDate = new Date();
@@ -91,6 +93,7 @@ class CustomerHome extends Component {
           welcome {this.state.user.username}
           Check for cottage avaialbility{" "}
         </h1>
+        {errorMessage !== "" && errorMessage}
         <form
           autoComplete="off"
           onSubmit={this.searchAvailability}

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {
   uploadCottagePictures,
   updateCottageInfo,
-} from "../services/cottageService";
+} from "../../services/cottageService";
 // import "./EditCottage.css";
 
 class EditCottage extends Component {
@@ -25,7 +25,6 @@ class EditCottage extends Component {
       e.target.files,
       localStorage.getItem("accessToken")
     ).then((cottageimages) => {
-      console.log(cottageimages);
       this.setState({
         cottageimages,
       });
@@ -38,7 +37,7 @@ class EditCottage extends Component {
    */
   updateCottage = (evt) => {
     evt.preventDefault();
-    console.log(" Update cottage clicked ");
+
     const {
       cottageRecId: id,
       cottagetype,
@@ -53,7 +52,7 @@ class EditCottage extends Component {
       localStorage.getItem("accessToken")
     ).then((updatedCottage) => {
       if (updatedCottage) {
-        this.props.updateCottageList();
+        this.props.setUpdatedCottage(updatedCottage.recordUpdated);
         this.props.closePopup();
       }
     });
@@ -84,14 +83,8 @@ class EditCottage extends Component {
    */
   render() {
     console.log("AddCottage -> render(): ", this.props);
-    const {
-      cottagetype,
-      cottageimages,
-      costperday,
-      description,
-      // cottagestatus,
-      // totalcottages,
-    } = this.state;
+    console.log("AddCottage -> render(): ", this.state);
+    const { cottagetype, cottageimages, costperday, description } = this.state;
     let cottageTbl;
 
     // form cottages table:

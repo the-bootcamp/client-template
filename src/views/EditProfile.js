@@ -1,8 +1,7 @@
 import React from "react";
-import { signup } from "../services/authService";
 import { updateuser } from "../services/userService";
 
-class Signup extends React.Component {
+class EditProfile extends React.Component {
   state = {
     username: this.props.user ? this.props.user.username : "",
     email: this.props.user ? this.props.user.email : "",
@@ -12,8 +11,8 @@ class Signup extends React.Component {
     userrole: this.props.user ? this.props.user.userrole : "customer",
     membership: this.props.user ? this.props.user.membership : "",
     defaultcottage: this.props.user ? this.props.user.defaultcottage : "",
-    formtype: this.props.formtype,
     errorMessage: "",
+    successMessage: "",
   };
 
   handleChange = (event) => {
@@ -38,50 +37,47 @@ class Signup extends React.Component {
   };
 
   handleSubmit = (event) => {
-    console.log(" signup-> handleSubmit(): ", this.props);
     event.preventDefault();
-    if (this.state.formtype === "edit") {
-      // When updateprofile is clicked
-
-      updateuser(this.state, localStorage.getItem("accessToken"))
-        .then((editRes) => {
-          console.log(" Edit profile result: ", editRes);
-          if (editRes.accessToken) {
-            console.log("profile edited successfully ");
-            // Todo  this.setState({});
-          } else {
-            this.setState({
-              errorMessage: editRes.errorMessage,
-            });
-          }
-        })
-        .catch((err) => console.log(err));
-    } else if (this.state.formtype === "signup") {
-      // When signup is clicked
-      signup({
-        username: this.state.username,
-        email: this.state.email,
-        password: this.state.password,
-        address: this.state.address,
-        phone: this.state.phone,
-        userrole: this.state.userrole,
+    console.log("update profile  button clicked ");
+    updateuser(this.state, localStorage.getItem("accessToken"))
+      .then((editRes) => {
+        console.log(" EDIT  profile response :", editRes.userInfo);
+        if (editRes.success) {
+          console.log(" Edit is success ");
+          const {
+            username,
+            email,
+            password,
+            address,
+            phone,
+            userrole,
+            membership,
+            defaultcottage,
+          } = editRes.userInfo;
+          this.setState({
+            successMessage: editRes.success,
+            username,
+            email,
+            password,
+            address,
+            phone,
+            userrole,
+            membership,
+            defaultcottage,
+          });
+        } else {
+          console.log(" Edit Failed ..  ");
+          this.setState({
+            errorMessage: editRes.errorMessage,
+          });
+        }
       })
-        .then((response) =>
-          response.accessToken
-            ? (localStorage.setItem("accessToken", response.accessToken),
-              this.props.authenticate(response.user),
-              this.props.history.push("/membership"))
-            : this.setState({
-                errorMessage: response.errorMessage,
-              })
-        )
-        .catch((err) => console.log(err));
-    }
+      .catch((err) => console.log(err));
   };
 
   render() {
-    console.log(" signup-> render(): ", this.props);
-    console.log(" ", this.state);
+    console.log(" EditProfile-> render(): ", this.props);
+    console.log("EditProfile-> render(): ", this.state);
     const {
       username,
       email,
@@ -89,7 +85,6 @@ class Signup extends React.Component {
       address,
       phone,
       userrole,
-      formtype,
       membership,
       errorMessage,
     } = this.state;
@@ -129,8 +124,8 @@ class Signup extends React.Component {
             onChange={this.handleChange}
             required={true}
           />
-          {formtype === "edit" && (
-            <div className="form-group">
+
+          {/* <div className="form-group">
               <label>Choose membership: </label>
               <select
                 value={membership}
@@ -143,8 +138,8 @@ class Signup extends React.Component {
                 <option value="gold">Gold</option>
                 <option value="platinum">Platinum</option>
               </select>
-            </div>
-          )}
+            </div> */}
+
           <label>Address: </label>
           <textarea
             name="address"
@@ -153,13 +148,21 @@ class Signup extends React.Component {
             onChange={this.handleChange}
             required={true}
           ></textarea>
-          <button type="submit">
-            {this.state.formtype === "edit" ? "Update" : "SignUp"}
-          </button>
+          <button type="submit">Update Profile</button>
         </form>
       </div>
     );
   }
+
+  componentWillUnmount = () => {
+    if (window.performance) {
+      if (performance.navigation.type == 1) {
+        alert("This page is reloaded");
+      } else {
+        alert("This page is not reloaded");
+      }
+    }
+  };
 }
 
-export default Signup;
+export default EditProfile;

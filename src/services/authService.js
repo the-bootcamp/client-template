@@ -12,7 +12,6 @@ const service = axios.create({
  * @param {*} accessToken
  */
 export const validateSession = (accessToken) => {
-  console.log(process.env.REACT_APP_API_BASE_URL);
   return service
     .get(`/auth/session/${accessToken}`)
     .then((response) => response.data)

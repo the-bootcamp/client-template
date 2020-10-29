@@ -1,22 +1,27 @@
 import React from "react";
 import { BrowserRouter, Link, Switch } from "react-router-dom";
 import "./App.css";
+import "bootstrap/dist/css/bootstrap.css";
+
 import AnonRoute from "./components/auth/AnonRoute";
 import PrivateRoute from "./components/auth/PrivateRoute";
 import ManagerRoute from "./components/auth/ManagerRoute";
 import CustomerRoute from "./components/auth/CustomerRoute";
 import { validateSession, logout } from "./services/authService";
-import CustomerHome from "./views/CustomerHome";
-import CottageList from "./views/CottageList";
-import Login from "./views/Login";
-import Signup from "./views/Signup";
-import Footer from "./views/Footer";
-import MembershipPage from "./views/MembershipPage";
-import "bootstrap/dist/css/bootstrap.css";
-import BookingsPage from "./views/BookingsPage";
-import ListBookings from "./views/ListBookings";
+import CustomerHome from "./views/Bookings/CustomerHome";
+import CottageList from "./views/cottages/CottageList";
+import Login from "./views/auth/Login";
+import Signup from "./views/auth/Signup";
+import EditProfile from "./views/EditProfile";
+import Footer from "./views/layout/Footer";
+import MembershipPage from "./views/auth/MembershipPage";
+
+import BookingsPage from "./views/Bookings/BookingsPage";
+import ListBookings from "./views/Bookings/ListBookings";
+import ManagerCheckout from "./views/Bookings/ManagerCheckout";
 
 class App extends React.Component {
+  con;
   /** STATE: */
   state = {
     authenticated: false,
@@ -57,6 +62,14 @@ class App extends React.Component {
     });
   };
 
+  clearAccessToken = () => {
+    localStorage.clear();
+    this.setState({
+      authenticated: false,
+      user: {},
+    });
+  };
+
   /**
    * when 'Logout' button clicked
    */
@@ -66,11 +79,7 @@ class App extends React.Component {
       .then((resp) => {
         console.log(" logout response: ", resp);
         if (resp.success) {
-          localStorage.clear();
-          this.setState({
-            authenticated: false,
-            user: {},
-          });
+          this.clearAccessToken();
         }
       })
       .catch((err) => console.log(err));
@@ -89,7 +98,10 @@ class App extends React.Component {
             {authenticated && <Link to="/home"> Home </Link>}
             {authenticated && <Link to="/editprofile"> Edit Profile </Link>}
             {authenticated && user.userrole === "manager" && (
-              <Link to="/manager"> Cottages </Link>
+              <div>
+                <Link to="/manager"> Cottages </Link>
+                <Link to="/manager/checkout"> check Out </Link>
+              </div>
             )}
             {authenticated && user.userrole === "customer" && (
               <Link to="/my-bookings"> My Bookings </Link>
@@ -110,6 +122,13 @@ class App extends React.Component {
               authenticated={authenticated}
               component={CottageList}
             />
+            <ManagerRoute
+              exact
+              path="/manager/checkout"
+              user={user}
+              authenticated={authenticated}
+              component={ManagerCheckout}
+            />
             <CustomerRoute
               exact
               path="/membership"
@@ -122,10 +141,9 @@ class App extends React.Component {
               exact
               path="/editprofile"
               user={user}
-              formtype="edit"
               authenticated={authenticated}
               authenticate={this.authenticate}
-              component={Signup}
+              component={EditProfile}
             />
             <AnonRoute
               exact
@@ -139,7 +157,6 @@ class App extends React.Component {
               path="/signup"
               authenticated={authenticated}
               authenticate={this.authenticate}
-              formtype="signup"
               component={Signup}
             />
             <CustomerRoute
@@ -157,6 +174,7 @@ class App extends React.Component {
               user={user}
               authenticated={authenticated}
               listAll={true}
+              clearSession={this.clearAccessToken}
               component={ListBookings}
             />
             <CustomerRoute

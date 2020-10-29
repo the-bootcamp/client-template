@@ -4,7 +4,7 @@ import {
   addNewCottage,
   removeSingleCottage,
   deleteCottageCategeory,
-} from "../services/cottageService";
+} from "../../services/cottageService";
 
 import AddCottage from "./AddCottage";
 import EditCottage from "./EditCottage";
@@ -22,38 +22,28 @@ class CottageList extends Component {
    *
    */
   toggleShowAddDialog() {
-    console.log(" toggleShowAddDialog: ");
     this.setState({
       showAddDialog: !this.state.showAddDialog,
     });
   }
 
   toggleShowEditDialog(idx) {
-    console.log(" toggleShowEditDialog: ", idx);
     this.setState({
       showEditDialog: !this.state.showEditDialog,
       editItem: this.state.cottagesList[idx],
     });
   }
-  /**
-   *
-   */
-  updateCottageList = () => {
-    getallCottages(localStorage.getItem("accessToken"))
-      .then((srvrResp) => {
-        console.log("updateCottageList:", srvrResp.allCottages);
-        const { allCottages: cottagesList } = srvrResp;
-        this.setState({ cottagesList });
-      })
-      .catch((err) => console.log(err));
-  };
 
   /**
    *
    */
   componentDidMount = () => {
-    console.log("cottageLIst: componentDidMount:");
-    this.updateCottageList();
+    getallCottages(localStorage.getItem("accessToken"))
+      .then((srvrResp) => {
+        const { allCottages: cottagesList } = srvrResp;
+        this.setState({ cottagesList });
+      })
+      .catch((err) => console.log(err));
   };
 
   /**
@@ -70,12 +60,15 @@ class CottageList extends Component {
    * @param {*} id
    */
   deleteFullCottage = (id) => {
-    console.log("deleteCottage", id);
     deleteCottageCategeory(id, localStorage.getItem("accessToken"))
-      .then((deletedCottage) => {
-        console.log(deletedCottage);
+      .then((deleteResponse) => {
+        const { deletedCottage } = deleteResponse;
         if (deletedCottage) {
-          this.updateCottageList();
+          let { cottagesList } = this.state;
+          cottagesList = cottagesList.filter(
+            (ele) => !(ele._id === deletedCottage._id)
+          );
+          this.setState({ cottagesList });
         }
       })
       .catch((error) => console.log(error));
@@ -91,10 +84,14 @@ class CottageList extends Component {
       console.log(" ERROR  cannot decrement the number of cottages ...");
     } else {
       removeSingleCottage(id, localStorage.getItem("accessToken"))
-        .then((deletedCottage) => {
-          console.log(deletedCottage);
-          if (deletedCottage) {
-            this.updateCottageList();
+        .then((deleteResponse) => {
+          const { deletedRes } = deleteResponse;
+          if (deletedRes) {
+            let { cottagesList } = this.state;
+            cottagesList = cottagesList.map((ele) =>
+              ele._id === deletedRes._id ? deletedRes : ele
+            );
+            this.setState({ cottagesList });
           }
         })
         .catch((error) => console.log(error));
@@ -103,15 +100,43 @@ class CottageList extends Component {
 
   /**
    *
+   * @param {*} updatedCottage
+   */
+  setUpdatedCottage = (updatedCottage) => {
+    if (updatedCottage) {
+      let { cottagesList } = this.state;
+      cottagesList = cottagesList.map((ele) =>
+        ele._id === updatedCottage._id ? updatedCottage : ele
+      );
+      this.setState({ cottagesList });
+    }
+  };
+
+  /**
+   *
+   * @param {*} newCottage
+   */
+  updateNewCottage = (newCottage) => {
+    if (newCottage) {
+      let { cottagesList } = this.state;
+      cottagesList.push(newCottage);
+      this.setState({ cottagesList });
+    }
+  };
+  /**
+   *
    * @param {*} id
    */
   incrementCottageCnt = (id) => {
     let cottagetoEdit = this.state.cottagesList.find((ele) => ele._id === id);
     addNewCottage(cottagetoEdit, localStorage.getItem("accessToken"))
       .then((addedCottage) => {
-        console.log(addedCottage);
         if (addedCottage) {
-          this.updateCottageList();
+          let { cottagesList } = this.state;
+          cottagesList = cottagesList.map((ele) =>
+            ele._id === addedCottage.addRes._id ? addedCottage.addRes : ele
+          );
+          this.setState({ cottagesList });
         }
       })
       .catch((error) => console.log(error));
@@ -121,8 +146,8 @@ class CottageList extends Component {
    *
    */
   render() {
-    console.log(" CottageList -> render() ");
-    console.log(this.state.cottagesList[1]);
+    console.log(" CottageList -> render() ", this.state);
+
     let cottageTable = this.state.cottagesList.map((ele, idx) => (
       <tr key={ele._id}>
         <td>{ele.cottagetype}</td>
@@ -130,6 +155,8 @@ class CottageList extends Component {
         <td>
           <button onClick={() => this.decrementCottageCnt(ele._id)}>-</button>
           {ele.totalcottages.length}
+        </td>
+        <td>
           <button onClick={() => this.incrementCottageCnt(ele._id)}>+</button>
         </td>
         <td>
@@ -152,6 +179,7 @@ class CottageList extends Component {
               <th scope="col">Cottage categoery</th>
               <th scope="col">Price/day</th>
               <th scope="col"> Total Cottages </th>
+              <th scope="col">Add</th>
               <th scope="col">Edit</th>
               <th scope="col">Delete</th>
             </tr>
@@ -163,22 +191,19 @@ class CottageList extends Component {
             Add new Cottage
           </button>
           {/* <Link to="/manager/add-cottage"> New Cottage </Link> */}
+
           {this.state.showAddDialog ? (
             <AddCottage
-              updateCottageList={() => this.updateCottageList()}
+              updateNewCottage={this.updateNewCottage}
               cottageCategories={() => this.getCottageTypes()}
               closePopup={this.toggleShowAddDialog.bind(this)}
-              // editInfo={this.state.editItem}
-              // formType={this.state.formType}
             />
           ) : null}
           {this.state.showEditDialog ? (
             <EditCottage
-              updateCottageList={() => this.updateCottageList()}
-              cottageCategories={() => this.getCottageTypes()}
+              setUpdatedCottage={this.setUpdatedCottage}
               closePopup={this.toggleShowEditDialog.bind(this)}
               editInfo={this.state.editItem}
-              // formType={this.state.formType}
             />
           ) : null}
         </div>
