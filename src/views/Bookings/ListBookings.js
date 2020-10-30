@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import {
   getCutomerBookings,
-  canceltheBooking,
+  // canceltheBooking,
+  changeBookingStatus,
 } from "../../services/bookingService";
 
 class ListBookings extends Component {
@@ -40,10 +41,16 @@ class ListBookings extends Component {
    * @param {*} bookingId
    */
   cancelBooking = (bookingId) => {
-    canceltheBooking(bookingId, localStorage.getItem("accessToken"))
+    changeBookingStatus(
+      bookingId,
+      "cancel",
+      localStorage.getItem("accessToken")
+    )
       .then((cancelResult) => {
+        if (!cancelResult.success) {
+          return console.log(cancelResult);
+        }
         const { updatedbooking: cancelledBooking } = cancelResult;
-
         let bookingsList = this.state.bookingsList;
         bookingsList = bookingsList.map((booking) =>
           booking._id === cancelledBooking._id ? cancelledBooking : booking
@@ -52,6 +59,19 @@ class ListBookings extends Component {
       })
       .catch((error) => console.log(error));
   };
+  // cancelBooking = (bookingId) => {
+  //   canceltheBooking(bookingId, localStorage.getItem("accessToken"))
+  //     .then((cancelResult) => {
+  //       const { updatedbooking: cancelledBooking } = cancelResult;
+
+  //       let bookingsList = this.state.bookingsList;
+  //       bookingsList = bookingsList.map((booking) =>
+  //         booking._id === cancelledBooking._id ? cancelledBooking : booking
+  //       );
+  //       this.setState({ bookingsList });
+  //     })
+  //     .catch((error) => console.log(error));
+  // };
 
   /**
    *

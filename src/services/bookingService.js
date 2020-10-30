@@ -39,15 +39,26 @@ export const getCutomerBookings = (bookingStatus, token) => {
  * cancel a booking
  * @param {*} accessToken
  */
-export const canceltheBooking = (id, token) => {
+export const changeBookingStatus = (id, status, token) => {
   const headers = {
     accessToken: token,
   };
+
   return service
-    .delete(`booking/cancel/${id}`, { headers })
+    .post(`booking/changeStatus/${id}`, { status }, { headers })
     .then((response) => response.data)
     .catch((err) => err);
 };
+
+// export const canceltheBooking = (id, token) => {
+//   const headers = {
+//     accessToken: token,
+//   };
+//   return service
+//     .delete(`booking/cancel/${id}`, { headers })
+//     .then((response) => response.data)
+//     .catch((err) => err);
+// };
 
 /**
  *

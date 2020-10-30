@@ -1,5 +1,8 @@
 import React, { Component } from "react";
-import { searchOpenBookings } from "../../services/bookingService";
+import {
+  changeBookingStatus,
+  searchOpenBookings,
+} from "../../services/bookingService";
 import { getallCottages } from "../../services/cottageService";
 
 class ManagerCheckout extends Component {
@@ -74,15 +77,46 @@ class ManagerCheckout extends Component {
    * @param {*} event
    * @param {*} id
    */
-  updateBookingStatus = (event, id) => {
-    console.log(" ManagerCheckout.js ==> changeBookingStatus(): ", id);
-    console.log(event.target.name, " --- ", event.target.value);
+  changeBookingStatus = (event, id) => {
+    console.log(
+      " ManagerCheckout.js ==> changeBookingStatus(): ",
+      id,
+      event.target.value
+    );
+
+    // console.log(event.target.name, " --- ", event.target.value);
     const bookingsForCheckout = this.state.bookingsForCheckout.map((ele) =>
       ele._id === id ? { ...ele, bookingstatus: event.target.value } : ele
     );
     this.setState({ bookingsForCheckout });
   };
 
+  updateBookingStatus = (event, bookId) => {
+    event.preventDefault();
+    console.log("updateBookingStatus clicked ....  ");
+
+    const newStatus = this.state.bookingsForCheckoutx
+      .filter((ele) => ele._id === bookId)
+      .map(({ bookingstatus }) => bookingstatus)[0];
+
+    changeBookingStatus(bookId, newStatus, localStorage.getItem("accessToken"))
+      .then((response) => {
+        // console.log(response.updatedbooking);
+        if (response.success) {
+          let bookingsForCheckout = this.state.bookingsForCheckout;
+          bookingsForCheckout = bookingsForCheckout.map((booking) =>
+            booking._id === response.updatedbooking._id
+              ? response.updatedbooking
+              : booking
+          );
+          this.setState({ bookingsForCheckout });
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+  /**
+   *
+   */
   render() {
     console.log(" ManagerCheckout.js ==> render(): ", this.state);
     const {
@@ -107,20 +141,23 @@ class ManagerCheckout extends Component {
     ));
 
     let bookingsTable = "";
-    if (bookingsForCheckout.length > 0) {
+    let canCheckOutDate = new Date();
+    canCheckOutDate.setDate(canCheckOutDate.getDate() + 10);
+    console.log(canCheckOutDate);
+    if (bookingsForCheckout && bookingsForCheckout.length > 0) {
       bookingsTable = bookingsForCheckout.map((booking) => (
         <tr key={booking._id}>
-          <td> {booking.checkindate} </td>
-          <td> {booking.checkoutdate}</td>
-          <td> {booking.bookingdate} </td>
-          <td>{booking.cottageId.cottagetype} </td>
-          <td>{booking.cottageNumber} </td>
-          <td>{booking.bookingstatus} </td>
+          <td> {new Date(booking.checkindate).toDateString()} </td>
+          <td> {new Date(booking.checkoutdate).toDateString()}</td>
+          <td> {new Date(booking.bookingdate).toDateString()} </td>
+          {/* <td>{booking.cottageId.cottagetype} </td> */}
+          {/* <td>{booking.cottageNumber}</td> */}
+
           <td>
             <select
               name="bookingstatus"
               value={booking.bookingstatus}
-              onChange={(evt) => this.updateBookingStatus(evt, booking._id)}
+              onChange={(evt) => this.changeBookingStatus(evt, booking._id)}
             >
               <option key={"open" + booking._id} value="open">
                 open
@@ -128,10 +165,18 @@ class ManagerCheckout extends Component {
               <option key={"cancel" + booking._id} value="cancel">
                 cancel
               </option>
-              <option key={"close" + booking._id} value="close">
-                close
-              </option>
+              {new Date(booking.checkoutdate) <= canCheckOutDate && (
+                <option key={"close" + booking._id} value="close">
+                  close
+                </option>
+              )}
             </select>
+            <button
+              onClick={(evt) => this.updateBookingStatus(evt, booking._id)}
+              disabled={booking.bookingstatus === "open"}
+            >
+              OK
+            </button>
           </td>
         </tr>
       ));
@@ -176,14 +221,18 @@ class ManagerCheckout extends Component {
 
         {bookingsForCheckout.length > 0 && (
           <div>
+            <div>
+              <h5> Cottage Categeory: {category} </h5>
+              <h5> Cottage Number: {cottageNumber} </h5>
+            </div>
             <table className="table">
               <thead className="thead-light text-center">
                 <tr>
                   <th scope="col"> Check-In Date</th>
                   <th scope="col"> Check-out Date</th>
                   <th scope="col"> Booking Date</th>
-                  <th scope="col"> Cottage Type</th>
-                  <th scope="col">Cottage Number </th>
+                  {/* <th scope="col"> Cottage Type</th>
+                  <th scope="col">Cottage Number </th> */}
                   <th scope="col"> Booking Status </th>
                 </tr>
               </thead>
