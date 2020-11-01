@@ -23,23 +23,27 @@ class EditProfile extends React.Component {
   };
 
   changeMemberShip = (evt) => {
-    if (this.state.formtype === "edit") {
-      let membership = evt.target.value;
-      // When updateprofile is clicked
-      let defaultcottage =
-        membership.toLowerCase().trim() === "silver"
-          ? "standard"
-          : membership.toLowerCase().trim() === "gold"
-          ? "classic"
-          : "superior";
-      this.setState({ [evt.target.name]: membership, defaultcottage });
-    }
+    // if (this.state.formtype === "edit") {
+    let membership = evt.target.value;
+    // When updateprofile is clicked
+    let defaultcottage =
+      membership.toLowerCase().trim() === "silver"
+        ? "standard"
+        : membership.toLowerCase().trim() === "gold"
+        ? "classic"
+        : "superior";
+    this.setState({ [evt.target.name]: membership, defaultcottage });
+    // }
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
     console.log("update profile  button clicked ");
-    updateuser(this.state, localStorage.getItem("accessToken"))
+    const { username, email, password, address, phone } = this.state;
+    updateuser(
+      { username, email, password, address, phone },
+      localStorage.getItem("accessToken")
+    )
       .then((editRes) => {
         console.log(" EDIT  profile response :", editRes.userInfo);
         if (editRes.success) {

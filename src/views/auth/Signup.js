@@ -73,56 +73,85 @@ class Signup extends React.Component {
       errorMessage,
     } = this.state;
     return (
-      <div>
-        {errorMessage !== "" && errorMessage}
-        <form autoComplete="off" onSubmit={this.handleSubmit}>
-          <label>username: </label>
-          <input
-            name="username"
-            value={username}
-            onChange={this.handleChange}
-            required={true}
-            type="text"
-            autoComplete="off"
-          />
-          <label>Email: </label>
-          <input
-            name="email"
-            value={email}
-            onChange={this.handleChange}
-            required={true}
-            type="email"
-            autoComplete="off"
-          />
-          <label>Password: </label>
-          <input
-            name="password"
-            type="password"
-            value={password}
-            onChange={this.handleChange}
-            required={true}
-            autoComplete="off"
-          />
-          <label>Phone: </label>
-          <input
-            name="phone"
-            type="phone"
-            value={phone}
-            onChange={this.handleChange}
-            required={true}
-            autoComplete="off"
-          />
-          <label>Address: </label>
-          <textarea
-            name="address"
-            type="text"
-            value={address}
-            onChange={this.handleChange}
-            required={true}
-            autoComplete="off"
-          ></textarea>
-          <button type="submit">SignUp</button>
-        </form>
+      <div className="auth-form  container-fluid">
+        <div className="row">
+          <div className="signUp-img col-sm-6">
+            <img src="./images/ResortCommon_1.jpg" alt="" />
+          </div>
+          <div className="col-sm-6">
+            {errorMessage !== "" && errorMessage}
+            <form autoComplete="off" onSubmit={this.handleSubmit}>
+              <h3> Sign Up </h3>
+
+              <div className="form-group">
+                <label>username: </label>
+                <input
+                  className="form-control"
+                  name="username"
+                  value={username}
+                  onChange={this.handleChange}
+                  required={true}
+                  type="text"
+                  autoComplete="off"
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Email: </label>
+                <input
+                  className="form-control"
+                  name="email"
+                  value={email}
+                  onChange={this.handleChange}
+                  required={true}
+                  type="email"
+                  autoComplete="off"
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Password: </label>
+                <input
+                  className="form-control"
+                  name="password"
+                  type="password"
+                  value={password}
+                  onChange={this.handleChange}
+                  required={true}
+                  autoComplete="off"
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Phone: </label>
+                <input
+                  className="form-control"
+                  name="phone"
+                  type="phone"
+                  value={phone}
+                  onChange={this.handleChange}
+                  required={true}
+                  autoComplete="off"
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Address: </label>
+                <textarea
+                  className="form-control"
+                  name="address"
+                  type="text"
+                  value={address}
+                  onChange={this.handleChange}
+                  required={true}
+                  autoComplete="off"
+                ></textarea>
+              </div>
+
+              <button type="submit">SignUp</button>
+            </form>
+          </div>
+        </div>
       </div>
     );
   }

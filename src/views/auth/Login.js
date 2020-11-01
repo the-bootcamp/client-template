@@ -1,5 +1,6 @@
 import React from "react";
 import { login } from "../../services/authService";
+import "./Auth.css";
 
 class Login extends React.Component {
   state = {
@@ -27,7 +28,7 @@ class Login extends React.Component {
           this.props.authenticate(response.user);
           response.user.userrole === "manager"
             ? this.props.history.push("/manager")
-            : this.props.history.push("/home");
+            : this.props.history.push("/membership");
         } else {
           this.setState({
             errorMessage: response.errorMessage,
@@ -43,28 +44,47 @@ class Login extends React.Component {
     const { email, password, errorMessage } = this.state;
     return (
       <div>
-        {errorMessage !== "" && errorMessage}
-        <form autoComplete="off" onSubmit={this.handleSubmit}>
-          <label>Email: </label>
-          <input
-            name="email"
-            value={email}
-            onChange={this.handleChange}
-            required={true}
-            type="email"
-            autoComplete="off"
-          />
-          <label>Password: </label>
-          <input
-            name="password"
-            type="password"
-            value={password}
-            onChange={this.handleChange}
-            required={true}
-            autoComplete="off"
-          />
-          <button type="submit"> Login </button>
-        </form>
+        <div className="auth-form  container-fluid">
+          <div className="row">
+            <div className="auth-img col-sm-6">
+              <img src="./images/ResortCommon_1.jpg" alt="" />
+            </div>
+            <div className="col-sm-6">
+              {errorMessage !== "" && errorMessage}
+              <form autoComplete="off" onSubmit={this.handleSubmit}>
+                <h3> Login </h3>
+
+                <div className="form-group">
+                  <label>Email: </label>
+                  <input
+                    className="form-control"
+                    name="email"
+                    value={email}
+                    onChange={this.handleChange}
+                    required={true}
+                    type="email"
+                    autoComplete="off"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Password: </label>
+                  <input
+                    className="form-control"
+                    name="password"
+                    type="password"
+                    value={password}
+                    onChange={this.handleChange}
+                    required={true}
+                    autoComplete="off"
+                  />
+                </div>
+
+                <button type="submit"> Login </button>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

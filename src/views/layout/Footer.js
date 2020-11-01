@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Footer.css";
+import "./Layout.css";
 
 function Footer(props) {
   const [signupNewsEmail, setSignUpNews] = useState("");

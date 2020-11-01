@@ -1,0 +1,12 @@
+.search-form-img {
+  position: absolute;
+  width: -webkit-fill-available;
+}
+
+.search-form {
+  border: 5px solid #ff9800;
+  background-color: #ff9800;
+  position: relative;
+  margin: 20% 5% 0px 5%;
+  justify-content: space-evenly;
+}

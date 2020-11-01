@@ -12,3 +12,24 @@ form {
 .content-wrap {
   flex: 1;
 }
+
+.nav-main {
+  background-color: #11b2a9b5;
+  height: fit-content;
+  padding: 0px;
+}
+.nav-main img {
+  width: 60px;
+  height: 50px;
+}
+
+#responsive-navbar-nav {
+  justify-content: flex-end;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.nav-menuitem {
+  margin-right: 5%;
+}

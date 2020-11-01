@@ -1,0 +1,32 @@
+.main-footer {
+  border: 5px solid white;
+  padding-top: 3em;
+  position: relative;
+  color: white;
+  background-color: #11b2a9b5;
+  bottom: 0;
+  width: 100%;
+}
+.react-datepicker {
+  padding: 3px;
+  display: inline-block;
+  background-color: #11b2a9b5;
+  border: 3px solid #ff9800;
+}
+
+.react-datepicker__header {
+  background-color: #009688;
+}
+
+.react-datepicker__day--keyboard-selected {
+  background-color: #ff9800;
+}
+
+.member-card {
+  border: 5px solid #ff9800;
+  border-radius: 20px;
+  background: #607d8b2e;
+  display: inline-flex;
+  justify-content: space-evenly;
+  width: 25%;
+}

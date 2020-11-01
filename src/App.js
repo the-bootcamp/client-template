@@ -1,7 +1,6 @@
 import React from "react";
-import { BrowserRouter, Link, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
-import "bootstrap/dist/css/bootstrap.css";
 
 import AnonRoute from "./components/auth/AnonRoute";
 import PrivateRoute from "./components/auth/PrivateRoute";
@@ -20,9 +19,10 @@ import MembershipPage from "./views/auth/MembershipPage";
 import BookingsPage from "./views/Bookings/BookingsPage";
 import ListBookings from "./views/Bookings/ListBookings";
 import ManagerCheckout from "./views/Bookings/ManagerCheckout";
+import NavBar from "./views/layout/NavBar";
+import HomePage from "./views/HomePage";
 
 class App extends React.Component {
-  con;
   /** STATE: */
   state = {
     authenticated: false,
@@ -102,26 +102,12 @@ class App extends React.Component {
       <div className="page-container">
         <div className="content-wrap">
           <BrowserRouter>
-            <nav>
-              {authenticated && <Link to="/home"> Home </Link>}
-              {authenticated && <Link to="/editprofile"> Edit Profile </Link>}
-              {authenticated && user.userrole === "manager" && (
-                <div>
-                  <Link to="/manager"> Cottages </Link>
-                  <Link to="/manager/checkout"> check Out </Link>
-                </div>
-              )}
-              {authenticated && user.userrole === "customer" && (
-                <Link to="/my-bookings"> My Bookings </Link>
-              )}
-              {!authenticated && <Link to="/login"> Login </Link>}
-              {!authenticated && <Link to="/signup"> Signup </Link>}
-              {authenticated && (
-                <Link to={"/"} onClick={this.handleLogout}>
-                  Logout
-                </Link>
-              )}
-            </nav>
+            <NavBar
+              user={user}
+              authenticated={authenticated}
+              handleLogout={this.handleLogout}
+            />
+
             <Switch>
               <ManagerRoute
                 exact
@@ -209,9 +195,11 @@ class App extends React.Component {
                 setCottageSearchRes={this.setCottageSearchRes}
                 component={CustomerHome}
               />
+              <Route exact path="/" component={HomePage} />
             </Switch>
           </BrowserRouter>
         </div>
+
         <Footer addEmailSubscription={this.addEmailSubscription} />
       </div>
     );

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-
 import {
   searchAvailabilty,
   getallCottages,
 } from "../../services/cottageService";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "./Bookings.css";
 
 class CustomerHome extends Component {
   state = {
@@ -94,36 +94,74 @@ class CustomerHome extends Component {
           Check for cottage avaialbility{" "}
         </h1>
         {errorMessage !== "" && errorMessage}
-        <form autoComplete="off" onSubmit={this.searchAvailability}>
-          <div className="form-group">
-            <label>Check-in date : </label>
+        <div className="search-form-img">
+          <img
+            className="search-form-img"
+            src="/images/ResortCommon_1.jpg"
+            alt=""
+          />
+        </div>
+        <div className="container-fluid">
+          <form
+            className="form-inline search-form"
+            autoComplete="off"
+            onSubmit={this.searchAvailability}
+          >
+            <div class="form-group mb-2">
+              <label style={{ background: "white" }}>
+                Search For Availability:
+              </label>
+            </div>
 
-            <DatePicker
-              selected={checkindate}
-              name="checkindate"
-              onChange={(date) => this.setSelectedDate(date, "checkindate")}
-              dateFormat="dd/MM/yyyy"
-              minDate={minimunDate}
-              maxDate={maximunDate}
-              filterDate={(date) => date.getDay() !== 6 || date.getDay() !== 0}
-              isClearable // to get a clear button
-            />
-          </div>
-          <div className="form-group">
-            <label>Check-Out Date: </label>
-            <DatePicker
-              name="checkoutdate"
-              selected={checkoutdate}
-              onChange={(date) => this.setSelectedDate(date, "checkoutdate")}
-              dateFormat="dd/MM/yyyy"
-              minDate={checkOutMinDate}
-              maxDate={maximunDate}
-              filterDate={(date) => date.getDay() !== 6 || date.getDay() !== 0}
-              isClearable // to get a clear button
-            />
-          </div>
-          <button type="submit"> Search </button>
-        </form>
+            <div class="form-group mb-2">
+              {/*  className="form-group" */}
+              <label style={{ background: "white" }}>Check-in date : </label>
+              <DatePicker
+                selected={checkindate}
+                name="checkindate"
+                onChange={(date) => this.setSelectedDate(date, "checkindate")}
+                dateFormat="dd/MM/yyyy"
+                minDate={minimunDate}
+                maxDate={maximunDate}
+                filterDate={(date) =>
+                  date.getDay() !== 6 || date.getDay() !== 0
+                }
+                closeOnScroll={true}
+                isClearable // to get a clear button
+                placeholderText="Click to choose date ..."
+              >
+                <div style={{ color: "red" }}>
+                  Don't forget to check the weather!
+                </div>
+              </DatePicker>
+            </div>
+            <div class="form-group mb-2">
+              <label style={{ background: "white" }}>Check-Out Date: </label>
+              <DatePicker
+                name="checkoutdate"
+                selected={checkoutdate}
+                onChange={(date) => this.setSelectedDate(date, "checkoutdate")}
+                dateFormat="dd/MM/yyyy"
+                minDate={checkOutMinDate}
+                maxDate={maximunDate}
+                filterDate={(date) =>
+                  date.getDay() !== 6 || date.getDay() !== 0
+                }
+                closeOnScroll={true}
+                isClearable // to get a clear button
+                placeholderText="Click to choose date ..."
+                // calendarContainer={MyContainer}
+              >
+                <div style={{ color: "red" }}>
+                  Don't forget to check the weather!{" "}
+                </div>
+              </DatePicker>
+            </div>
+            <button type="submit" className="btn btn-primary mb-2">
+              Search
+            </button>
+          </form>
+        </div>
       </div>
     );
   }
