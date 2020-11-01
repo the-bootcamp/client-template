@@ -5,7 +5,7 @@ import { Navbar, Nav } from "react-bootstrap";
 const navBar = (props) => {
   return (
     <Navbar className="nav-main" collapseOnSelect expand="lg" variant="dark">
-      <Navbar.Brand href="#home">
+      <Navbar.Brand href="/">
         <a className="navbar-brand" href="/">
           <img src="resortzy.png" alt="resortzy logo" />
         </a>

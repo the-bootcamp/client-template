@@ -12,9 +12,9 @@ import CustomerHome from "./views/Bookings/CustomerHome";
 import CottageList from "./views/cottages/CottageList";
 import Login from "./views/auth/Login";
 import Signup from "./views/auth/Signup";
-import EditProfile from "./views/EditProfile";
+import EditProfile from "./views/user/EditProfile";
 import Footer from "./views/layout/Footer";
-import MembershipPage from "./views/auth/MembershipPage";
+import MembershipPage from "./views/membership/MembershipPage";
 
 import BookingsPage from "./views/Bookings/BookingsPage";
 import ListBookings from "./views/Bookings/ListBookings";

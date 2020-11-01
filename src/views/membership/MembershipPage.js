@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { updateuser } from "../../services/userService";
 import { getMembershipDetails } from "../../services/membershipService";
-import MembershipCard from "../layout/MembershipCard";
+import MembershipCard from "./MembershipCard";
+import "./Membership.css";
 
 function MembershipPage(props) {
   const [membershipList, setMembershipList] = useState([]);
@@ -10,7 +11,6 @@ function MembershipPage(props) {
     getMembershipDetails()
       .then((MshipInfo) => {
         console.log(MshipInfo.membershipInfo);
-
         setMembershipList(MshipInfo.membershipInfo);
       })
       .catch((error) => console.log(error));
@@ -45,26 +45,37 @@ function MembershipPage(props) {
   };
 
   return (
-    <div>
-      <blockquote>
-        Holidays are the best way to bond with your loved ones, and choosing a
-        suitable Membership is ideal for it. With membership, you can enjoy
-        future holidays at today's prices. Pay once and we promise you the fun
-        and happiness to your loved ones.
-      </blockquote>
-      <h3> CLUB MEMBERSHIP ADVANTAGES </h3>
-      <ul>
-        <li> Book a vacation in our resort</li>
-        <li> Avail our great Aminities and Services </li>
-        <li>Accessibility Requests </li>
-      </ul>
-      <div className="member-layout">
-        {membershipList.map((eachMemShip) => (
-          <MembershipCard
-            eachMemShip={eachMemShip}
-            updateMembership={updateMembership}
-          />
-        ))}
+    <div className="member-layout">
+      <h2> One Membership. Exclusively Yours. </h2>
+      <div className="container">
+        <div className="row">
+          <div className="col">
+            &quot; Holidays are the best way to bond with your loved ones, and
+            choosing a suitable Membership is ideal for it. With membership, you
+            can enjoy future holidays at today's prices. Pay once and we promise
+            you the fun and happiness to your loved ones. &quot;
+          </div>
+          <div className="col">
+            <h3> CLUB MEMBERSHIP ADVANTAGES </h3>
+
+            <ul>
+              <li> Book a vacation in our resort</li>
+              <li> Avail our great Aminities and Services </li>
+              <li> Accessibility Requests </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div className="container">
+        <div class="member-layout row card-group ">
+          {membershipList.map((eachMemShip) => (
+            <MembershipCard
+              key={eachMemShip._id}
+              eachMemShip={eachMemShip}
+              updateMembership={updateMembership}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

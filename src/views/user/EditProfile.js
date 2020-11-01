@@ -1,5 +1,5 @@
 import React from "react";
-import { updateuser } from "../services/userService";
+import { updateuser } from "../../services/userService";
 
 class EditProfile extends React.Component {
   state = {

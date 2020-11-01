@@ -27,7 +27,7 @@ class Login extends React.Component {
           localStorage.setItem("accessToken", response.accessToken);
           this.props.authenticate(response.user);
           response.user.userrole === "manager"
-            ? this.props.history.push("/manager")
+            ? this.props.history.push("/")
             : this.props.history.push("/membership");
         } else {
           this.setState({
