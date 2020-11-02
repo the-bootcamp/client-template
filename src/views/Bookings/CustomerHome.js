@@ -13,39 +13,39 @@ class CustomerHome extends Component {
     checkindate: "",
     checkoutdate: "",
     bookingdate: "",
-    cottageId: "",
+    // cottageId: "",
     checkOutMinDate: "",
     errorMessage: "",
   };
 
   //temporary
-  componentDidMount = () => {
-    getallCottages(localStorage.getItem("accessToken"))
-      .then((cottagesList) => {
-        console.log(cottagesList.allCottages[0]._id);
-        this.setState({ cottageId: cottagesList.allCottages[0]._id });
-      })
-      .catch((error) => console.log("Error in finding the cottages", error));
-  };
+  // componentDidMount = () => {
+  // getallCottages(localStorage.getItem("accessToken"))
+  //   .then((cottagesList) => {
+  //     console.log(cottagesList.allCottages[0]._id);
+  //     // this.setState({ cottageId: cottagesList.allCottages[0]._id });
+  //   })
+  //   .catch((error) => console.log("Error in finding the cottages", error));
+  // };
 
   searchAvailability = (evt) => {
     evt.preventDefault();
     let {
       checkindate,
       checkoutdate,
-      cottageId,
-      user: { defaultcottage },
+      // cottageId,
+      user: { cottagetype: defaultcottage },
     } = this.state;
 
     // checkindate = checkindate.toLocaleDateString("de-DE");
     // checkoutdate = checkoutdate.toLocaleDateString("de-DE");
-
+    console.log(defaultcottage);
     searchAvailabilty(
       {
         checkindate,
         checkoutdate,
         defaultcottage,
-        cottageId,
+        // cottageId,
       },
       localStorage.getItem("accessToken")
     ).then((searchRes) => {
@@ -107,13 +107,13 @@ class CustomerHome extends Component {
             autoComplete="off"
             onSubmit={this.searchAvailability}
           >
-            <div class="form-group mb-2">
+            <div className="form-group mb-2">
               <label style={{ background: "white" }}>
                 Search For Availability:
               </label>
             </div>
 
-            <div class="form-group mb-2">
+            <div className="form-group mb-2">
               {/*  className="form-group" */}
               <label style={{ background: "white" }}>Check-in date : </label>
               <DatePicker
@@ -135,7 +135,7 @@ class CustomerHome extends Component {
                 </div>
               </DatePicker>
             </div>
-            <div class="form-group mb-2">
+            <div className="form-group mb-2">
               <label style={{ background: "white" }}>Check-Out Date: </label>
               <DatePicker
                 name="checkoutdate"

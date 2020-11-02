@@ -75,6 +75,17 @@ export const deleteCottageCategeory = (id, token) => {
     .catch(console.error);
 };
 
+export const removeCottageImg = () => {
+  console.log("cottageservice -> removeCottageImg");
+  // const headers = {
+  //   accessToken: token,
+  // };
+  return service
+    .delete(`cottage/deletePicture`)
+    .then((response) => response.data)
+    .catch(console.error);
+};
+
 /**
  *  get all cottages
  *

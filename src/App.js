@@ -39,7 +39,12 @@ class App extends React.Component {
     if (accessToken) {
       validateSession(accessToken)
         .then((response) => {
-          this.authenticate(response.session.userId);
+          console.log(
+            " App.js -> componentDidMount:   validateSession ",
+            response.user
+          );
+          this.authenticate(response.userId);
+          // this.authenticate(response.session.userId);
         })
         .catch((err) => console.log(err));
     }

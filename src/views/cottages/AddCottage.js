@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {
   uploadCottagePictures,
   addNewCottage,
+  removeCottageImg,
 } from "../../services/cottageService";
 
 class AddCottage extends Component {
@@ -14,6 +15,7 @@ class AddCottage extends Component {
     // cottagestatus: this.props.editInfo ? this.props.editInfo.cottagestatus : "",
     totalcottages: this.props.editInfo ? this.props.editInfo.totalcottages : [],
     showAddNext: false,
+    errorMessage: "",
   };
 
   /**
@@ -21,10 +23,17 @@ class AddCottage extends Component {
    * @param {*} e
    */
   onImageUpload = (e) => {
+    if (e.target.files.length > 4) {
+      this.setState({
+        errorMessage: "One can upload a maz. of 4 images at instance",
+      });
+      return;
+    }
     uploadCottagePictures(
       e.target.files,
       localStorage.getItem("accessToken")
     ).then((cottageimages) => {
+      console.log(" images uploaded: ", cottageimages);
       this.setState({
         cottageimages,
       });
@@ -37,12 +46,13 @@ class AddCottage extends Component {
    */
   addCottage = (evt) => {
     evt.preventDefault();
-    addNewCottage(this.state, localStorage.getItem("accessToken")).then(
-      (addedCottage) => {
-        this.props.updateNewCottage(addedCottage.addRes);
-        this.props.closePopup();
-      }
-    );
+    removeCottageImg();
+    // addNewCottage(this.state, localStorage.getItem("accessToken")).then(
+    //   (addedCottage) => {
+    //     this.props.updateNewCottage(addedCottage.addRes);
+    //     this.props.closePopup();
+    //   }
+    // );
   };
 
   /**
@@ -77,11 +87,13 @@ class AddCottage extends Component {
       description,
       // cottagestatus,
       // totalcottages,
+      errorMessage,
     } = this.state;
     // let cottageTbl;
 
     return (
       <div className="popup">
+        {errorMessage !== "" && errorMessage}
         <div>
           <button onClick={() => this.props.closePopup()}> X </button>
           <h2> Add a new Cottage </h2>

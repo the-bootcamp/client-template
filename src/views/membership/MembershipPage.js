@@ -31,7 +31,8 @@ function MembershipPage(props) {
     console.log("MembershipPAge => updateMembership => ", defaultcottage);
 
     updateuser(
-      { membership, defaultcottage },
+      // { membership, defaultcottage },
+      { membership },
       localStorage.getItem("accessToken")
     )
       .then((updatedResult) => {
@@ -67,7 +68,7 @@ function MembershipPage(props) {
         </div>
       </div>
       <div className="container">
-        <div class="member-layout row card-group ">
+        <div className="member-layout row card-group ">
           {membershipList.map((eachMemShip) => (
             <MembershipCard
               key={eachMemShip._id}

@@ -22,19 +22,17 @@ class EditProfile extends React.Component {
     });
   };
 
-  changeMemberShip = (evt) => {
-    // if (this.state.formtype === "edit") {
-    let membership = evt.target.value;
-    // When updateprofile is clicked
-    let defaultcottage =
-      membership.toLowerCase().trim() === "silver"
-        ? "standard"
-        : membership.toLowerCase().trim() === "gold"
-        ? "classic"
-        : "superior";
-    this.setState({ [evt.target.name]: membership, defaultcottage });
-    // }
-  };
+  // changeMemberShip = (evt) => {
+  //   let membership = evt.target.value;
+
+  //   let defaultcottage =
+  //     membership.toLowerCase().trim() === "silver"
+  //       ? "standard"
+  //       : membership.toLowerCase().trim() === "gold"
+  //       ? "classic"
+  //       : "superior";
+  //   this.setState({ [evt.target.name]: membership, defaultcottage });
+  // };
 
   handleSubmit = (event) => {
     event.preventDefault();
@@ -93,45 +91,65 @@ class EditProfile extends React.Component {
       errorMessage,
     } = this.state;
     return (
-      <div>
-        {errorMessage !== "" && errorMessage}
-        <form autoComplete="off" onSubmit={this.handleSubmit}>
-          <label>username: </label>
-          <input
-            name="username"
-            value={username}
-            onChange={this.handleChange}
-            required={true}
-            type="text"
-          />
-          <label>Email: </label>
-          <input
-            name="email"
-            value={email}
-            onChange={this.handleChange}
-            required={true}
-            type="email"
-          />
-          <label>Password: </label>
-          <input
-            name="password"
-            type="password"
-            value={password}
-            onChange={this.handleChange}
-            required={true}
-          />
-          <label>Phone: </label>
-          <input
-            name="phone"
-            type="phone"
-            value={phone}
-            onChange={this.handleChange}
-            required={true}
-          />
+      <div className="auth-form  container-fluid">
+        <div className="row">
+          <div className="auth-img col-sm-6">
+            <img src="./images/ResortCommon_1.jpg" alt="" />
+          </div>
+          <div className="col-sm-6">
+            {errorMessage !== "" && errorMessage}
+            <form autoComplete="off" onSubmit={this.handleSubmit}>
+              <h3> Edit My Profile </h3>
 
-          {/* <div className="form-group">
+              <div className="form-group">
+                <label>username: </label>
+                <input
+                  className="form-control"
+                  name="username"
+                  value={username}
+                  onChange={this.handleChange}
+                  required={true}
+                  type="text"
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Email: </label>
+                <input
+                  className="form-control"
+                  name="email"
+                  value={email}
+                  onChange={this.handleChange}
+                  required={true}
+                  type="email"
+                />
+              </div>
+              <div className="form-group">
+                <label>Password: </label>
+                <input
+                  className="form-control"
+                  name="password"
+                  type="password"
+                  value={password}
+                  onChange={this.handleChange}
+                  required={true}
+                />
+              </div>
+              <div className="form-group">
+                <label>Phone: </label>
+                <input
+                  className="form-control"
+                  name="phone"
+                  type="phone"
+                  value={phone}
+                  onChange={this.handleChange}
+                  required={true}
+                />
+              </div>
+              {/* <div className="form-group">
               <label>Choose membership: </label>
               <select
+               className="form-control"
                 value={membership}
                 name="membership"
                 className="form-control"
@@ -144,16 +162,21 @@ class EditProfile extends React.Component {
               </select>
             </div> */}
 
-          <label>Address: </label>
-          <textarea
-            name="address"
-            type="text"
-            value={address}
-            onChange={this.handleChange}
-            required={true}
-          ></textarea>
-          <button type="submit">Update Profile</button>
-        </form>
+              <div className="form-group">
+                <label>Address: </label>
+                <textarea
+                  className="form-control"
+                  name="address"
+                  type="text"
+                  value={address}
+                  onChange={this.handleChange}
+                  required={true}
+                ></textarea>
+              </div>
+              <button type="submit">Update Profile</button>
+            </form>
+          </div>
+        </div>
       </div>
     );
   }

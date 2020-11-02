@@ -23,12 +23,17 @@ class Login extends React.Component {
       password: this.state.password,
     })
       .then((response) => {
+        console.log(" =========== ");
+        console.log(response.success);
+        console.log(response.user);
+
         if (response.accessToken) {
           localStorage.setItem("accessToken", response.accessToken);
           this.props.authenticate(response.user);
+
           response.user.userrole === "manager"
-            ? this.props.history.push("/")
-            : this.props.history.push("/membership");
+            ? this.props.history.push("/manager")
+            : this.props.history.push("/home");
         } else {
           this.setState({
             errorMessage: response.errorMessage,

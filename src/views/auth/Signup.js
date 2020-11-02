@@ -21,19 +21,19 @@ class Signup extends React.Component {
     });
   };
 
-  changeMemberShip = (evt) => {
-    if (this.state.formtype === "edit") {
-      let membership = evt.target.value;
-      // When updateprofile is clicked
-      let defaultcottage =
-        membership.toLowerCase().trim() === "silver"
-          ? "standard"
-          : membership.toLowerCase().trim() === "gold"
-          ? "classic"
-          : "superior";
-      this.setState({ [evt.target.name]: membership, defaultcottage });
-    }
-  };
+  // changeMemberShip = (evt) => {
+  //   if (this.state.formtype === "edit") {
+  //     let membership = evt.target.value;
+  //     // When updateprofile is clicked
+  //     let defaultcottage =
+  //       membership.toLowerCase().trim() === "silver"
+  //         ? "standard"
+  //         : membership.toLowerCase().trim() === "gold"
+  //         ? "classic"
+  //         : "superior";
+  //     this.setState({ [evt.target.name]: membership, defaultcottage });
+  //   }
+  // };
 
   handleSubmit = (event) => {
     event.preventDefault();
