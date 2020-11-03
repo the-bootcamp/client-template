@@ -26,6 +26,8 @@ function BookingsPage(props) {
       bookingstatus: "open",
     };
 
+    console.log(" nook cottage clicked ...", bookingRecord);
+
     addABooking(bookingRecord, localStorage.getItem("accessToken"))
       .then((bookingRes) => {
         console.log(bookingRes);
@@ -41,7 +43,6 @@ function BookingsPage(props) {
   } = props;
 
   return (
-    // cottagedetails={props.cottageSearchRes.cottagelist}
     <div>
       <CottageInfo bookCottage={bookCottage} cottagedetails={cottagelist} />
     </div>

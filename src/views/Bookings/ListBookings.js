@@ -4,6 +4,7 @@ import {
   // canceltheBooking,
   changeBookingStatus,
 } from "../../services/bookingService";
+import BookingDetails from "./BookingDetails";
 
 class ListBookings extends Component {
   state = {
@@ -59,6 +60,7 @@ class ListBookings extends Component {
       })
       .catch((error) => console.log(error));
   };
+
   // cancelBooking = (bookingId) => {
   //   canceltheBooking(bookingId, localStorage.getItem("accessToken"))
   //     .then((cancelResult) => {
@@ -81,6 +83,20 @@ class ListBookings extends Component {
     let bookingsTable = "";
     if (this.state.bookingsList) {
       bookingsTable = this.state.bookingsList.map((booking) => (
+        <BookingDetails
+          bookingInfo={booking}
+          cancelBooking={this.cancelBooking}
+        />
+      ));
+    }
+    return <div>{bookingsTable}</div>;
+  }
+}
+
+export default ListBookings;
+
+/**
+
         <tr key={booking._id}>
           <td> {booking.checkindate} </td>
           <td> {booking.checkoutdate}</td>
@@ -96,11 +112,9 @@ class ListBookings extends Component {
             </td>
           )}
         </tr>
-      ));
-    }
-    return (
-      <div>
-        <table className="table">
+*/
+{
+  /* <table className="table">
           <thead className="thead-light text-center">
             <tr>
               <th scope="col"> Check-In Date</th>
@@ -112,10 +126,5 @@ class ListBookings extends Component {
             </tr>
           </thead>
           <tbody>{bookingsTable}</tbody>
-        </table>
-      </div>
-    );
-  }
+        </table> */
 }
-
-export default ListBookings;

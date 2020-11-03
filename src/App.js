@@ -24,17 +24,43 @@ import HomePage from "./views/HomePage";
 
 class App extends React.Component {
   /** STATE: */
+  // constructor() {
+  //   super();
+  //   this.state = {
+  //     authenticated: false,
+  //     // authenticated: localStorage.getItem("accessToken") ? true : false,
+  //     user: {},
+  //     cottageSearchRes: {},
+  //     bookingStatus: {},
+  //     isLoading: true,
+  //   };
+  //   this.checkAuthentication();
+  // }
+
   state = {
     authenticated: false,
+    // authenticated: localStorage.getItem("accessToken") ? true : false,
     user: {},
     cottageSearchRes: {},
     bookingStatus: {},
+    isLoading: true,
   };
+
+  checkAuthentication() {
+    setTimeout(
+      () =>
+        this.setState({
+          isLoading: false,
+        }),
+      200
+    );
+  }
 
   /**
    *  componentDidMount
    */
   componentDidMount = () => {
+    console.log(this.props.history);
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
       validateSession(accessToken)
@@ -65,6 +91,7 @@ class App extends React.Component {
     this.setState({
       authenticated: true,
       user,
+      isLoading: false,
     });
   };
 
@@ -101,6 +128,10 @@ class App extends React.Component {
    * render()
    */
   render() {
+    // if (this.state.isLoading) {
+    //   return <div> </div>;
+    // }
+
     console.log(" App-> render()-> ", this.state);
     const { authenticated, user } = this.state;
     return (

@@ -1,30 +1,49 @@
 import React from "react";
+import ResortzyButton from "../../components/resortzy-ui/ResortzyButton";
 
+import "./Cottage.css";
 const CottageInfo = (props) => {
   const { cottagedetails } = props;
   console.log("CottageInfo:  ", cottagedetails);
   return (
-    <div>
-      <p> {cottagedetails.cottagetype} </p>
-      <p> Cost per day and Night:{cottagedetails.costperday} € </p>
-      <p> {cottagedetails.description} </p>
-      {cottagedetails.cottageimages && (
-        <div>
+    <div className="container">
+      <div className="cottage-layout">
+        <div className="row">
+          <h2> Cottages availability </h2>
+        </div>
+        <div className="row cottage-info">
+          <div className="col-sm-6">
+            <h4> Cottage Facilities </h4>
+            <ul>
+              {cottagedetails.facilities && (
+                <div>
+                  {cottagedetails.facilities.map((facility, idx) => (
+                    <li key={idx}> {facility} </li>
+                  ))}
+                </div>
+              )}
+            </ul>
+          </div>
+          <div className="col-sm-6 cottage-info-right">
+            You are entitled to book {cottagedetails.cottagetype} cottages
+            <p> Cost per day and Night:{cottagedetails.costperday} € </p>
+            <p> {cottagedetails.description} </p>
+            {/* <button onClick={props.bookCottage}> Book </button> */}
+            <ResortzyButton
+              style="membership-btn"
+              clickapi={() => props.bookCottage(cottagedetails._id)}
+              btntext="Choose"
+            />
+          </div>
+        </div>
+        <div className="row">
           {cottagedetails.cottageimages.map((picture, idx) => (
-            <img key={idx} src={picture} alt="" />
+            <div className="col-sm-4" key={idx}>
+              <img className="cottage-img d-block w-100" src={picture} alt="" />
+            </div>
           ))}
         </div>
-      )}
-
-      {cottagedetails.facilities && (
-        <div>
-          <h4> Facilities: </h4>
-          {cottagedetails.facilities.map((facility, idx) => (
-            <p key={idx}> {facility} </p>
-          ))}
-        </div>
-      )}
-      <button onClick={props.bookCottage}> Book </button>
+      </div>
     </div>
   );
 };
@@ -41,5 +60,5 @@ export default CottageInfo;
 //     return <div></div>;
 //   }
 // }
-
+// className={`cottage-img col-md-offset-2 col-` + `${idx + 1}`}
 // export default CottageInfo;
