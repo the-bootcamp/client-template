@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {
   searchAvailabilty,
-  getallCottages,
+  // getallCottages,
 } from "../../services/cottageService";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -150,7 +150,6 @@ class CustomerHome extends Component {
                 closeOnScroll={true}
                 isClearable // to get a clear button
                 placeholderText="Click to choose date ..."
-                // calendarContainer={MyContainer}
               >
                 <div style={{ color: "red" }}>
                   Don't forget to check the weather!{" "}

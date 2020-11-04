@@ -23,9 +23,8 @@ class Login extends React.Component {
       password: this.state.password,
     })
       .then((response) => {
-        console.log(" =========== ");
-        console.log(response.success);
-        console.log(response.user);
+        // console.log(response.success);
+        // console.log(response.user);
 
         if (response.accessToken) {
           localStorage.setItem("accessToken", response.accessToken);
@@ -75,13 +74,13 @@ class Login extends React.Component {
                 <div className="form-group">
                   <label>Password: </label>
                   <input
+                    autoComplete="off"
                     className="form-control"
                     name="password"
                     type="password"
                     value={password}
                     onChange={this.handleChange}
                     required={true}
-                    autoComplete="off"
                   />
                 </div>
 

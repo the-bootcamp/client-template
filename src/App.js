@@ -44,6 +44,7 @@ class App extends React.Component {
     cottageSearchRes: {},
     bookingStatus: {},
     isLoading: true,
+    errorMessage: "",
   };
 
   checkAuthentication() {
@@ -60,19 +61,29 @@ class App extends React.Component {
    *  componentDidMount
    */
   componentDidMount = () => {
-    console.log(this.props.history);
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
       validateSession(accessToken)
         .then((response) => {
-          console.log(
-            " App.js -> componentDidMount:   validateSession ",
-            response.user
-          );
-          this.authenticate(response.userId);
-          // this.authenticate(response.session.userId);
+          // response.accessToken
+          //   ? this.authenticate(response.userId)
+          //   : localStorage.removeItem("accessToken"),
+          //   this.setState({
+          //     errorMessage: "Access Token is expired",
+          //   });
+          if (response.accessToken) {
+            this.authenticate(response.userId);
+          } else {
+            localStorage.removeItem("accessToken");
+            this.setState({
+              errorMessage: "Access Token is expired",
+            });
+          }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log("Invalid Access Token ", err);
+          localStorage.removeItem("accessToken");
+        });
     }
   };
 

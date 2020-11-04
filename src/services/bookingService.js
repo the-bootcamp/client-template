@@ -35,27 +35,39 @@ export const getCutomerBookings = (bookingStatus, token) => {
     .catch((err) => err);
 };
 
-/**
- * cancel a booking
- * @param {*} accessToken
- */
-export const changeBookingStatus = (id, status, token) => {
+export const updateBookingDates = (id, checkindate, checkoutdate, token) => {
   const headers = {
     accessToken: token,
   };
-
+  let record = { checkindate, checkoutdate };
   return service
-    .post(`booking/changeStatus/${id}`, { status }, { headers })
+    .post(`booking/changeStatus/${id}`, record, { headers })
     .then((response) => response.data)
     .catch((err) => err);
 };
 
-// export const canceltheBooking = (id, token) => {
+/**
+ * cancel a booking
+ * @param {*} accessToken
+ */
+export const changeBookingStatus = (id, bookingstatus, token) => {
+  const headers = {
+    accessToken: token,
+  };
+  let record = { bookingstatus };
+  return service
+    .post(`booking/changeStatus/${id}`, record, { headers })
+    .then((response) => response.data)
+    .catch((err) => err);
+};
+
+// export const changeBookingStatus = (id, status, token) => {
 //   const headers = {
 //     accessToken: token,
 //   };
+
 //   return service
-//     .delete(`booking/cancel/${id}`, { headers })
+//     .post(`booking/changeStatus/${id}`, { status }, { headers })
 //     .then((response) => response.data)
 //     .catch((err) => err);
 // };

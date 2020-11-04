@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {
   uploadCottagePictures,
-  addNewCottage,
+  // addNewCottage,
   removeCottageImg,
 } from "../../services/cottageService";
 

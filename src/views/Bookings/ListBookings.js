@@ -3,6 +3,7 @@ import {
   getCutomerBookings,
   // canceltheBooking,
   changeBookingStatus,
+  updateBookingDates,
 } from "../../services/bookingService";
 import BookingDetails from "./BookingDetails";
 
@@ -37,11 +38,55 @@ class ListBookings extends Component {
     }
   };
 
+  /***
+   */
+  updateBooking = (checkin, checkout, bookingId) => {
+    console.log(" ^^^^^^^^^^^^^^^^ ^^^^^^^^^ ");
+    console.log(
+      " ListBookings -> updateBooking -> clicked ... ",
+      checkin,
+      checkout,
+      bookingId
+    );
+    updateBookingDates(
+      bookingId,
+      checkin,
+      checkout,
+      localStorage.getItem("accessToken")
+    )
+      .then((updatedResult) => {
+        console.log(" ################# ");
+
+        console.log(" updated response from serer: ");
+        if (!updatedResult.success) {
+          return console.log(updatedResult);
+        }
+        const { updatedbooking } = updatedResult;
+        let bookingsList = [...this.state.bookingsList];
+
+        bookingsList = bookingsList.map((ele) => ({
+          ...ele,
+          checkindate:
+            updatedbooking._id === ele._id
+              ? updatedbooking.checkindate
+              : ele.checkindate,
+          checkoutdate:
+            updatedbooking._id === ele._id
+              ? updatedbooking.checkoutdate
+              : ele.checkoutdate,
+        }));
+        console.log(bookingsList);
+        this.setState({ bookingsList });
+      })
+      .catch((error) => console.log(error));
+  };
+
   /**
    *
    * @param {*} bookingId
    */
   cancelBooking = (bookingId) => {
+    console.log("ListBookings.js -> cancelBooking:  ", bookingId);
     changeBookingStatus(
       bookingId,
       "cancel",
@@ -51,29 +96,21 @@ class ListBookings extends Component {
         if (!cancelResult.success) {
           return console.log(cancelResult);
         }
-        const { updatedbooking: cancelledBooking } = cancelResult;
-        let bookingsList = this.state.bookingsList;
-        bookingsList = bookingsList.map((booking) =>
-          booking._id === cancelledBooking._id ? cancelledBooking : booking
-        );
+        const { updatedbooking } = cancelResult;
+        let bookingsList = [...this.state.bookingsList];
+
+        bookingsList = bookingsList.map((ele) => ({
+          ...ele,
+          bookingstatus:
+            updatedbooking._id === ele._id
+              ? updatedbooking.bookingstatus
+              : ele.bookingstatus,
+        }));
+
         this.setState({ bookingsList });
       })
       .catch((error) => console.log(error));
   };
-
-  // cancelBooking = (bookingId) => {
-  //   canceltheBooking(bookingId, localStorage.getItem("accessToken"))
-  //     .then((cancelResult) => {
-  //       const { updatedbooking: cancelledBooking } = cancelResult;
-
-  //       let bookingsList = this.state.bookingsList;
-  //       bookingsList = bookingsList.map((booking) =>
-  //         booking._id === cancelledBooking._id ? cancelledBooking : booking
-  //       );
-  //       this.setState({ bookingsList });
-  //     })
-  //     .catch((error) => console.log(error));
-  // };
 
   /**
    *
@@ -84,8 +121,10 @@ class ListBookings extends Component {
     if (this.state.bookingsList) {
       bookingsTable = this.state.bookingsList.map((booking) => (
         <BookingDetails
+          key={booking._id}
           bookingInfo={booking}
           cancelBooking={this.cancelBooking}
+          updateBooking={this.updateBooking}
         />
       ));
     }
@@ -95,36 +134,17 @@ class ListBookings extends Component {
 
 export default ListBookings;
 
-/**
+// OLD method:
+// cancelBooking = (bookingId) => {
+//   canceltheBooking(bookingId, localStorage.getItem("accessToken"))
+//     .then((cancelResult) => {
+//       const { updatedbooking: cancelledBooking } = cancelResult;
 
-        <tr key={booking._id}>
-          <td> {booking.checkindate} </td>
-          <td> {booking.checkoutdate}</td>
-          <td> {booking.bookingdate} </td>
-          <td>{booking.cottageId.cottagetype} </td>
-          <td>{booking.cottageNumber} </td>
-          <td>{booking.bookingstatus} </td>
-          {booking.bookingstatus.trim() === "open" && (
-            <td>
-              <button onClick={() => this.cancelBooking(booking._id)}>
-                Cancel
-              </button>
-            </td>
-          )}
-        </tr>
-*/
-{
-  /* <table className="table">
-          <thead className="thead-light text-center">
-            <tr>
-              <th scope="col"> Check-In Date</th>
-              <th scope="col"> Check-out Date</th>
-              <th scope="col"> Booking Date</th>
-              <th scope="col"> Cottage Type</th>
-              <th scope="col">Cottage Number </th>
-              <th scope="col"> Booking Status </th>
-            </tr>
-          </thead>
-          <tbody>{bookingsTable}</tbody>
-        </table> */
-}
+//       let bookingsList = this.state.bookingsList;
+//       bookingsList = bookingsList.map((booking) =>
+//         booking._id === cancelledBooking._id ? cancelledBooking : booking
+//       );
+//       this.setState({ bookingsList });
+//     })
+//     .catch((error) => console.log(error));
+// };

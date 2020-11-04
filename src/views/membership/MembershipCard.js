@@ -42,7 +42,7 @@ function MembershipCard(props) {
           Choose
         </button> */}
         <ResortzyButton
-          style="membership-btn"
+          style={"membership-btn"}
           clickapi={() => props.updateMembership(eachMemShip.membership)}
           btntext="Choose"
         />

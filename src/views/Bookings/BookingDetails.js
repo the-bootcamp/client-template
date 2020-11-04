@@ -1,42 +1,66 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Bookings.css";
+import ResortzyButton from "../../components/resortzy-ui/ResortzyButton";
+import EditBooking from "./EditBooking";
+
 const BookingDetails = (props) => {
-  console.log(" BookingDetails: ", props);
+  const [showEditDialog, enableEditDialog] = useState(false);
+
+  console.log(" BookingDetails: ", props, showEditDialog);
   const { bookingInfo } = props;
 
-  return (
-    <div className="booking-info">
-      <p> Booking Date: {new Date(bookingInfo.bookingdate).toDateString()} </p>
-      <h5> Status: {bookingInfo.bookingstatus} </h5>
-      <p> Check-in Date: {new Date(bookingInfo.checkindate).toDateString()} </p>
-      <p>
-        Check-Out Date: {new Date(bookingInfo.checkoutdate).toDateString()}{" "}
-      </p>
+  useEffect(() => {
+    enableEditDialog(false);
+  }, []);
 
-      <img src={bookingInfo.cottageId.cottageimages[0]} alt="" />
-      {bookingInfo.cottageId.cottagetype}
+  return (
+    <div className="booking-info row">
+      <div className="col-sm-6">
+        <img src={bookingInfo.cottageId.cottageimages[0]} alt="" />
+      </div>
+      <div className="col-sm-6">
+        <p>
+          Cottage Number: {bookingInfo.cottageId.cottagetype}-
+          {bookingInfo.cottageNumber}
+        </p>
+        <p> {bookingInfo.cottageId.description} </p>
+        <p>Booking Date: {new Date(bookingInfo.bookingdate).toDateString()} </p>
+        <p>
+          Check-in Date: {new Date(bookingInfo.checkindate).toDateString()}{" "}
+        </p>
+        <p>
+          Check-Out Date: {new Date(bookingInfo.checkoutdate).toDateString()}
+        </p>
+        <div className="row">
+          <h5> Status: {bookingInfo.bookingstatus} </h5> &emsp;
+          {bookingInfo.bookingstatus.trim() === "open" && (
+            <>
+              <ResortzyButton
+                style="membership-btn"
+                clickapi={() => props.cancelBooking(bookingInfo._id)}
+                btntext="cancel"
+              />
+              &emsp;
+              <ResortzyButton
+                style="membership-btn"
+                clickapi={() => enableEditDialog(true)}
+                btntext="change"
+                disabled={showEditDialog ? true : false}
+              />
+            </>
+          )}
+          can show edit dialog: <p> {console.log(showEditDialog)} </p>
+          {bookingInfo.bookingstatus.trim() === "open" && showEditDialog && (
+            <EditBooking
+              bookingInfo={bookingInfo}
+              updateBooking={props.updateBooking}
+              closeEditDialog={() => enableEditDialog(false)}
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 };
 
 export default BookingDetails;
-
-/**
-bookingdate: "2020-11-03T18:24:43.458Z"
-bookingstatus: "open"
-checkindate: "2020-11-11T23:00:00.000Z"
-checkoutdate: "2020-11-11T23:00:00.000Z"
-cottageId:
-costperday: 80
-cottageimages: (6) ["https://res.cloudinary.com/dqnzc4mlz/image/upload/…esortzy-cottage-pictures/yu2tzsycskboa6prsvor.jpg", "https://res.cloudinary.com/dqnzc4mlz/image/upload/…esortzy-cottage-pictures/ok27viqqm5b6xczaumhr.jpg", "https://res.cloudinary.com/dqnzc4mlz/image/upload/…esortzy-cottage-pictures/rwkt4izqket3dl8ceozo.jpg", "https://res.cloudinary.com/dqnzc4mlz/image/upload/…esortzy-cottage-pictures/py3q6zti3cogooqev5qc.jpg", "https://res.cloudinary.com/dqnzc4mlz/image/upload/…esortzy-cottage-pictures/djbbrfxjqkjl2gaibnxj.jpg", "https://res.cloudinary.com/dqnzc4mlz/image/upload/…esortzy-cottage-pictures/pmg8qhc3beit9tg250uk.jpg"]
-cottagetype: "standard"
-createdAt: "2020-11-02T09:24:41.211Z"
-description: "These are our budget cottges with cmpact rooms andlimited space and storage."
-facilities: (13) ["Bath amenities", "Bathrobes & slippers", "2-seater sofa", "2 arm chairs", "mini TV", "Alarm clock", "2-chair Dining table", "Electirc cooker (2-burner)", "coffee machine", "Kettle", "Kitchen utensils", "Refrigerator", "wardrobes"]
-totalcottages: (3) [1, 2, 3]
-updatedAt: "2020-11-02T09:31:15.038Z"
-__v: 3
-_id: "5f9fd059297922061372dd5f"
-__proto__: Object
-cottageNumber: 1
- */

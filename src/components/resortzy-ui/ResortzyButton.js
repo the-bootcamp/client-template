@@ -6,7 +6,11 @@ const ResortzyButton = (props) => {
 
   return (
     <div>
-      <button className={resClass} onClick={props.clickapi}>
+      <button
+        className={resClass}
+        onClick={props.clickapi}
+        disabled={props.disabled}
+      >
         {props.btntext}
       </button>
     </div>

@@ -8,7 +8,7 @@
   width: 100%;
 }
 /*  Date Picker :  changing the default values in react-date picker */
-.react-datepicker {
+/* .react-datepicker {
   padding: 3px;
   display: inline-block;
   background-color: #11b2a9b5;
@@ -21,4 +21,4 @@
 
 .react-datepicker__day--keyboard-selected {
   background-color: #ff9800;
-}
+} */

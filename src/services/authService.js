@@ -13,7 +13,7 @@ const service = axios.create({
  */
 export const validateSession = (accessToken) => {
   return service
-    .get(`/auth/session/${accessToken}`)
+    .get(`/auth/validatesession/${accessToken}`)
     .then((response) => response.data)
     .catch((err) => err);
 };
