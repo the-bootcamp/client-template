@@ -9,9 +9,9 @@ const BookingDetails = (props) => {
   console.log(" BookingDetails: ", props, showEditDialog);
   const { bookingInfo } = props;
 
-  useEffect(() => {
-    enableEditDialog(false);
-  }, []);
+  // useEffect(() => {
+  //   enableEditDialog(false);
+  // }, []);
 
   return (
     <div className="booking-info row">
@@ -49,7 +49,7 @@ const BookingDetails = (props) => {
               />
             </>
           )}
-          can show edit dialog: <p> {console.log(showEditDialog)} </p>
+          <p> {console.log(showEditDialog)} </p>
           {bookingInfo.bookingstatus.trim() === "open" && showEditDialog && (
             <EditBooking
               bookingInfo={bookingInfo}

@@ -53,3 +53,74 @@ h4 {
   list-style-image: url("/images/bullet1.png");
   margin-left: 10%;
 }
+/*  Manager  */
+.cottage-mgmt {
+  text-align: center;
+}
+.cottage-mgmt h2 {
+  margin-bottom: 5%;
+}
+.cottage-category {
+  border: 6px #ff5722 ridge;
+  margin: 40px;
+  padding: 20px;
+}
+.cottage-category-edit {
+  border: 6px #ff5722 ridge;
+  margin: 40px;
+  padding: 20px;
+}
+.cottage-category-edit ul {
+  list-style: none;
+  columns: 3;
+  justify-content: space-evenly;
+  padding-left: 5%;
+  font-size: small;
+}
+
+.cottage-category-edit ul li {
+  margin: 3px;
+  display: flex;
+  flex-flow: inherit;
+  justify-content: flex-start;
+}
+
+.cottage-category ul {
+  list-style: ethiopic-halehame;
+  list-style-image: url(/images/bullet1.png);
+  columns: 3;
+  justify-content: space-evenly;
+  padding-left: 5%;
+  font-size: small;
+}
+
+.cottage-category ul li {
+  margin-left: 10px;
+}
+.facility-del-btn {
+  background: none;
+  color: #00000096;
+  position: relative;
+  border-radius: 5px;
+  font-size: xx-small;
+  float: right;
+  margin-right: 5px;
+}
+
+.input-small {
+  height: calc(1em + 0.375rem + 2px);
+  padding: 0.125rem 0.25rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  border-radius: 0.2rem;
+}
+
+input[type="file"] {
+  display: none;
+}
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}

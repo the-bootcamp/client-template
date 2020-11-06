@@ -6,9 +6,9 @@ const navBar = (props) => {
   return (
     <Navbar className="nav-main" collapseOnSelect expand="lg" variant="dark">
       <Navbar.Brand href="/">
-        <a className="navbar-brand" href="/">
+        <p className="navbar-brand">
           <img src="resortzy.png" alt="resortzy logo" />
-        </a>
+        </p>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">

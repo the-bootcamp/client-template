@@ -32,7 +32,7 @@ const CottageInfo = (props) => {
             <ResortzyButton
               style="membership-btn"
               clickapi={() => props.bookCottage(cottagedetails._id)}
-              btntext="Choose"
+              btntext="Book"
             />
           </div>
         </div>
@@ -49,16 +49,3 @@ const CottageInfo = (props) => {
 };
 
 export default CottageInfo;
-
-// import React, { Component } from "react";
-// import AddCottage from "./AddCottage";
-
-// class CottageInfo extends Component {
-//   state = {};
-
-//   render() {
-//     return <div></div>;
-//   }
-// }
-// className={`cottage-img col-md-offset-2 col-` + `${idx + 1}`}
-// export default CottageInfo;

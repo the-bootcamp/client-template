@@ -1,0 +1,23 @@
+.image-del-btn {
+  background: none;
+  color: black;
+  position: absolute;
+  background: bisque;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: xx-small;
+  font-weight: bold;
+  float: right;
+}
+
+.resortzy-img {
+  border: 3px #ff57229c ridge;
+  position: relative;
+  width: 155px;
+  margin: 5px;
+}
+.resortzy-img img {
+  width: 150px;
+  height: 150px;
+}

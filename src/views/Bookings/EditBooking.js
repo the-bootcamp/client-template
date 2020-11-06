@@ -63,13 +63,14 @@ const EditBooking = (props) => {
           </div>
           <ResortzyButton
             style="membership-btn"
-            clickapi={() =>
+            clickapi={() => {
               props.updateBooking(
                 checkindate,
                 checkoutdate,
                 props.bookingInfo._id
-              )
-            }
+              );
+              props.closeEditDialog(false);
+            }}
             btntext="Update"
           />
         </div>
