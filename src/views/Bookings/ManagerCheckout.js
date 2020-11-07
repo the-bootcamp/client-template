@@ -4,13 +4,18 @@ import {
   changeBookingStatus,
   searchOpenBookings,
 } from "../../services/bookingService";
+import BookingsChekoutTable from "./BookingsChekoutTable";
 
-const ManagerCheckout = () => {
+function ManagerCheckout() {
   const [categoryChosen, setCategoryChosen] = useState("");
   const [cottageNumchosen, setCottageNumchosen] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [arrayCottages, setArrayCottages] = useState([]);
   const [arrayRoomsNums, setArrayRoomsNums] = useState([]);
+  const [bookingsForCheckout, setBookingsForCheckout] = useState([]);
+
+  // let bookingsTableData = "";
+
   /**
    *
    */
@@ -25,57 +30,89 @@ const ManagerCheckout = () => {
     );
   }, []);
 
+  useEffect(() => {
+    console.log(
+      " managercheckout => useEffect : bookingsForCheckout ",
+      bookingsForCheckout
+    );
+  }, [bookingsForCheckout]);
+
   /* Form category drop box:   */
-  let categoryDropbox = arrayCottages.map((ele) => (
-    <option key={ele._id} value={`${ele.cottagetype}`}>
+  let categoryDropbox = arrayCottages.map((ele, idx) => (
+    <option key={idx} value={`${ele.cottagetype}`}>
       {ele.cottagetype}
     </option>
   ));
 
-  let cottagenumbersDropbox = arrayRoomsNums.map((ele) => (
-    <option key={ele} value={`${ele}`}>
+  // let cottagenumbersDropbox = <> </>;
+  let cottagenumbersDropbox = arrayRoomsNums.map((ele, idx) => (
+    <option key={idx} value={`${ele}`}>
       {ele}
     </option>
   ));
+
+  /**
+   *
+   * @param {*} event
+   * @param {*} id
+   */
+  const changeBookingStatusState = (event, id) => {
+    const bookingChanged = bookingsForCheckout.map((ele) =>
+      ele._id === id ? { ...ele, bookingstatus: event.target.value } : ele
+    );
+    setBookingsForCheckout([...bookingChanged]);
+    // this.setState({ bookingsForCheckout });
+  };
+
+  /**
+   *
+   */
+  const updateBookingStatus = (event, bookId) => {
+    event.preventDefault();
+
+    const newStatus = bookingsForCheckout
+      .filter((ele) => ele._id === bookId)
+      .map(({ bookingstatus }) => bookingstatus)[0];
+
+    changeBookingStatus(bookId, newStatus, localStorage.getItem("accessToken"))
+      .then((response) => {
+        // console.log(response.updatedbooking);
+        if (response.success) {
+          let updatedBookingsForCheckout = [...bookingsForCheckout];
+          updatedBookingsForCheckout = updatedBookingsForCheckout.filter(
+            (booking) => booking._id !== response.updatedbooking._id
+
+            // ? console.log("")
+            // : // ? response.updatedbooking
+            //   booking
+          );
+          // this.setState({ bookingsForCheckout });
+          setBookingsForCheckout([...updatedBookingsForCheckout]);
+        }
+      })
+      .catch((error) => console.log(error));
+  };
 
   /*
    */
   const searchBookings = (evt) => {
     evt.preventDefault();
-    if (categoryChosen || cottageNumchosen) {
+    if (!categoryChosen || !cottageNumchosen) {
       setErrorMessage("Choose Valid Cottage category and Cottage Number ");
       return;
     }
     searchOpenBookings(
-      this.state.category,
-      this.state.cottageNumber,
+      categoryChosen,
+      cottageNumchosen,
       localStorage.getItem("accessToken")
     )
       .then((response) => {
-        console.log(response);
         const { bookingsFound } = response;
-        this.setState({ bookingsForCheckout: bookingsFound });
+        console.log(" search bookings result : ", bookingsFound);
+        setBookingsForCheckout([...bookingsFound]);
+        // this.setState({ bookingsForCheckout: bookingsFound });
       })
       .catch((error) => console.log(error));
-  };
-
-  /**
-   *
-   * @param {*} evt
-   */
-  const handleCategoryChange = (evt) => {
-    if (evt.target.name === "category") {
-      this.setState({
-        [evt.target.name]: evt.target.value,
-        arrayRoomsNums: this.state.arrayCottages
-          .filter((ele) => ele.cottagetype === evt.target.value)
-          .map((ele) => ele.totalcottages)[0],
-      });
-    } else if (evt.target.name === "cottageNumber") {
-      // this.setState({
-      //   [evt.target.name]: evt.target.value,
-      // });
-    }
   };
 
   /**
@@ -91,7 +128,14 @@ const ManagerCheckout = () => {
             value={categoryChosen}
             name="categoryChosen"
             className="form-control"
-            onChange={handleCategoryChange}
+            onChange={(evt) => {
+              setCategoryChosen(evt.target.value);
+              setArrayRoomsNums(
+                arrayCottages
+                  .filter((ele, idx) => ele.cottagetype === evt.target.value)
+                  .map((ele) => ele.totalcottages)[0]
+              );
+            }}
           >
             <option value="">none</option>
             {categoryDropbox}
@@ -103,7 +147,7 @@ const ManagerCheckout = () => {
             value={cottageNumchosen}
             name="cottageNumchosen"
             className="form-control"
-            onChange={handleCategoryChange}
+            onChange={(evt) => setCottageNumchosen(evt.target.value)}
           >
             <option value="">none</option>
             {cottagenumbersDropbox}
@@ -115,11 +159,19 @@ const ManagerCheckout = () => {
             Search Bookings
           </button>
         </div>
-        //{" "}
       </form>
+      <div>
+        <h5> Cottage Categeory: {categoryChosen} </h5>
+        <h5> Cottage Number: {cottageNumchosen} </h5>
+      </div>
+      <BookingsChekoutTable
+        openBookings={bookingsForCheckout}
+        changeBookingStatusState={changeBookingStatusState}
+        updateBookingStatus={updateBookingStatus}
+      />
     </div>
   );
-};
+}
 
 export default ManagerCheckout;
 

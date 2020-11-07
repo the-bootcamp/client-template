@@ -185,7 +185,7 @@ const CottageCategory = (props) => {
                   <input
                     type="file"
                     name="cottageimage"
-                    // multiple
+                    multiple
                     onChange={(e) => onImageUpload(e)}
                   />{" "}
                   <i className="fa fa-cloud-upload"></i> upload

@@ -89,10 +89,7 @@ class CustomerHome extends Component {
 
     return (
       <div>
-        <h1>
-          welcome {this.state.user.username}
-          Check for cottage avaialbility{" "}
-        </h1>
+        <h2>Check for cottage avaialbility </h2>
         {errorMessage !== "" && errorMessage}
         <div className="search-form-img">
           <img
