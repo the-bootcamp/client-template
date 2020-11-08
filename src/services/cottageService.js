@@ -12,18 +12,55 @@ const service = axios.create({
  * @param {*} imagesList
  * @param {*} token
  */
-export const uploadCottagePictures = (imagesList, token) => {
-  console.log("cottageservice -> uploadCottagePictures", imagesList.length);
+// export const uploadCottagePictures = (imagesList, token) => {
+//   console.log("cottageservice -> uploadCottagePictures", imagesList);
+//   const uploadpictures = new FormData();
+//   const headers = {
+//     accessToken: token,
+//   };
+//   for (let image of imagesList) {
+//     uploadpictures.append("cottageimages", image);
+//   }
+//   return service
+//     .post("cottage/upload", uploadpictures, { headers })
+//     .then((response) => {
+//       console.log("Response from file upload: ", response);
+//       return response.data;
+//     })
+//     .catch(console.error);
+// };
+
+export const uploadCottagePictures = (
+  imagesList,
+  token,
+  { onUploadProgress }
+) => {
+  console.log("cottageservice -> uploadCottagePictures", imagesList);
   const uploadpictures = new FormData();
   const headers = {
     accessToken: token,
+  };
+  const config = {
+    headers: {
+      accessToken: token,
+    },
+    onUploadProgress: (progressEvt) => {
+      const { loaded, total } = progressEvt;
+      let percent = Math.floor((loaded * 100) / total);
+      console.log(` ${loaded}kb of ${total}kb, : ${percent}`);
+      if (percent < 100) onUploadProgress(percent);
+    },
   };
   for (let image of imagesList) {
     uploadpictures.append("cottageimages", image);
   }
   return service
-    .post("cottage/upload", uploadpictures, { headers })
-    .then((response) => response.data)
+    .post("cottage/upload", uploadpictures, config)
+    .then((response) => {
+      onUploadProgress(100);
+      console.log("Response from file upload: ", response);
+      return response.data;
+    })
     .catch(console.error);
 };
 

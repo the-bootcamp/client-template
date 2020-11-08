@@ -124,3 +124,9 @@ input[type="file"] {
   padding: 6px 12px;
   cursor: pointer;
 }
+
+/*  file upload  */
+.file-upload {
+  display: block;
+  border: 2px solid orange;
+}

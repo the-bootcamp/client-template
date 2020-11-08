@@ -1,36 +1,41 @@
 import React, { useState, useEffect } from "react";
 import ResortzyButton from "../../components/resortzy-ui/ResortzyButton";
 import ResortzyImage from "../../components/resortzy-ui/ResortzyImage";
-import EditCottage from "./EditCottage";
 import { uploadCottagePictures } from "../../services/cottageService";
+import { ProgressBar } from "react-bootstrap";
 
 const CottageCategory = (props) => {
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [cottagedetails, setcottagedetails] = useState({
     ...props.cottagedetails,
   });
+  const [uploadPercentage, setUploadPercentage] = useState(0);
   const [newFacility, setNewFacility] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   /**
    * service call to upload cottage images to cloudinary
    */
   const onImageUpload = (e) => {
-    if (e.target.files.length > 4) {
-      this.setState({
-        errorMessage: "One can upload a maz. of 4 images at instance",
-      });
-      return;
-    }
-    uploadCottagePictures(
-      e.target.files,
-      localStorage.getItem("accessToken")
-    ).then((cottageimages) => {
-      console.log(" images uploaded: ", cottageimages[0]);
-      cottagedetails.cottageimages.push(cottageimages[0]);
-      setcottagedetails({
-        ...cottagedetails,
-        cottageimages: cottagedetails.cottageimages,
-      });
+    // if (e.target.files.length > 4) {
+    //   setErrorMessage("One can upload a maz. of 4 images at instance");
+    //   return;
+    // }
+    uploadCottagePictures(e.target.files, localStorage.getItem("accessToken"), {
+      onUploadProgress: setUploadPercentage,
+    }).then((cottageimages) => {
+      setUploadPercentage(0);
+      if (cottageimages) {
+        console.log(" Response from UPLOAD: ", cottageimages);
+        cottageimages.forEach((image) =>
+          cottagedetails.cottageimages.push(image)
+        );
+
+        setcottagedetails({
+          ...cottagedetails,
+          cottageimages: cottagedetails.cottageimages,
+        });
+      }
     });
   };
 
@@ -179,15 +184,26 @@ const CottageCategory = (props) => {
                   />
                 </div>
               ))}
+            </div>
+
+            <div className="row file-upload">
               {/*  DIV : uploading  a new cottage picture */}
               <form className="text-center" autoComplete="off">
-                <label className="custom-file-upload">
+                <label>
                   <input
+                    className="form-control"
                     type="file"
                     name="cottageimage"
                     multiple
                     onChange={(e) => onImageUpload(e)}
-                  />{" "}
+                  />
+                  {uploadPercentage > 0 && (
+                    <ProgressBar
+                      now={uploadPercentage}
+                      label={`${uploadPercentage}%`}
+                      srOnly
+                    />
+                  )}
                   <i className="fa fa-cloud-upload"></i> upload
                 </label>
               </form>
