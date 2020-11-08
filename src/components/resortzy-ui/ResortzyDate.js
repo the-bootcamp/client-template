@@ -4,15 +4,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./ResortzyDate.css";
 
 function ResortzyDate(props) {
-  console.log(" ResortzyDate-> render()-> ", props);
-
   let minimunDate = new Date(props.minDate);
   let numberOfDaysToAdd = 6;
   minimunDate.setDate(minimunDate.getDate() + numberOfDaysToAdd);
   let maximunDate = new Date();
   numberOfDaysToAdd = 90; // for max. date
   maximunDate.setDate(maximunDate.getDate() + numberOfDaysToAdd);
-  //
+
   return (
     <div>
       <DatePicker

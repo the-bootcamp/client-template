@@ -11,13 +11,16 @@
   float: right;
 }
 
+.resortzy-img img {
+  width: 145px;
+  height: 145px;
+  border-radius: 100px;
+}
+
 .resortzy-img {
-  border: 3px #ff57229c ridge;
+  border: 5px #4caf50b0 ridge;
   position: relative;
   width: 155px;
   margin: 5px;
-}
-.resortzy-img img {
-  width: 150px;
-  height: 150px;
+  border-radius: 90px;
 }

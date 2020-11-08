@@ -35,7 +35,6 @@ export const uploadCottagePictures = (
   token,
   { onUploadProgress }
 ) => {
-  console.log("cottageservice -> uploadCottagePictures", imagesList);
   const uploadpictures = new FormData();
   const headers = {
     accessToken: token,
@@ -47,7 +46,6 @@ export const uploadCottagePictures = (
     onUploadProgress: (progressEvt) => {
       const { loaded, total } = progressEvt;
       let percent = Math.floor((loaded * 100) / total);
-      console.log(` ${loaded}kb of ${total}kb, : ${percent}`);
       if (percent < 100) onUploadProgress(percent);
     },
   };
@@ -58,7 +56,6 @@ export const uploadCottagePictures = (
     .post("cottage/upload", uploadpictures, config)
     .then((response) => {
       onUploadProgress(100);
-      console.log("Response from file upload: ", response);
       return response.data;
     })
     .catch(console.error);

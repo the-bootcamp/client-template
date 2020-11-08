@@ -35,11 +35,17 @@ export const getCutomerBookings = (bookingStatus, token) => {
     .catch((err) => err);
 };
 
-export const updateBookingDates = (id, checkindate, checkoutdate, token) => {
+export const updateBookingDates = (
+  id,
+  checkindate,
+  checkoutdate,
+  cottageNumber,
+  token
+) => {
   const headers = {
     accessToken: token,
   };
-  let record = { checkindate, checkoutdate };
+  let record = { checkindate, checkoutdate, cottageNumber };
   return service
     .post(`booking/changeStatus/${id}`, record, { headers })
     .then((response) => response.data)
@@ -60,17 +66,6 @@ export const changeBookingStatus = (id, bookingstatus, token) => {
     .then((response) => response.data)
     .catch((err) => err);
 };
-
-// export const changeBookingStatus = (id, status, token) => {
-//   const headers = {
-//     accessToken: token,
-//   };
-
-//   return service
-//     .post(`booking/changeStatus/${id}`, { status }, { headers })
-//     .then((response) => response.data)
-//     .catch((err) => err);
-// };
 
 /**
  *

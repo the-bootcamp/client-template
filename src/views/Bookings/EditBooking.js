@@ -15,11 +15,8 @@ const EditBooking = (props) => {
   const [checkOutMinDate, setCheckOutMinDate] = useState(new Date());
 
   function updateDates(date, origin) {
-    // console.log(" updateDates called ... ", date);
-
     if (origin === "checkindate") {
       setCheckinDate(date);
-
       checkoutdate <= date ? setCheckoutDate(date) : console.log("");
     } else {
       date >= checkindate ? setCheckoutDate(date) : console.log("");
@@ -67,7 +64,8 @@ const EditBooking = (props) => {
               props.updateBooking(
                 checkindate,
                 checkoutdate,
-                props.bookingInfo._id
+                props.bookingInfo._id,
+                props.bookingInfo.cottageId.cottagetype
               );
               props.closeEditDialog(false);
             }}

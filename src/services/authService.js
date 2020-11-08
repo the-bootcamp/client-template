@@ -40,7 +40,7 @@ export const signup = ({
       userrole,
     })
     .then((response) => {
-      console.log(" Signup response from axios call: ", response);
+      // console.log(" Signup response from axios call: ", response);
       return response.data;
     })
     .catch((err) => err);
@@ -54,7 +54,7 @@ export const login = ({ email, password }) => {
   return service
     .post("/auth/login", { email, password })
     .then((response) => {
-      console.log("Login response from server:", response);
+      // console.log("Login response from server:", response);
       return response.data;
     })
     .catch((err) => {

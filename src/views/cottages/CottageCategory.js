@@ -199,6 +199,7 @@ const CottageCategory = (props) => {
                   />
                   {uploadPercentage > 0 && (
                     <ProgressBar
+                      animated
                       now={uploadPercentage}
                       label={`${uploadPercentage}%`}
                       srOnly
@@ -235,7 +236,6 @@ const CottageCategory = (props) => {
                     </span>
                   </h6>
                   <ResortzyButton
-                    // btntext="◅ Add cottages"
                     btntext="+"
                     style="membership-btn m-2"
                     clickapi={(e) => {
@@ -247,7 +247,6 @@ const CottageCategory = (props) => {
                         totalcottages: cottagedetails.totalcottages,
                       });
                     }}
-                    // clickapi={() => incrementCottageCnt(cottagedetails._id)}
                   />
                 </div>
               </div>

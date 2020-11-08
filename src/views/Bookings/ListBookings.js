@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import {
   getCutomerBookings,
-  // canceltheBooking,
   changeBookingStatus,
   updateBookingDates,
 } from "../../services/bookingService";
+import { searchAvailabilty } from "../../services/cottageService";
 import BookingDetails from "./BookingDetails";
 
 class ListBookings extends Component {
   state = {
     bookingsList: [],
+    errorMessage: "",
   };
 
   /**
@@ -40,45 +41,75 @@ class ListBookings extends Component {
 
   /***
    */
-  updateBooking = (checkin, checkout, bookingId) => {
-    console.log(" ^^^^^^^^^^^^^^^^ ^^^^^^^^^ ");
+  updateBooking = (checkin, checkout, bookingId, defaultcottage) => {
     console.log(
       " ListBookings -> updateBooking -> clicked ... ",
       checkin,
       checkout,
-      bookingId
+      defaultcottage
     );
-    updateBookingDates(
-      bookingId,
-      checkin,
-      checkout,
+    // ------------------------------
+    // Check for availbility of cottages
+
+    searchAvailabilty(
+      {
+        checkindate: checkin,
+        checkoutdate: checkout,
+        defaultcottage,
+      },
       localStorage.getItem("accessToken")
-    )
-      .then((updatedResult) => {
-        console.log(" ################# ");
+    ).then((searchRes) => {
+      console.log(searchRes);
+      if (searchRes && searchRes.cottagesAvailability) {
+        console.log(" cottages avaialbe for booking .... ");
 
-        console.log(" updated response from serer: ");
-        if (!updatedResult.success) {
-          return console.log(updatedResult);
-        }
-        const { updatedbooking } = updatedResult;
-        let bookingsList = [...this.state.bookingsList];
+        const {
+          cottagesFree: [cottageNumber],
+        } = searchRes.cottagesAvailability;
 
-        bookingsList = bookingsList.map((ele) => ({
-          ...ele,
-          checkindate:
-            updatedbooking._id === ele._id
-              ? updatedbooking.checkindate
-              : ele.checkindate,
-          checkoutdate:
-            updatedbooking._id === ele._id
-              ? updatedbooking.checkoutdate
-              : ele.checkoutdate,
-        }));
-        console.log(bookingsList);
-        this.setState({ bookingsList });
-      })
-      .catch((error) => console.log(error));
+        console.log(cottageNumber);
+        updateBookingDates(
+          bookingId,
+          checkin,
+          checkout,
+          cottageNumber,
+          localStorage.getItem("accessToken")
+        )
+          .then((updatedResult) => {
+            console.log(" ################# ");
+
+            console.log(" updated response from serer: ");
+            if (!updatedResult.success) {
+              return console.log(updatedResult);
+            }
+            const { updatedbooking } = updatedResult;
+            let bookingsList = [...this.state.bookingsList];
+
+            bookingsList = bookingsList.map((ele) => ({
+              ...ele,
+              checkindate:
+                updatedbooking._id === ele._id
+                  ? updatedbooking.checkindate
+                  : ele.checkindate,
+              checkoutdate:
+                updatedbooking._id === ele._id
+                  ? updatedbooking.checkoutdate
+                  : ele.checkoutdate,
+              cottageNumber:
+                updatedbooking._id === ele._id
+                  ? updatedbooking.cottageNumber
+                  : ele.cottageNumber,
+            }));
+            console.log(bookingsList);
+            this.setState({ bookingsList });
+          })
+          .catch((error) => console.log(error));
+      } else {
+        console.log(" cottages not avaialble .....  ", searchRes.error);
+        this.setState({ errorMessage: searchRes.error });
+      }
+    });
+    // ----------------------------------------
   };
 
   /**
@@ -116,7 +147,7 @@ class ListBookings extends Component {
    *
    */
   render() {
-    console.log(" ListBookings -- render() => ", this.state);
+    // console.log(" ListBookings -- render() => ", this.state);
     let bookingsTable = "";
     if (this.state.bookingsList) {
       bookingsTable = this.state.bookingsList.map((booking) => (

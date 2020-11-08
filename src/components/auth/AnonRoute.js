@@ -7,7 +7,6 @@ const AnonRoute = ({
   authenticate,
   ...rest
 }) => {
-  console.log(" entered  Anon rute ..... _");
   return (
     <Route
       render={(props) =>
