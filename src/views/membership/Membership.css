@@ -32,8 +32,10 @@
 .member-card ul {
   margin-top: 0;
   margin-bottom: 1rem;
-  list-style: none;
-  height: 40%;
+  list-style: circle;
+  list-style-image: url(/images/bullet1.png);
+  columns: 2;
+  font-size: small;
 }
 
 .member-card img {

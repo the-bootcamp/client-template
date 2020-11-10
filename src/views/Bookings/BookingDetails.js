@@ -9,13 +9,9 @@ const BookingDetails = (props) => {
   console.log(" BookingDetails: ", props, showEditDialog);
   const { bookingInfo } = props;
 
-  // useEffect(() => {
-  //   enableEditDialog(false);
-  // }, []);
-
   return (
     <div className="booking-info row">
-      <div className="col-sm-6">
+      <div className="col-sm-5">
         <img src={bookingInfo.cottageId.cottageimages[0]} alt="" />
       </div>
       <div className="col-sm-6">

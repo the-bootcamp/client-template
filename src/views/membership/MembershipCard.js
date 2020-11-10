@@ -12,7 +12,7 @@ function MembershipCard(props) {
         <img className="card-img-top" src={eachMemShip.imgurl} alt="" />
         <div class="card-body">
           <h5 class="card-title">
-            Enjoy <q>{eachMemShip.cottagetype}</q> Cottages
+            Enjoy our <i>{eachMemShip.cottagetype}</i> Cottages
           </h5>
           <p class="card-text"> {eachMemShip.description}</p>
         </div>
@@ -26,26 +26,28 @@ function MembershipCard(props) {
         </p>
 
         <ul>
-          {" "}
           Benefits
           {eachMemShip.amenities.map((ele, idx) => (
             <li key={idx}> {ele} </li>
           ))}
         </ul>
-        <p class="card-text">
+        {/* <p class="card-text">
           <small class="text-muted">
             Days Free stay: {eachMemShip.daysfreestay} days{" "}
             {eachMemShip.daysfreestay - 1} nights
           </small>
-        </p>
+        </p> */}
         {/* <button onClick={() => props.updateMembership(eachMemShip.membership)}>
           Choose
+          
         </button> */}
-        <ResortzyButton
-          style={"membership-btn"}
-          clickapi={() => props.updateMembership(eachMemShip.membership)}
-          btntext="Choose"
-        />
+        <div style={{ "padding-left": "30%" }}>
+          <ResortzyButton
+            style={"membership-btn"}
+            clickapi={() => props.updateMembership(eachMemShip.membership)}
+            btntext="Choose"
+          />
+        </div>
       </div>
     </div>
   );

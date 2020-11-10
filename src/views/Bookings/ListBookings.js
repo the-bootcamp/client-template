@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ResortzyButton from "../../components/resortzy-ui/ResortzyButton";
 import {
   getCutomerBookings,
   changeBookingStatus,
@@ -6,6 +7,7 @@ import {
 } from "../../services/bookingService";
 import { searchAvailabilty } from "../../services/cottageService";
 import BookingDetails from "./BookingDetails";
+import ResortzyAlert from "../../components/resortzy-ui/ResortzyAlert";
 
 class ListBookings extends Component {
   state = {
@@ -29,7 +31,7 @@ class ListBookings extends Component {
     } else {
       getCutomerBookings("open", localStorage.getItem("accessToken"))
         .then((bookingsListResp) => {
-          console.log(bookingsListResp);
+          // console.log(bookingsListResp);
           const { bookingsList } = bookingsListResp;
           this.setState({ bookingsList });
         })
@@ -61,7 +63,7 @@ class ListBookings extends Component {
     ).then((searchRes) => {
       console.log(searchRes);
       if (searchRes && searchRes.cottagesAvailability) {
-        console.log(" cottages avaialbe for booking .... ");
+        // console.log(" cottages avaialbe for booking .... ");
 
         const {
           cottagesFree: [cottageNumber],
@@ -76,9 +78,7 @@ class ListBookings extends Component {
           localStorage.getItem("accessToken")
         )
           .then((updatedResult) => {
-            console.log(" ################# ");
-
-            console.log(" updated response from serer: ");
+            // console.log(" updated response from serer: ");
             if (!updatedResult.success) {
               return console.log(updatedResult);
             }
@@ -100,10 +100,10 @@ class ListBookings extends Component {
                   ? updatedbooking.cottageNumber
                   : ele.cottageNumber,
             }));
-            console.log(bookingsList);
+
             this.setState({ bookingsList });
           })
-          .catch((error) => console.log(error));
+          .catch((error) => this.setState({ errorMessage: error }));
       } else {
         console.log(" cottages not avaialble .....  ", searchRes.error);
         this.setState({ errorMessage: searchRes.error });
@@ -159,7 +159,37 @@ class ListBookings extends Component {
         />
       ));
     }
-    return <div>{bookingsTable}</div>;
+
+    return (
+      <div className="my-bookings">
+        {this.state.errorMessage !== "" && (
+          <ResortzyAlert message={this.state.errorMessage} style={"danger"} />
+        )}
+        {this.state.bookingsList.length > 0 ? (
+          <div>
+            <h2> My Bookings </h2> {bookingsTable}
+          </div>
+        ) : (
+          <div className=" justify-content-center">
+            <div>
+              <h2>
+                No Bookings .... &nbsp;
+                <ResortzyButton
+                  clickapi={() => this.props.history.push("/home")}
+                  style="btn btn-default  membership-btn "
+                  btntext={"Plan your holidays"}
+                />
+              </h2>
+              <img
+                className="empty-page col-sm-6"
+                src="/images/emptybookings.png"
+                alt=""
+              />
+            </div>
+          </div>
+        )}
+      </div>
+    );
   }
 }
 

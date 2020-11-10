@@ -65,12 +65,6 @@ class App extends React.Component {
     if (accessToken) {
       validateSession(accessToken)
         .then((response) => {
-          // response.accessToken
-          //   ? this.authenticate(response.userId)
-          //   : localStorage.removeItem("accessToken"),
-          //   this.setState({
-          //     errorMessage: "Access Token is expired",
-          //   });
           if (response.accessToken) {
             this.authenticate(response.userId);
           } else {
@@ -146,87 +140,87 @@ class App extends React.Component {
     console.log(" App-> render()-> ", this.state);
     const { authenticated, user } = this.state;
     return (
-      <div className="page-container">
-        <div className="content-wrap">
-          <BrowserRouter>
-            <NavBar
+      // <div className="page-container">
+      <div className="page-container content-wrap">
+        <BrowserRouter>
+          <NavBar
+            user={user}
+            authenticated={authenticated}
+            handleLogout={this.handleLogout}
+          />
+
+          <Switch>
+            <ManagerRoute
+              exact
+              path="/manager"
               user={user}
               authenticated={authenticated}
-              handleLogout={this.handleLogout}
+              component={CottageList}
             />
-
-            <Switch>
-              <ManagerRoute
-                exact
-                path="/manager"
-                user={user}
-                authenticated={authenticated}
-                component={CottageList}
-              />
-              <ManagerRoute
-                exact
-                path="/manager/checkout"
-                user={user}
-                authenticated={authenticated}
-                component={ManagerCheckout}
-              />
-              <CustomerRoute
-                exact
-                path="/membership"
-                user={user}
-                authenticated={authenticated}
-                authenticate={this.authenticate}
-                component={MembershipPage}
-              />
-              <PrivateRoute
-                exact
-                path="/editprofile"
-                user={user}
-                authenticated={authenticated}
-                authenticate={this.authenticate}
-                component={EditProfile}
-              />
-              <AnonRoute
-                exact
-                path="/login"
-                authenticated={authenticated}
-                authenticate={this.authenticate}
-                component={Login}
-              />
-              <AnonRoute
-                exact
-                path="/signup"
-                authenticated={authenticated}
-                authenticate={this.authenticate}
-                component={Signup}
-              />
-              <CustomerRoute
-                exact
-                path="/bookings"
-                user={user}
-                authenticated={authenticated}
-                setBookingResult={this.setBookingResult}
-                cottageSearchRes={this.state.cottageSearchRes}
-                component={BookingsPage}
-              />
-              <CustomerRoute
-                exact
-                path="/my-bookings"
-                user={user}
-                authenticated={authenticated}
-                listAll={true}
-                clearSession={this.clearAccessToken}
-                component={ListBookings}
-              />
-              <CustomerRoute
-                exact
-                path="/open-bookings"
-                user={user}
-                authenticated={authenticated}
-                listAll={false}
-                component={ListBookings}
-              />
-              {/* <AnonRoute
+            <ManagerRoute
+              exact
+              path="/manager/checkout"
+              user={user}
+              authenticated={authenticated}
+              component={ManagerCheckout}
+            />
+            <CustomerRoute
+              exact
+              path="/membership"
+              user={user}
+              authenticated={authenticated}
+              authenticate={this.authenticate}
+              component={MembershipPage}
+            />
+            <PrivateRoute
+              exact
+              path="/editprofile"
+              user={user}
+              authenticated={authenticated}
+              authenticate={this.authenticate}
+              component={EditProfile}
+            />
+            <AnonRoute
+              exact
+              path="/login"
+              authenticated={authenticated}
+              authenticate={this.authenticate}
+              component={Login}
+            />
+            <AnonRoute
+              exact
+              path="/signup"
+              authenticated={authenticated}
+              authenticate={this.authenticate}
+              component={Signup}
+            />
+            <CustomerRoute
+              exact
+              path="/bookings"
+              user={user}
+              authenticated={authenticated}
+              setBookingResult={this.setBookingResult}
+              cottageSearchRes={this.state.cottageSearchRes}
+              component={BookingsPage}
+            />
+            <CustomerRoute
+              exact
+              path="/my-bookings"
+              user={user}
+              authenticated={authenticated}
+              listAll={true}
+              clearSession={this.clearAccessToken}
+              component={ListBookings}
+            />
+            <CustomerRoute
+              exact
+              path="/open-bookings"
+              user={user}
+              authenticated={authenticated}
+              listAll={false}
+              component={ListBookings}
+            />
+            {/* <AnonRoute
               exact
               path="/"
               user={user}
@@ -234,18 +228,18 @@ class App extends React.Component {
               setCottageSearchRes={this.setCottageSearchRes}
               component={CustomerHome}
             /> */}
-              <CustomerRoute
-                exact
-                path="/home"
-                user={user}
-                authenticated={authenticated}
-                setCottageSearchRes={this.setCottageSearchRes}
-                component={CustomerHome}
-              />
-              <Route exact path="/" component={HomePage} />
-            </Switch>
-          </BrowserRouter>
-        </div>
+            <CustomerRoute
+              exact
+              path="/home"
+              user={user}
+              authenticated={authenticated}
+              setCottageSearchRes={this.setCottageSearchRes}
+              component={CustomerHome}
+            />
+            <Route exact path="/" component={HomePage} />
+          </Switch>
+        </BrowserRouter>
+        {/* </div> */}
 
         <Footer addEmailSubscription={this.addEmailSubscription} />
       </div>

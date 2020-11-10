@@ -1,5 +1,7 @@
 import React from "react";
 import { signup } from "../../services/authService";
+import ResortzyAlert from "../../components/resortzy-ui/ResortzyAlert";
+import ResortzyButton from "../../components/resortzy-ui/ResortzyButton";
 
 class Signup extends React.Component {
   state = {
@@ -20,20 +22,6 @@ class Signup extends React.Component {
       [name]: value || "",
     });
   };
-
-  // changeMemberShip = (evt) => {
-  //   if (this.state.formtype === "edit") {
-  //     let membership = evt.target.value;
-  //     // When updateprofile is clicked
-  //     let defaultcottage =
-  //       membership.toLowerCase().trim() === "silver"
-  //         ? "standard"
-  //         : membership.toLowerCase().trim() === "gold"
-  //         ? "classic"
-  //         : "superior";
-  //     this.setState({ [evt.target.name]: membership, defaultcottage });
-  //   }
-  // };
 
   handleSubmit = (event) => {
     event.preventDefault();
@@ -60,8 +48,8 @@ class Signup extends React.Component {
   };
 
   render() {
-    console.log(" signup-> render(): ", this.props);
-    console.log("signup-> render(): ", this.state);
+    // console.log(" signup-> render(): ", this.props);
+    // console.log("signup-> render(): ", this.state);
     const {
       username,
       email,
@@ -74,17 +62,23 @@ class Signup extends React.Component {
     } = this.state;
     return (
       <div className="auth-form  container-fluid">
-        <div className="row">
-          <div className="signUp-img col-sm-6">
-            <img src="./images/ResortCommon_1.jpg" alt="" />
-          </div>
-          <div className="col-sm-6">
-            {errorMessage !== "" && errorMessage}
-            <form autoComplete="off" onSubmit={this.handleSubmit}>
-              <h3> Sign Up </h3>
-
-              <div className="form-group">
-                <label>username: </label>
+        <form
+          autoComplete="off"
+          className="login-container"
+          onSubmit={this.handleSubmit}
+        >
+          {errorMessage !== "" && (
+            <ResortzyAlert message={errorMessage} style={"danger"} />
+          )}
+          <div className="input-container p-3">
+            <h3 className="text-center p-3">Sign Up </h3>
+            {/*  username row */}
+            <div className="form-group row">
+              <div class="col-md-2"></div>
+              <label className="col-md-3">
+                username <span class="mandatory-color "> * </span>
+              </label>
+              <div class="col-md-5">
                 <input
                   className="form-control"
                   name="username"
@@ -95,9 +89,15 @@ class Signup extends React.Component {
                   autoComplete="off"
                 />
               </div>
-
-              <div className="form-group">
-                <label>Email: </label>
+              <div class="col-md-2"></div>
+            </div>
+            {/*  email row */}
+            <div className="form-group row">
+              <div class="col-md-2"></div>
+              <label className="col-md-3">
+                Email <span class="mandatory-color "> * </span>
+              </label>
+              <div class="col-md-5">
                 <input
                   className="form-control"
                   name="email"
@@ -108,9 +108,15 @@ class Signup extends React.Component {
                   autoComplete="off"
                 />
               </div>
-
-              <div className="form-group">
-                <label>Password: </label>
+              <div class="col-md-2"></div>
+            </div>
+            {/*  password row */}
+            <div className="form-group row">
+              <div class="col-md-2"></div>
+              <label className="col-md-3">
+                Password <span class="mandatory-color "> * </span>
+              </label>
+              <div class="col-md-5">
                 <input
                   className="form-control"
                   name="password"
@@ -121,9 +127,15 @@ class Signup extends React.Component {
                   autoComplete="off"
                 />
               </div>
-
-              <div className="form-group">
-                <label>Phone: </label>
+              <div class="col-md-2"></div>
+            </div>
+            {/*  phone row */}
+            <div className="form-group row">
+              <div class="col-md-2"></div>
+              <label className="col-md-3">
+                Phone <span class="mandatory-color "> * </span>
+              </label>
+              <div class="col-md-5">
                 <input
                   className="form-control"
                   name="phone"
@@ -134,9 +146,16 @@ class Signup extends React.Component {
                   autoComplete="off"
                 />
               </div>
+              <div class="col-md-2"></div>
+            </div>
 
-              <div className="form-group">
-                <label>Address: </label>
+            {/*  Address row */}
+            <div className="form-group row">
+              <div class="col-md-2"></div>
+              <label className="col-md-3">
+                Address <span class="mandatory-color "> * </span>
+              </label>
+              <div class="col-md-5">
                 <textarea
                   className="form-control"
                   name="address"
@@ -147,14 +166,39 @@ class Signup extends React.Component {
                   autoComplete="off"
                 ></textarea>
               </div>
+              <div class="col-md-2"></div>
+            </div>
 
-              <button type="submit">SignUp</button>
-            </form>
+            <div class="form-group row">
+              <div class="col-md-5"></div>
+              {/* <button type="submit" class="btn btn-primary col-md-2 m-3">Register</button> */}
+              <ResortzyButton
+                style="btn btn-primary  membership-btn"
+                btntext={"Signup"}
+              />
+
+              <div class="col-md-5"></div>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
+      /////////////////////////////
     );
   }
 }
 
 export default Signup;
+
+// changeMemberShip = (evt) => {
+//   if (this.state.formtype === "edit") {
+//     let membership = evt.target.value;
+//     // When updateprofile is clicked
+//     let defaultcottage =
+//       membership.toLowerCase().trim() === "silver"
+//         ? "standard"
+//         : membership.toLowerCase().trim() === "gold"
+//         ? "classic"
+//         : "superior";
+//     this.setState({ [evt.target.name]: membership, defaultcottage });
+//   }
+// };
