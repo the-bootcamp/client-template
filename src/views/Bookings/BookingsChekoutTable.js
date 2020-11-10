@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ResortzyButton from "../../components/resortzy-ui/ResortzyButton";
 
 function BookingsChekoutTable(props) {
   const [openBookings, setOpenbookings] = useState(props.openBookings);
@@ -41,12 +42,18 @@ function BookingsChekoutTable(props) {
                   </option>
                 )}
               </select>
-              <button
+              {/* <button
                 onClick={(evt) => props.updateBookingStatus(evt, booking._id)}
                 disabled={booking.bookingstatus === "open"}
               >
                 OK
-              </button>
+              </button> */}
+              <ResortzyButton
+                disabled={booking.bookingstatus === "open"}
+                clickapi={(evt) => props.updateBookingStatus(evt, booking._id)}
+                style="btn btn-primary membership-btn"
+                btntext={"OK"}
+              />
             </td>
           </tr>
         ))}
@@ -54,7 +61,7 @@ function BookingsChekoutTable(props) {
   );
 
   const tableHeader = (
-    <thead className="thead-light text-center">
+    <thead className="text-center">
       <tr>
         <th scope="col"> Check-In Date</th>
         <th scope="col"> Check-out Date</th>
@@ -66,10 +73,21 @@ function BookingsChekoutTable(props) {
 
   return (
     <div>
-      <table className="table">
-        {tableHeader}
-        {tableBody}
-      </table>
+      {openBookings.length > 0 ? (
+        <table className="chkout-tbl table">
+          {tableHeader}
+          {tableBody}
+        </table>
+      ) : (
+        <div className=" my-bookings justify-content-center">
+          <h2>No Bookings found &nbsp;</h2>
+          <img
+            className="empty-page col-sm-6"
+            src="/images/bookingsNotfound.png"
+            alt=""
+          />
+        </div>
+      )}
     </div>
   );
 }

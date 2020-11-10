@@ -34,6 +34,10 @@ media (min-width: 992px) .search-form {
   font: normal 300 30px/36px HarrietDisplay, serif;
 }
 
+.chkout-tbl > thead {
+  background-color: #0096889e;
+}
+
 .booking-info {
   border: 6px #ff57229c ridge;
   margin-bottom: 10px;

@@ -5,6 +5,8 @@ import {
   searchOpenBookings,
 } from "../../services/bookingService";
 import BookingsChekoutTable from "./BookingsChekoutTable";
+import ResortzyAlert from "../../components/resortzy-ui/ResortzyAlert";
+import ResortzyButton from "../../components/resortzy-ui/ResortzyButton";
 
 function ManagerCheckout() {
   const [categoryChosen, setCategoryChosen] = useState("");
@@ -13,8 +15,6 @@ function ManagerCheckout() {
   const [arrayCottages, setArrayCottages] = useState([]);
   const [arrayRoomsNums, setArrayRoomsNums] = useState([]);
   const [bookingsForCheckout, setBookingsForCheckout] = useState([]);
-
-  // let bookingsTableData = "";
 
   /**
    *
@@ -30,13 +30,6 @@ function ManagerCheckout() {
     );
   }, []);
 
-  // useEffect(() => {
-  //   console.log(
-  //     " managercheckout => useEffect : bookingsForCheckout ",
-  //     bookingsForCheckout
-  //   );
-  // }, [bookingsForCheckout]);
-
   /* Form category drop box:   */
   let categoryDropbox = arrayCottages.map((ele, idx) => (
     <option key={idx} value={`${ele.cottagetype}`}>
@@ -44,7 +37,6 @@ function ManagerCheckout() {
     </option>
   ));
 
-  // let cottagenumbersDropbox = <> </>;
   let cottagenumbersDropbox = arrayRoomsNums.map((ele, idx) => (
     <option key={idx} value={`${ele}`}>
       {ele}
@@ -61,7 +53,6 @@ function ManagerCheckout() {
       ele._id === id ? { ...ele, bookingstatus: event.target.value } : ele
     );
     setBookingsForCheckout([...bookingChanged]);
-    // this.setState({ bookingsForCheckout });
   };
 
   /**
@@ -76,7 +67,6 @@ function ManagerCheckout() {
 
     changeBookingStatus(bookId, newStatus, localStorage.getItem("accessToken"))
       .then((response) => {
-        // console.log(response.updatedbooking);
         if (response.success) {
           let updatedBookingsForCheckout = [...bookingsForCheckout];
           updatedBookingsForCheckout = updatedBookingsForCheckout.filter(
@@ -115,51 +105,78 @@ function ManagerCheckout() {
   */
   return (
     <div>
-      {errorMessage !== "" && errorMessage}
-      <form autoComplete="off" onSubmit={searchBookings}>
-        <h2> Checkout Management : </h2>
-        <div className="form-group">
-          <label>Choose cottage categeory : </label>
-          <select
-            value={categoryChosen}
-            name="categoryChosen"
-            className="form-control"
-            onChange={(evt) => {
-              setCategoryChosen(evt.target.value);
-              setArrayRoomsNums(
-                arrayCottages
-                  .filter((ele, idx) => ele.cottagetype === evt.target.value)
-                  .map((ele) => ele.totalcottages)[0]
-              );
-            }}
-          >
-            <option value="">none</option>
-            {categoryDropbox}
-          </select>
-        </div>
-        <div className="form-group">
-          <label>Choose cottage Number : </label>
-          <select
-            value={cottageNumchosen}
-            name="cottageNumchosen"
-            className="form-control"
-            onChange={(evt) => setCottageNumchosen(evt.target.value)}
-          >
-            <option value="">none</option>
-            {cottagenumbersDropbox}
-          </select>
-          <button
-            type="submit"
-            className="btn btn-primary  justify-content-center"
-          >
-            Search Bookings
-          </button>
-        </div>
-      </form>
-      <div>
-        <h5> Cottage Categeory: {categoryChosen} </h5>
-        <h5> Cottage Number: {cottageNumchosen} </h5>
+      <div className="container-fluid">
+        <form
+          className="checkout-form"
+          autoComplete="off"
+          onSubmit={searchBookings}
+        >
+          {errorMessage !== "" && (
+            <ResortzyAlert message={errorMessage} style={"danger"} />
+          )}
+
+          <div className="checkout-container p-3">
+            <h3 className="text-center p-3"> Check-Out Management </h3>
+            {/*  categeory row */}
+            <div className="form-group row">
+              <div class="col-md-2"></div>
+              <label className="col-md-3">Choose cottage categeory :</label>
+              <div class="col-md-5">
+                <select
+                  value={categoryChosen}
+                  name="categoryChosen"
+                  className="form-control"
+                  onChange={(evt) => {
+                    setCategoryChosen(evt.target.value);
+                    setArrayRoomsNums(
+                      arrayCottages
+                        .filter(
+                          (ele, idx) => ele.cottagetype === evt.target.value
+                        )
+                        .map((ele) => ele.totalcottages)[0]
+                    );
+                  }}
+                >
+                  <option value="">none</option>
+                  {categoryDropbox}
+                </select>
+              </div>
+              <div class="col-md-2"></div>
+            </div>
+            {/*  cottage number row */}
+            <div className="form-group row">
+              <div class="col-md-2"></div>
+              <label className="col-md-3">Choose cottage categeory :</label>
+              <div class="col-md-5">
+                <select
+                  value={cottageNumchosen}
+                  name="cottageNumchosen"
+                  className="form-control"
+                  onChange={(evt) => setCottageNumchosen(evt.target.value)}
+                >
+                  <option value="">none</option>
+                  {cottagenumbersDropbox}
+                </select>
+              </div>
+              <div class="col-md-2"></div>
+            </div>
+
+            {/*  button submit */}
+          </div>
+
+          <div class="form-group row">
+            <div class="col-md-5"></div>
+            {/* <button type="submit" class="btn btn-primary col-md-2 m-3">Register</button> */}
+            <ResortzyButton
+              style="btn btn-primary  membership-btn"
+              btntext={"Search Bookings"}
+            />
+
+            <div class="col-md-5"></div>
+          </div>
+        </form>
       </div>
+
       <BookingsChekoutTable
         openBookings={bookingsForCheckout}
         changeBookingStatusState={changeBookingStatusState}

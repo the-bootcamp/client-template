@@ -17,10 +17,6 @@ const CottageCategory = (props) => {
    * service call to upload cottage images to cloudinary
    */
   const onImageUpload = (e) => {
-    // if (e.target.files.length > 4) {
-    //   setErrorMessage("One can upload a maz. of 4 images at instance");
-    //   return;
-    // }
     uploadCottagePictures(e.target.files, localStorage.getItem("accessToken"), {
       onUploadProgress: setUploadPercentage,
     }).then((cottageimages) => {
