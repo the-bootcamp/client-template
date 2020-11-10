@@ -240,7 +240,7 @@ const CottageCategory = (props) => {
                     style="membership-btn m-2"
                     clickapi={(e) => {
                       cottagedetails.totalcottages.push(
-                        cottagedetails.totalcottages.length
+                        cottagedetails.totalcottages.length + 1
                       );
                       setcottagedetails({
                         ...cottagedetails,

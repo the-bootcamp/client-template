@@ -30,12 +30,12 @@ function ManagerCheckout() {
     );
   }, []);
 
-  useEffect(() => {
-    console.log(
-      " managercheckout => useEffect : bookingsForCheckout ",
-      bookingsForCheckout
-    );
-  }, [bookingsForCheckout]);
+  // useEffect(() => {
+  //   console.log(
+  //     " managercheckout => useEffect : bookingsForCheckout ",
+  //     bookingsForCheckout
+  //   );
+  // }, [bookingsForCheckout]);
 
   /* Form category drop box:   */
   let categoryDropbox = arrayCottages.map((ele, idx) => (
@@ -81,12 +81,7 @@ function ManagerCheckout() {
           let updatedBookingsForCheckout = [...bookingsForCheckout];
           updatedBookingsForCheckout = updatedBookingsForCheckout.filter(
             (booking) => booking._id !== response.updatedbooking._id
-
-            // ? console.log("")
-            // : // ? response.updatedbooking
-            //   booking
           );
-          // this.setState({ bookingsForCheckout });
           setBookingsForCheckout([...updatedBookingsForCheckout]);
         }
       })
@@ -122,6 +117,7 @@ function ManagerCheckout() {
     <div>
       {errorMessage !== "" && errorMessage}
       <form autoComplete="off" onSubmit={searchBookings}>
+        <h2> Checkout Management : </h2>
         <div className="form-group">
           <label>Choose cottage categeory : </label>
           <select
