@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ResortzyButton from "../../components/resortzy-ui/ResortzyButton";
 import StripeCheckout from "react-stripe-checkout";
 import { userPayment } from "../../services/userService";
+import ResortzyAlert from "../../components/resortzy-ui/ResortzyAlert";
 
 import "./Cottage.css";
 
@@ -20,7 +21,7 @@ const CottageInfo = (props) => {
       name: `payment for ${cottagedetails.cottagetype}`,
       price: cottagedetails.costperday,
     };
-    userPayment(token)
+    userPayment(token, product)
       .then((paymentResult) => {
         if (paymentResult.error) {
           setErrorMessage(paymentResult.error);
@@ -29,12 +30,18 @@ const CottageInfo = (props) => {
           props.bookCottage(cottagedetails._id);
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log("userPayment:", error);
+        setErrorMessage(error);
+      });
   };
 
   return (
     <div className="container">
       <div className="cottage-layout">
+        {errorMessage !== "" && (
+          <ResortzyAlert message={errorMessage} style={"danger"} />
+        )}
         <div className="row">
           <h2> Cottages availability </h2>
         </div>
