@@ -23,7 +23,7 @@ const CottageInfo = (props) => {
     };
     userPayment(token, product)
       .then((paymentResult) => {
-        if (paymentResult.error) {
+        if (paymentResult.failure) {
           setErrorMessage(paymentResult.error);
         } else {
           console.log(" Payment success ....  ");
@@ -65,8 +65,8 @@ const CottageInfo = (props) => {
             {/* <button onClick={props.bookCottage}> Book </button> */}
             <ResortzyButton
               style="membership-btn"
-              clickapi={() => enablePayment(true)}
-              // clickapi={() => props.bookCottage(cottagedetails._id)}
+              // clickapi={() => enablePayment(true)}
+              clickapi={() => props.bookCottage(cottagedetails._id)}
               btntext="Book"
             />
             <br />
