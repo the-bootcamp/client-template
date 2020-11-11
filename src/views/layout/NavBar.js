@@ -21,7 +21,7 @@ const navBar = (props) => {
           <Nav className="ml-auto">
             {props.authenticated && (
               <Link className="nav-menuitem" to="/home">
-                Home
+                Plan
               </Link>
             )}
             {props.authenticated && (

@@ -21,6 +21,7 @@ import ListBookings from "./views/Bookings/ListBookings";
 import ManagerCheckout from "./views/Bookings/ManagerCheckout";
 import NavBar from "./views/layout/NavBar";
 import HomePage from "./views/HomePage";
+import RegistrationSuccess from "./views/user/RegistrationSuccess";
 
 class App extends React.Component {
   /** STATE: */
@@ -202,6 +203,14 @@ class App extends React.Component {
               cottageSearchRes={this.state.cottageSearchRes}
               component={BookingsPage}
             />
+            <CustomerRoute
+              exact
+              path="/signupsuccess"
+              user={user}
+              authenticated={authenticated}
+              component={RegistrationSuccess}
+            />
+
             <CustomerRoute
               exact
               path="/my-bookings"

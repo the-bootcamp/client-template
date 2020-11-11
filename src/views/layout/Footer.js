@@ -47,7 +47,7 @@ function Footer(props) {
             </ul>
           </div>
           {/* Column-3 */}
-          <div className="col">
+          {/* <div className="col">
             <h5>Stay Connected</h5>
             <ul className="list-unstyled">
               <li> Enter your email address: </li>
@@ -65,7 +65,7 @@ function Footer(props) {
                 </button>
               </li>
             </ul>
-          </div>
+          </div> */}
         </div>
         <hr />
         <div className="row">

@@ -76,6 +76,9 @@ h4 {
   justify-content: space-evenly;
   padding-left: 5%;
   font-size: small;
+  border: 2px solid #ff5722;
+  padding: 5px;
+  border-radius: 10px;
 }
 
 .cottage-category-edit ul li {
@@ -99,11 +102,12 @@ h4 {
   margin-left: 10px;
 }
 .facility-del-btn {
-  background: none;
-  color: #00000096;
+  background: antiquewhite;
+  color: #000000eb;
   position: relative;
   border-radius: 5px;
   font-size: xx-small;
+  font-weight: 900;
   float: right;
   margin-right: 5px;
 }
@@ -124,6 +128,7 @@ input[type="file"] {
   display: inline-block;
   padding: 6px 12px;
   cursor: pointer;
+  padding-left: 40%;
 }
 
 /*  file upload  */

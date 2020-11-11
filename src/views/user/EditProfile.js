@@ -9,11 +9,15 @@ const EditProfile = (props) => {
   );
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [edited, setEdited] = useState(false);
 
   const handleUpdate = (event) => {
     event.preventDefault();
-    console.log("update profile  button clicked ");
-
+    // console.log("update profile  button clicked ");
+    if (!edited) {
+      setSuccessMessage("Profile is not changed ");
+      return;
+    }
     updateuser(user, localStorage.getItem("accessToken"))
       .then((editRes) => {
         console.log(" EDIT  profile response :", editRes.userInfo);
@@ -54,9 +58,10 @@ const EditProfile = (props) => {
                 className="form-control"
                 name="username"
                 value={user.username}
-                onChange={(evt) =>
-                  setUser({ ...user, username: evt.target.value })
-                }
+                onChange={(evt) => {
+                  setUser({ ...user, username: evt.target.value });
+                  setEdited(true);
+                }}
                 required={true}
                 type="text"
               />
@@ -74,9 +79,10 @@ const EditProfile = (props) => {
                 className="form-control"
                 name="email"
                 value={user.email}
-                onChange={(evt) =>
-                  setUser({ ...user, email: evt.target.value })
-                }
+                onChange={(evt) => {
+                  setUser({ ...user, email: evt.target.value });
+                  setEdited(true);
+                }}
                 required={true}
                 type="email"
               />
@@ -95,9 +101,10 @@ const EditProfile = (props) => {
                 name="password"
                 type="password"
                 value={user.password}
-                onChange={(evt) =>
-                  setUser({ ...user, password: evt.target.value })
-                }
+                onChange={(evt) => {
+                  setUser({ ...user, password: evt.target.value });
+                  setEdited(true);
+                }}
               />
             </div>
             <div className="col-md-2"></div>
@@ -114,9 +121,10 @@ const EditProfile = (props) => {
                 name="phone"
                 type="phone"
                 value={user.phone}
-                onChange={(evt) =>
-                  setUser({ ...user, phone: evt.target.value })
-                }
+                onChange={(evt) => {
+                  setUser({ ...user, phone: evt.target.value });
+                  setEdited(true);
+                }}
               />
             </div>
             <div className="col-md-2"></div>
@@ -133,9 +141,10 @@ const EditProfile = (props) => {
                 name="address"
                 type="text"
                 value={user.address}
-                onChange={(evt) =>
-                  setUser({ ...user, address: evt.target.value })
-                }
+                onChange={(evt) => {
+                  setUser({ ...user, address: evt.target.value });
+                  setEdited(true);
+                }}
                 required={true}
               ></textarea>
             </div>
@@ -150,7 +159,6 @@ const EditProfile = (props) => {
               style="btn btn-primary  membership-btn"
               btntext={"Update Profile"}
             />
-
             <div className="col-md-5"></div>
           </div>
         </div>

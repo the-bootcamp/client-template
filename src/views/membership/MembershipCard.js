@@ -16,17 +16,14 @@ function MembershipCard(props) {
           </h5>
           <p className="card-text"> {eachMemShip.description}</p>
         </div>
-
         {/* <p>Membership Type: : {eachMemShip.membership} </p> */}
-
-        <p className="card-text">
-          <p className="text-muted">
+        {/* <p className="card-text">
+          <span className="text-muted">
             Membership price: {eachMemShip.costperyear} €
-          </p>
-        </p>
-
+          </span>
+        </p> */}
+        Benefits
         <ul>
-          Benefits
           {eachMemShip.amenities.map((ele, idx) => (
             <li key={idx}> {ele} </li>
           ))}
@@ -41,13 +38,15 @@ function MembershipCard(props) {
           Choose
           
         </button> */}
-        <div style={{ "padding-left": "30%" }}>
-          <ResortzyButton
-            style={"membership-btn"}
-            clickapi={() => props.updateMembership(eachMemShip.membership)}
-            btntext="Choose"
-          />
-        </div>
+        {props.showChooseBtn && (
+          <div style={{ paddingLeft: "30%" }}>
+            <ResortzyButton
+              style={"membership-btn"}
+              clickapi={() => props.updateMembership(eachMemShip.membership)}
+              btntext="Choose"
+            />{" "}
+          </div>
+        )}
       </div>
     </div>
   );

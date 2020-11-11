@@ -8,7 +8,7 @@ function MembershipPage(props) {
   const [membershipList, setMembershipList] = useState([]);
 
   useEffect(() => {
-    getMembershipDetails()
+    getMembershipDetails("all")
       .then((MshipInfo) => {
         console.log(MshipInfo.membershipInfo);
         setMembershipList(MshipInfo.membershipInfo);
@@ -39,7 +39,8 @@ function MembershipPage(props) {
         if (updatedResult) {
           console.log(" updated membership result: ", updatedResult);
           props.authenticate(updatedResult.userInfo);
-          props.history.push("/home");
+          props.history.push("/signupsuccess");
+          // props.history.push("/home");
         }
       })
       .catch((error) => console.log(error));
@@ -72,6 +73,7 @@ function MembershipPage(props) {
           {membershipList.map((eachMemShip) => (
             <MembershipCard
               key={eachMemShip._id}
+              showChooseBtn={true}
               eachMemShip={eachMemShip}
               updateMembership={updateMembership}
             />

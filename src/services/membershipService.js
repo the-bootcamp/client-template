@@ -11,9 +11,9 @@ const service = axios.create({
  * get all the membershipdetails
  * @param {*} accessToken
  */
-export const getMembershipDetails = () => {
+export const getMembershipDetails = (membership) => {
   return service
-    .get(`membership/all/`)
+    .get(`membership/${membership}`)
     .then((response) => response.data)
     .catch((err) => err);
 };

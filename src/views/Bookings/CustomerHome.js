@@ -7,10 +7,10 @@ import ResortzyAlert from "../../components/resortzy-ui/ResortzyAlert";
 import ResortzyButton from "../../components/resortzy-ui/ResortzyButton";
 
 const CustomerHome = (props) => {
-  const [user, setUser] = useState(props.user);
+  // const [user, setUser] = useState(props.user);
   const [checkindate, setCheckindate] = useState("");
   const [checkoutdate, setCheckoutdate] = useState("");
-  const [bookingdate, setBookingdate] = useState("");
+  // const [bookingdate, setBookingdate] = useState("");
   const [checkOutMinDate, setCheckOutMinDate] = useState(new Date());
   const [minimunDate, setMinimunDate] = useState(new Date());
   const [maximunDate, setMaximunDate] = useState(new Date());
