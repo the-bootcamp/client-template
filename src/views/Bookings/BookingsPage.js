@@ -40,11 +40,16 @@ function BookingsPage(props) {
 
   const {
     cottageSearchRes: { cottagelist },
+    user,
   } = props;
 
   return (
     <div>
-      <CottageInfo bookCottage={bookCottage} cottagedetails={cottagelist} />
+      <CottageInfo
+        bookCottage={bookCottage}
+        user={user}
+        cottagedetails={cottagelist}
+      />
     </div>
   );
 }

@@ -28,7 +28,6 @@ class App extends React.Component {
   //   super();
   //   this.state = {
   //     authenticated: false,
-  //     // authenticated: localStorage.getItem("accessToken") ? true : false,
   //     user: {},
   //     cottageSearchRes: {},
   //     bookingStatus: {},
@@ -124,11 +123,11 @@ class App extends React.Component {
   };
 
   addEmailSubscription = (emailID) => {
-    // console.log(" App.js email subscription clicked .... ");
     addSubscriber(emailID)
       .then((resp) => console.log(resp))
       .catch((error) => console.log(error));
   };
+
   /**
    * render()
    */

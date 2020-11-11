@@ -119,9 +119,9 @@ function ManagerCheckout() {
             <h3 className="text-center p-3"> Check-Out Management </h3>
             {/*  categeory row */}
             <div className="form-group row">
-              <div class="col-md-2"></div>
+              <div className="col-md-2"></div>
               <label className="col-md-3">Choose cottage categeory :</label>
-              <div class="col-md-5">
+              <div className="col-md-5">
                 <select
                   value={categoryChosen}
                   name="categoryChosen"
@@ -141,13 +141,13 @@ function ManagerCheckout() {
                   {categoryDropbox}
                 </select>
               </div>
-              <div class="col-md-2"></div>
+              <div className="col-md-2"></div>
             </div>
             {/*  cottage number row */}
             <div className="form-group row">
-              <div class="col-md-2"></div>
+              <div className="col-md-2"></div>
               <label className="col-md-3">Choose cottage categeory :</label>
-              <div class="col-md-5">
+              <div className="col-md-5">
                 <select
                   value={cottageNumchosen}
                   name="cottageNumchosen"
@@ -158,21 +158,21 @@ function ManagerCheckout() {
                   {cottagenumbersDropbox}
                 </select>
               </div>
-              <div class="col-md-2"></div>
+              <div className="col-md-2"></div>
             </div>
 
             {/*  button submit */}
           </div>
 
-          <div class="form-group row">
-            <div class="col-md-5"></div>
-            {/* <button type="submit" class="btn btn-primary col-md-2 m-3">Register</button> */}
+          <div className="form-group row">
+            <div className="col-md-5"></div>
+            {/* <button type="submit" className="btn btn-primary col-md-2 m-3">Register</button> */}
             <ResortzyButton
               style="btn btn-primary  membership-btn"
               btntext={"Search Bookings"}
             />
 
-            <div class="col-md-5"></div>
+            <div className="col-md-5"></div>
           </div>
         </form>
       </div>

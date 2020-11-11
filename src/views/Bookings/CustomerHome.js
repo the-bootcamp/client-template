@@ -64,9 +64,9 @@ const CustomerHome = (props) => {
         <div className="input-container p-3">
           <h3 className="text-center p-3">Check Availability </h3>
           <div className="form-group row">
-            <div class="col-md-2"></div>
-            <label className="col-md-3">Check--In: </label>
-            <div class="col-md-5">
+            <div className="col-md-2"></div>
+            <label className="col-md-3">Check-In: </label>
+            <div className="col-md-5">
               <DatePicker
                 className="form-control"
                 selected={checkindate}
@@ -92,12 +92,12 @@ const CustomerHome = (props) => {
               </DatePicker>
             </div>
 
-            <div class="col-md-2"></div>
+            <div className="col-md-2"></div>
           </div>
           <div className="form-group row">
-            <div class="col-md-2"></div>
+            <div className="col-md-2"></div>
             <label className="col-md-3">Check-Out: </label>
-            <div class="col-md-5">
+            <div className="col-md-5">
               <DatePicker
                 className="form-control"
                 name="checkoutdate"
@@ -118,17 +118,17 @@ const CustomerHome = (props) => {
                 </div>
               </DatePicker>
             </div>
-            <div class="col-md-2"></div>
+            <div className="col-md-2"></div>
           </div>
           &nbsp;
-          <div class="form-group row">
-            <div class="col-md-5"></div>
-            {/* <button type="submit" class="btn btn-primary col-md-2 m-3">Register</button> */}
+          <div className="form-group row">
+            <div className="col-md-5"></div>
+            {/* <button type="submit" className="btn btn-primary col-md-2 m-3">Register</button> */}
             <ResortzyButton
               style="btn btn-primary  membership-btn"
               btntext={"Search"}
             />
-            <div class="col-md-5"></div>
+            <div className="col-md-5"></div>
           </div>
           &nbsp;&nbsp;
           {errorMessage !== "" && (

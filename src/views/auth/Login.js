@@ -59,11 +59,11 @@ class Login extends React.Component {
             <h3 className="text-center p-3">Login </h3>
             {/*  email row */}
             <div className="form-group row">
-              <div class="col-md-2"></div>
+              <div className="col-md-2"></div>
               <label className="col-md-3">
-                Email <span class="mandatory-color "> * </span>
+                Email <span className="mandatory-color "> * </span>
               </label>
-              <div class="col-md-5">
+              <div className="col-md-5">
                 <input
                   className="form-control"
                   name="email"
@@ -74,15 +74,15 @@ class Login extends React.Component {
                   autoComplete="off"
                 />
               </div>
-              <div class="col-md-2"></div>
+              <div className="col-md-2"></div>
             </div>
             {/*  password row */}
             <div className="form-group row">
-              <div class="col-md-2"></div>
+              <div className="col-md-2"></div>
               <label className="col-md-3">
-                Password <span class="mandatory-color "> * </span>{" "}
+                Password <span className="mandatory-color "> * </span>{" "}
               </label>
-              <div class="col-md-5">
+              <div className="col-md-5">
                 <input
                   autoComplete="off"
                   className="form-control"
@@ -93,18 +93,18 @@ class Login extends React.Component {
                   required={true}
                 />
               </div>
-              <div class="col-md-2"></div>
+              <div className="col-md-2"></div>
             </div>
 
-            <div class="form-group row">
-              <div class="col-md-5"></div>
-              {/* <button type="submit" class="btn btn-primary col-md-2 m-3">Register</button> */}
+            <div className="form-group row">
+              <div className="col-md-5"></div>
+              {/* <button type="submit" className="btn btn-primary col-md-2 m-3">Register</button> */}
               <ResortzyButton
                 style="btn btn-primary  membership-btn"
                 btntext={"Login"}
               />
 
-              <div class="col-md-5"></div>
+              <div className="col-md-5"></div>
             </div>
           </div>
         </form>

@@ -32,3 +32,11 @@ export const addSubscriber = (email) => {
     .then((subscribeResp) => subscribeResp.data)
     .catch((error) => console.log(error));
 };
+
+export const userPayment = (token) => {
+  const product = { name: " soap", price: 200 };
+  return service
+    .post("user/payment", { token, product })
+    .then((loginResp) => loginResp.data)
+    .catch((error) => console.log(error));
+};

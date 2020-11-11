@@ -10,17 +10,17 @@ function MembershipCard(props) {
     <div className="member-card col">
       <div key={eachMemShip._id}>
         <img className="card-img-top" src={eachMemShip.imgurl} alt="" />
-        <div class="card-body">
-          <h5 class="card-title">
+        <div className="card-body">
+          <h5 className="card-title">
             Enjoy our <i>{eachMemShip.cottagetype}</i> Cottages
           </h5>
-          <p class="card-text"> {eachMemShip.description}</p>
+          <p className="card-text"> {eachMemShip.description}</p>
         </div>
 
         {/* <p>Membership Type: : {eachMemShip.membership} </p> */}
 
-        <p class="card-text">
-          <p class="text-muted">
+        <p className="card-text">
+          <p className="text-muted">
             Membership price: {eachMemShip.costperyear} €
           </p>
         </p>
@@ -31,8 +31,8 @@ function MembershipCard(props) {
             <li key={idx}> {ele} </li>
           ))}
         </ul>
-        {/* <p class="card-text">
-          <small class="text-muted">
+        {/* <p className="card-text">
+          <small className="text-muted">
             Days Free stay: {eachMemShip.daysfreestay} days{" "}
             {eachMemShip.daysfreestay - 1} nights
           </small>

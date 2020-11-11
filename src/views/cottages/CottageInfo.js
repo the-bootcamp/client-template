@@ -1,10 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import ResortzyButton from "../../components/resortzy-ui/ResortzyButton";
+import StripeCheckout from "react-stripe-checkout";
+import { userPayment } from "../../services/userService";
 
 import "./Cottage.css";
+
 const CottageInfo = (props) => {
-  const { cottagedetails } = props;
-  console.log("CottageInfo:  ", cottagedetails);
+  const [isPaying, enablePayment] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const { cottagedetails, user } = props;
+  console.log("CottageInfo:  ", cottagedetails, user);
+  /**
+   *  Handle token
+   */
+
+  const handleToken = (token, addresses) => {
+    console.log("handleToken: ", token, addresses);
+    const product = {
+      name: `payment for ${cottagedetails.cottagetype}`,
+      price: cottagedetails.costperday,
+    };
+    userPayment(token)
+      .then((paymentResult) => {
+        if (paymentResult.error) {
+          setErrorMessage(paymentResult.error);
+        } else {
+          console.log(" Payment success ....  ");
+          props.bookCottage(cottagedetails._id);
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <div className="container">
       <div className="cottage-layout">
@@ -31,9 +58,19 @@ const CottageInfo = (props) => {
             {/* <button onClick={props.bookCottage}> Book </button> */}
             <ResortzyButton
               style="membership-btn"
-              clickapi={() => props.bookCottage(cottagedetails._id)}
+              clickapi={() => enablePayment(true)}
+              // clickapi={() => props.bookCottage(cottagedetails._id)}
               btntext="Book"
             />
+            <br />
+            {isPaying && (
+              <StripeCheckout
+                token={handleToken}
+                stripeKey={process.env.REACT_APP_PAYMENT_PUBLIC_KEY}
+                email={user.email}
+                // amount={cottagedetails.costperday * 100}
+              />
+            )}
           </div>
         </div>
         <div className="row">

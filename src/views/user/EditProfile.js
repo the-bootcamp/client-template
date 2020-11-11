@@ -45,11 +45,11 @@ const EditProfile = (props) => {
           <h3 className="text-center p-3"> Edit My Profile </h3>
           {/*  USERNAME row */}
           <div className="form-group row">
-            <div class="col-md-2"></div>
+            <div className="col-md-2"></div>
             <label className="col-md-3">
-              Username <span class="mandatory-color"> * </span>
+              Username <span className="mandatory-color"> * </span>
             </label>
-            <div class="col-md-5">
+            <div className="col-md-5">
               <input
                 className="form-control"
                 name="username"
@@ -61,15 +61,15 @@ const EditProfile = (props) => {
                 type="text"
               />
             </div>
-            <div class="col-md-2"></div>
+            <div className="col-md-2"></div>
           </div>
           {/*  Email row */}
           <div className="form-group row">
-            <div class="col-md-2"></div>
+            <div className="col-md-2"></div>
             <label className="col-md-3">
-              Email <span class="mandatory-color"> * </span>
+              Email <span className="mandatory-color"> * </span>
             </label>
-            <div class="col-md-5">
+            <div className="col-md-5">
               <input
                 className="form-control"
                 name="email"
@@ -81,15 +81,15 @@ const EditProfile = (props) => {
                 type="email"
               />
             </div>
-            <div class="col-md-2"></div>
+            <div className="col-md-2"></div>
           </div>
           {/*  password row */}
           <div className="form-group row">
-            <div class="col-md-2"></div>
+            <div className="col-md-2"></div>
             <label className="col-md-3">
-              Password <span class="mandatory-color"> * </span>
+              Password <span className="mandatory-color"> * </span>
             </label>
-            <div class="col-md-5">
+            <div className="col-md-5">
               <input
                 className="form-control"
                 name="password"
@@ -100,15 +100,15 @@ const EditProfile = (props) => {
                 }
               />
             </div>
-            <div class="col-md-2"></div>
+            <div className="col-md-2"></div>
           </div>
           {/*  Phone number:  */}
           <div className="form-group row">
-            <div class="col-md-2"></div>
+            <div className="col-md-2"></div>
             <label className="col-md-3">
-              Phone <span class="mandatory-color"> * </span>
+              Phone <span className="mandatory-color"> * </span>
             </label>
-            <div class="col-md-5">
+            <div className="col-md-5">
               <input
                 className="form-control"
                 name="phone"
@@ -119,15 +119,15 @@ const EditProfile = (props) => {
                 }
               />
             </div>
-            <div class="col-md-2"></div>
+            <div className="col-md-2"></div>
           </div>
           {/*  Phone number:  */}
           <div className="form-group row">
-            <div class="col-md-2"></div>
+            <div className="col-md-2"></div>
             <label className="col-md-3">
-              Address <span class="mandatory-color"> * </span>
+              Address <span className="mandatory-color"> * </span>
             </label>
-            <div class="col-md-5">
+            <div className="col-md-5">
               <textarea
                 className="form-control"
                 name="address"
@@ -139,19 +139,19 @@ const EditProfile = (props) => {
                 required={true}
               ></textarea>
             </div>
-            <div class="col-md-2"></div>
+            <div className="col-md-2"></div>
           </div>
           {/*  button  */}
 
-          <div class="form-group row">
-            <div class="col-md-5"></div>
-            {/* <button type="submit" class="btn btn-primary col-md-2 m-3">Register</button> */}
+          <div className="form-group row">
+            <div className="col-md-5"></div>
+            {/* <button type="submit" className="btn btn-primary col-md-2 m-3">Register</button> */}
             <ResortzyButton
               style="btn btn-primary  membership-btn"
               btntext={"Update Profile"}
             />
 
-            <div class="col-md-5"></div>
+            <div className="col-md-5"></div>
           </div>
         </div>
       </form>
