@@ -5,7 +5,7 @@ import { Navbar, Nav } from "react-bootstrap";
 const navBar = (props) => {
   return (
     <div className="main-nav-menu">
-      <Navbar className="nav-main p2" collapseOnSelect expand="lg">
+      <Navbar className="nav-main p2" collapse OnSelect expand="lg">
         {/* variant="dark" */}
         <Navbar.Brand href="/">
           <div className="container-fluid">

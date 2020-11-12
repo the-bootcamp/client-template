@@ -10,7 +10,6 @@ function MembershipPage(props) {
   useEffect(() => {
     getMembershipDetails("all")
       .then((MshipInfo) => {
-        console.log(MshipInfo.membershipInfo);
         setMembershipList(MshipInfo.membershipInfo);
       })
       .catch((error) => console.log(error));
@@ -28,7 +27,6 @@ function MembershipPage(props) {
 
   const updateMembership = (membership) => {
     let defaultcottage = getCottageCategory(membership);
-    console.log("MembershipPAge => updateMembership => ", defaultcottage);
 
     updateuser(
       // { membership, defaultcottage },
@@ -37,7 +35,6 @@ function MembershipPage(props) {
     )
       .then((updatedResult) => {
         if (updatedResult) {
-          console.log(" updated membership result: ", updatedResult);
           props.authenticate(updatedResult.userInfo);
           props.history.push("/signupsuccess");
           // props.history.push("/home");

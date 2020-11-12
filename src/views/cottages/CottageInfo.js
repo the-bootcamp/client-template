@@ -6,17 +6,14 @@ import ResortzyAlert from "../../components/resortzy-ui/ResortzyAlert";
 
 import "./Cottage.css";
 
-const CottageInfo = (props) => {
+const CottageInfo = ({ bookCottage, user, cottagedetails, bookingResult }) => {
   const [isPaying, enablePayment] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const { cottagedetails, user } = props;
-  console.log("CottageInfo:  ", cottagedetails, user);
   /**
    *  Handle token
    */
 
   const handleToken = (token, addresses) => {
-    console.log("handleToken: ", token, addresses);
     const product = {
       name: `payment for ${cottagedetails.cottagetype}`,
       price: cottagedetails.costperday,
@@ -26,12 +23,10 @@ const CottageInfo = (props) => {
         if (paymentResult.failure) {
           setErrorMessage(paymentResult.error);
         } else {
-          console.log(" Payment success ....  ");
-          props.bookCottage(cottagedetails._id);
+          bookCottage(cottagedetails._id);
         }
       })
       .catch((error) => {
-        console.log("userPayment:", error);
         setErrorMessage(error);
       });
   };
@@ -43,7 +38,11 @@ const CottageInfo = (props) => {
           <ResortzyAlert message={errorMessage} style={"danger"} />
         )}
         <div className="row">
-          <h2> Cottages availability </h2>
+          {bookCottage ? (
+            <h2> Cottages availability </h2>
+          ) : (
+            <h2> Booking Result </h2>
+          )}
         </div>
         <div className="row cottage-info">
           <div className="col-sm-6">
@@ -63,12 +62,36 @@ const CottageInfo = (props) => {
             <p> Cost per day and Night:{cottagedetails.costperday} € </p>
             <p> {cottagedetails.description} </p>
             {/* <button onClick={props.bookCottage}> Book </button> */}
-            <ResortzyButton
-              style="membership-btn"
-              // clickapi={() => enablePayment(true)}
-              clickapi={() => props.bookCottage(cottagedetails._id)}
-              btntext="Book"
-            />
+            {bookCottage && (
+              <ResortzyButton
+                style="membership-btn"
+                // clickapi={() => enablePayment(true)}
+                clickapi={() => bookCottage(cottagedetails._id)}
+                btntext="Book"
+              />
+            )}
+            {bookingResult && (
+              <div>
+                <h5> Booking Details </h5>
+                <p>
+                  Cottage Number: {cottagedetails.cottagetype}-
+                  {bookingResult.cottageNumber}
+                </p>
+                <p> {bookingResult.cottageId.description} </p>
+                <p>
+                  Booking Date:{" "}
+                  {new Date(bookingResult.bookingdate).toDateString()}{" "}
+                </p>
+                <p>
+                  Check-in Date:{" "}
+                  {new Date(bookingResult.checkindate).toDateString()}{" "}
+                </p>
+                <p>
+                  Check-Out Date:{" "}
+                  {new Date(bookingResult.checkoutdate).toDateString()}
+                </p>
+              </div>
+            )}
             <br />
             {isPaying && (
               <StripeCheckout

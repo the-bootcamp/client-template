@@ -5,7 +5,6 @@ export default function HomePage() {
   return (
     <div>
       <MainCarousal />
-      {/*  Amenities will come here  */}
     </div>
   );
 }

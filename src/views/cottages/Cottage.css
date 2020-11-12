@@ -112,6 +112,13 @@ h4 {
   margin-right: 5px;
 }
 
+.upload-btn {
+  background-color: #ff810099;
+  padding-left: 40%;
+  font-weight: 500;
+  border: solid 3px #b07621;
+  border-radius: 5px;
+}
 .input-small {
   height: calc(1em + 0.375rem + 2px);
   padding: 0.125rem 0.25rem;
@@ -135,4 +142,8 @@ input[type="file"] {
 .file-upload {
   display: block;
   border: 2px solid orange;
+}
+
+.progress {
+  width: 100%;
 }

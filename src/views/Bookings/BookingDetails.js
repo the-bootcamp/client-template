@@ -1,19 +1,35 @@
 import React, { useState, useEffect } from "react";
 import "./Bookings.css";
 import ResortzyButton from "../../components/resortzy-ui/ResortzyButton";
+import ResortzyImage from "../../components/resortzy-ui/ResortzyImage";
+
 import EditBooking from "./EditBooking";
 
-const BookingDetails = (props) => {
+const BookingDetails = ({ bookingInfo, cancelBooking, updateBooking }) => {
   const [showEditDialog, enableEditDialog] = useState(false);
-
-  console.log(" BookingDetails: ", props, showEditDialog);
-  const { bookingInfo } = props;
+  const [cancelConfirm, showCancelConfirm] = useState(false);
 
   return (
     <div className="booking-info row">
-      <div className="col-sm-5">
-        <img src={bookingInfo.cottageId.cottageimages[0]} alt="" />
-      </div>
+      {cancelBooking && (
+        <div className="col-sm-5">
+          <div className="row">
+            {bookingInfo.cottageId.cottageimages
+              .slice(0, 3)
+              .map((picture, idx) => (
+                <div key={idx}>
+                  <ResortzyImage
+                    style="cottage-img"
+                    imglink={picture}
+                    showClose={false}
+                    alt=""
+                  />
+                </div>
+              ))}
+          </div>
+        </div>
+      )}
+
       <div className="col-sm-6">
         <p>
           Cottage Number: {bookingInfo.cottageId.cottagetype}-
@@ -29,11 +45,12 @@ const BookingDetails = (props) => {
         </p>
         <div className="row">
           <h5> Status: {bookingInfo.bookingstatus} </h5> &emsp;
-          {bookingInfo.bookingstatus.trim() === "open" && (
+          {cancelBooking && bookingInfo.bookingstatus.trim() === "open" && (
             <>
               <ResortzyButton
                 style="membership-btn"
-                clickapi={() => props.cancelBooking(bookingInfo._id)}
+                // clickapi={() => cancelBooking(bookingInfo._id)}
+                clickapi={() => showCancelConfirm(true)}
                 btntext="cancel"
               />
               &emsp;
@@ -45,15 +62,33 @@ const BookingDetails = (props) => {
               />
             </>
           )}
-          <p> {console.log(showEditDialog)} </p>
+          {/* <p> {console.log(showEditDialog)} </p> */}
           {bookingInfo.bookingstatus.trim() === "open" && showEditDialog && (
             <EditBooking
               bookingInfo={bookingInfo}
-              updateBooking={props.updateBooking}
+              updateBooking={updateBooking}
               closeEditDialog={() => enableEditDialog(false)}
             />
           )}
         </div>
+        {cancelConfirm && (
+          <div className="cancel-dialog">
+            <p> Do you want to cancel the Booking? </p>
+            <ResortzyButton
+              style="membership-btn"
+              clickapi={() => showCancelConfirm(false)}
+              btntext="No"
+            />
+            <ResortzyButton
+              style="membership-btn"
+              clickapi={() => {
+                showCancelConfirm(false);
+                cancelBooking(bookingInfo._id);
+              }}
+              btntext="Yes"
+            />
+          </div>
+        )}
       </div>
     </div>
   );

@@ -7,17 +7,14 @@ function Footer(props) {
 
   const subscribeNewsLetter = (evt) => {
     // evt.preventDefault();
-    console.log(" Footer.js -> subscribeNewsLetter", signupNewsEmail);
     if (
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
         signupNewsEmail
       )
     ) {
-      console.log(" valide eamil ");
       setPlaceHolder("");
       props.addEmailSubscription(signupNewsEmail);
     } else {
-      console.log(" Invalid  eamil ");
       setPlaceHolder(" Invalid email");
     }
     setSignUpNews("");

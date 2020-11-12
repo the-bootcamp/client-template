@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import CottageInfo from "../cottages/CottageInfo";
 import { addABooking } from "../../services/bookingService";
+import ResortzyAlert from "../../components/resortzy-ui/ResortzyAlert";
+
+// import { useBookingInfo } from "./BookingData";
 
 function BookingsPage(props) {
+  // const { bookingInfo, setBookingInfo } = BookingData();
   // const [state, setstate] = useState(props.cottageSearchRes);
-  console.log("BookingsPage => ", props.cottageSearchRes);
+  const [errorMessage, setErrorMessage] = useState("");
 
   /** to book a cottage  */
   const bookCottage = () => {
@@ -21,21 +25,19 @@ function BookingsPage(props) {
       checkindate,
       checkoutdate,
       bookingdate: new Date(),
-      cottageId, //: this.state.searchResult.cottageId,
-      cottageNumber, //: this.state.searchResult.cottagesFree[0],
+      cottageId,
+      cottageNumber,
       bookingstatus: "open",
     };
-
-    console.log(" nook cottage clicked ...", bookingRecord);
-
     addABooking(bookingRecord, localStorage.getItem("accessToken"))
       .then((bookingRes) => {
-        console.log(bookingRes);
-        // this.props.setBookingResult(bookingRes);
-        props.setBookingResult();
-        props.history.push("/open-bookings");
+        if (bookingRes.success) {
+          props.setBookingResult(bookingRes.newBooking, bookingRes.cottageinfo);
+          props.history.push("/open-bookings");
+        }
+        // setBookingInfo(bookingRes.newBooking); // added for usecontext.
       })
-      .catch((error) => console.log(error));
+      .catch((error) => setErrorMessage(error));
   }; // end bookCottage
 
   const {
@@ -45,6 +47,9 @@ function BookingsPage(props) {
 
   return (
     <div>
+      {errorMessage !== "" && (
+        <ResortzyAlert message={errorMessage} style={"danger"} />
+      )}
       <CottageInfo
         bookCottage={bookCottage}
         user={user}

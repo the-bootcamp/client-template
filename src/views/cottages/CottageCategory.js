@@ -22,7 +22,6 @@ const CottageCategory = (props) => {
     }).then((cottageimages) => {
       setUploadPercentage(0);
       if (cottageimages) {
-        console.log(" Response from UPLOAD: ", cottageimages);
         cottageimages.forEach((image) =>
           cottagedetails.cottageimages.push(image)
         );
@@ -39,8 +38,6 @@ const CottageCategory = (props) => {
   useEffect(() => {
     setcottagedetails(props.cottagedetails);
   }, [props.cottagedetails]);
-
-  console.log(" CottageCategory => cottageToEdit: ", cottagedetails);
 
   return (
     <div>
@@ -148,11 +145,13 @@ const CottageCategory = (props) => {
                         btntext="+"
                         style="membership-btn m-2"
                         clickapi={(e) => {
-                          cottagedetails.facilities.push(newFacility);
-                          setcottagedetails({
-                            ...cottagedetails,
-                            facilities: cottagedetails.facilities,
-                          });
+                          if (newFacility.trim().length > 0) {
+                            cottagedetails.facilities.push(newFacility);
+                            setcottagedetails({
+                              ...cottagedetails,
+                              facilities: cottagedetails.facilities,
+                            });
+                          }
                         }}
                       />
                     </div>
@@ -182,7 +181,7 @@ const CottageCategory = (props) => {
               ))}
             </div>
 
-            <div className="row file-upload">
+            <div className="row file-upload ">
               {/*  DIV : uploading  a new cottage picture */}
               <form className="text-center" autoComplete="off">
                 <label>
@@ -196,6 +195,8 @@ const CottageCategory = (props) => {
                   {uploadPercentage > 0 && (
                     <ProgressBar
                       animated
+                      striped
+                      variant="success"
                       now={uploadPercentage}
                       label={`${uploadPercentage}%`}
                       srOnly

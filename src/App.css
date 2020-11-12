@@ -67,5 +67,11 @@ input.form-control {
 }
 
 .main-caraousel img {
-  height: 500px;
+  height: max-content;
+}
+
+.not-found {
+  text-align: center;
+  padding-left: 25%;
+  padding-right: 25%;
 }

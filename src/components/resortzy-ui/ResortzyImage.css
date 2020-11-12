@@ -14,7 +14,7 @@
 .resortzy-img img {
   width: 145px;
   height: 145px;
-  border-radius: 100px;
+  border-radius: 20px;
 }
 
 .resortzy-img {
@@ -22,5 +22,5 @@
   position: relative;
   width: 155px;
   margin: 5px;
-  border-radius: 90px;
+  border-radius: 25px;
 }

@@ -79,3 +79,12 @@ media (min-width: 992px) .search-form {
   font-size: small;
   font-weight: bold;
 }
+
+.cancel-dialog {
+  display: flex;
+  margin-left: -10%;
+  padding-top: 5px;
+  justify-content: space-evenly;
+  border: 2px orange solid;
+  border-radius: 5px;
+}

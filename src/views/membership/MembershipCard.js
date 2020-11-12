@@ -2,10 +2,7 @@ import React from "react";
 import "./Membership.css";
 import ResortzyButton from "../../components/resortzy-ui/ResortzyButton";
 
-function MembershipCard(props) {
-  console.log(props);
-  const { eachMemShip } = props;
-
+function MembershipCard({ eachMemShip, showChooseBtn, updateMembership }) {
   return (
     <div className="member-card col">
       <div key={eachMemShip._id}>
@@ -38,11 +35,11 @@ function MembershipCard(props) {
           Choose
           
         </button> */}
-        {props.showChooseBtn && (
+        {showChooseBtn && (
           <div style={{ paddingLeft: "30%" }}>
             <ResortzyButton
               style={"membership-btn"}
-              clickapi={() => props.updateMembership(eachMemShip.membership)}
+              clickapi={() => updateMembership(eachMemShip.membership)}
               btntext="Choose"
             />{" "}
           </div>

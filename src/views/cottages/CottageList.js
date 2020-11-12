@@ -42,7 +42,6 @@ class CottageList extends Component {
    * @param {*} evt
    */
   updateCottageDetails = (cottagedetails) => {
-    console.log(" CottageList() => updateCottageDetails: ", cottagedetails);
     const {
       _id,
       cottagetype,
@@ -93,14 +92,11 @@ class CottageList extends Component {
    *
    */
   render() {
-    console.log(" CottageList -> render() ", this.state);
     const { cottagesList } = this.state;
     let allCottagesTbl = cottagesList.map((eachCottage, idx) => (
       <div>
         <CottageCategory
           cottagedetails={eachCottage}
-          // incCottages={this.incrementCottageCnt}
-          // editCottage={this.toggleShowEditDialog}
           updateCottageDetails={this.updateCottageDetails}
           onImageUpload={this.onImageUpload}
         />

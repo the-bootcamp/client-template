@@ -44,12 +44,14 @@ class Signup extends React.Component {
               errorMessage: response.errorMessage,
             })
       )
-      .catch((err) => console.log(err));
+      .catch((err) =>
+        this.setState({
+          errorMessage: err,
+        })
+      );
   };
 
   render() {
-    // console.log(" signup-> render(): ", this.props);
-    // console.log("signup-> render(): ", this.state);
     const {
       username,
       email,

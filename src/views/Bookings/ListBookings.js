@@ -31,7 +31,6 @@ class ListBookings extends Component {
     } else {
       getCutomerBookings("open", localStorage.getItem("accessToken"))
         .then((bookingsListResp) => {
-          // console.log(bookingsListResp);
           const { bookingsList } = bookingsListResp;
           this.setState({ bookingsList });
         })

@@ -3,13 +3,13 @@ import ResortzyDate from "../../components/resortzy-ui/ResortzyDate";
 import ResortzyButton from "../../components/resortzy-ui/ResortzyButton";
 import "./Bookings.css";
 
-const EditBooking = (props) => {
-  console.log("EditBooking ...  ", props);
+const EditBooking = ({ bookingInfo, closeEditDialog, updateBooking }) => {
+  // const { bookingInfo, closeEditDialog, updateBooking } = props;
   const [checkindate, setCheckinDate] = useState(
-    new Date(props.bookingInfo.checkindate)
+    new Date(bookingInfo.checkindate)
   );
   const [checkoutdate, setCheckoutDate] = useState(
-    new Date(props.bookingInfo.checkoutdate)
+    new Date(bookingInfo.checkoutdate)
   );
   // checkOutMinDate
   const [checkOutMinDate, setCheckOutMinDate] = useState(new Date());
@@ -29,7 +29,7 @@ const EditBooking = (props) => {
         <div>
           <button
             className="form-close-btn btn-xs"
-            onClick={() => props.closeEditDialog()}
+            onClick={() => closeEditDialog()}
           >
             X
           </button>
@@ -61,13 +61,13 @@ const EditBooking = (props) => {
           <ResortzyButton
             style="membership-btn"
             clickapi={() => {
-              props.updateBooking(
+              updateBooking(
                 checkindate,
                 checkoutdate,
-                props.bookingInfo._id,
-                props.bookingInfo.cottageId.cottagetype
+                bookingInfo._id,
+                bookingInfo.cottageId.cottagetype
               );
-              props.closeEditDialog(false);
+              closeEditDialog(false);
             }}
             btntext="Update"
           />

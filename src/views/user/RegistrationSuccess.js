@@ -8,13 +8,8 @@ function RegistrationSuccess(props) {
   const { user } = props;
 
   useEffect(() => {
-    console.log(" RegistrationSuccess-> useEffect : ", props);
     getMembershipDetails(user.membership)
       .then((MshipInfo) => {
-        console.log(
-          "RegistrationSuccess -> getMembershipDetails:  ",
-          MshipInfo.membershipInfo[0]
-        );
         setMembership(MshipInfo.membershipInfo[0]);
       })
       .catch((error) => console.log(error));
