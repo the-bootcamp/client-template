@@ -25,7 +25,7 @@ import { NotFound } from "./views/NotFound";
 import RegistrationSuccess from "./views/user/RegistrationSuccess";
 import { BookingResultPage } from "./views/Bookings/BookingResultPage";
 
-// import { BookingData } from "./views/Bookings/BookingData";
+import BookingStore from "./views/Bookings/BookingStore";
 
 class App extends React.Component {
   /** STATE: */
@@ -35,7 +35,7 @@ class App extends React.Component {
   //     authenticated: false,
   //     user: {},
   //     cottageSearchRes: {},
-  //     bookingStatus: {},
+  //     // bookingResult: {},
   //     isLoading: true,
   //   };
   //   this.checkAuthentication();
@@ -43,10 +43,9 @@ class App extends React.Component {
 
   state = {
     authenticated: false,
-    // authenticated: localStorage.getItem("accessToken") ? true : false,
     user: {},
     cottageSearchRes: {},
-    bookingResult: {},
+    // bookingResult: {},
     isLoading: true,
     errorMessage: "",
   };
@@ -91,9 +90,9 @@ class App extends React.Component {
     this.setState({ cottageSearchRes });
   };
 
-  setBookingResult = (bookgRes, cottageinfo) => {
-    this.setState({ bookingResult: { bookgRes, cottageinfo } });
-  };
+  // setBookingResult = (bookgRes, cottageinfo) => {
+  //   this.setState({ bookingResult: { bookgRes, cottageinfo } });
+  // };
   /**
    *
    * @param {*} user
@@ -154,100 +153,100 @@ class App extends React.Component {
     return (
       <div className="page-container">
         <div className="page-container content-wrap">
-          {/* <BookingData> */}
-          <BrowserRouter>
-            <NavBar
-              user={user}
-              authenticated={authenticated}
-              handleLogout={this.handleLogout}
-            />
-
-            <Switch>
-              <ManagerRoute
-                exact
-                path="/manager"
+          <BookingStore>
+            <BrowserRouter>
+              <NavBar
                 user={user}
                 authenticated={authenticated}
-                component={CottageList}
-              />
-              <ManagerRoute
-                exact
-                path="/manager/checkout"
-                user={user}
-                authenticated={authenticated}
-                component={ManagerCheckout}
-              />
-              <CustomerRoute
-                exact
-                path="/membership"
-                user={user}
-                authenticated={authenticated}
-                authenticate={this.authenticate}
-                component={MembershipPage}
-              />
-              <PrivateRoute
-                exact
-                path="/editprofile"
-                user={user}
-                authenticated={authenticated}
-                authenticate={this.authenticate}
-                component={EditProfile}
-              />
-              <AnonRoute
-                exact
-                path="/login"
-                authenticated={authenticated}
-                authenticate={this.authenticate}
-                component={Login}
-              />
-              <AnonRoute
-                exact
-                path="/signup"
-                authenticated={authenticated}
-                authenticate={this.authenticate}
-                component={Signup}
+                handleLogout={this.handleLogout}
               />
 
-              <CustomerRoute
-                exact
-                path="/bookings"
-                user={user}
-                authenticated={authenticated}
-                setBookingResult={this.setBookingResult}
-                cottageSearchRes={this.state.cottageSearchRes}
-                component={BookingsPage}
-              />
+              <Switch>
+                <ManagerRoute
+                  exact
+                  path="/manager"
+                  user={user}
+                  authenticated={authenticated}
+                  component={CottageList}
+                />
+                <ManagerRoute
+                  exact
+                  path="/manager/checkout"
+                  user={user}
+                  authenticated={authenticated}
+                  component={ManagerCheckout}
+                />
+                <CustomerRoute
+                  exact
+                  path="/membership"
+                  user={user}
+                  authenticated={authenticated}
+                  authenticate={this.authenticate}
+                  component={MembershipPage}
+                />
+                <PrivateRoute
+                  exact
+                  path="/editprofile"
+                  user={user}
+                  authenticated={authenticated}
+                  authenticate={this.authenticate}
+                  component={EditProfile}
+                />
+                <AnonRoute
+                  exact
+                  path="/login"
+                  authenticated={authenticated}
+                  authenticate={this.authenticate}
+                  component={Login}
+                />
+                <AnonRoute
+                  exact
+                  path="/signup"
+                  authenticated={authenticated}
+                  authenticate={this.authenticate}
+                  component={Signup}
+                />
 
-              <CustomerRoute
-                exact
-                path="/open-bookings"
-                user={user}
-                authenticated={authenticated}
-                listAll={false}
-                bookingResult={this.state.bookingResult}
-                component={BookingResultPage}
-                // component={ListBookings}
-              />
+                <CustomerRoute
+                  exact
+                  path="/bookings"
+                  user={user}
+                  authenticated={authenticated}
+                  // setBookingResult={this.setBookingResult}
+                  cottageSearchRes={this.state.cottageSearchRes}
+                  component={BookingsPage}
+                />
 
-              <CustomerRoute
-                exact
-                path="/signupsuccess"
-                user={user}
-                authenticated={authenticated}
-                component={RegistrationSuccess}
-              />
+                <CustomerRoute
+                  exact
+                  path="/open-bookings"
+                  user={user}
+                  authenticated={authenticated}
+                  listAll={false}
+                  // bookingResult={this.state.bookingResult}
+                  component={BookingResultPage}
+                  // component={ListBookings}
+                />
 
-              <CustomerRoute
-                exact
-                path="/my-bookings"
-                user={user}
-                authenticated={authenticated}
-                listAll={true}
-                clearSession={this.clearAccessToken}
-                component={ListBookings}
-              />
+                <CustomerRoute
+                  exact
+                  path="/signupsuccess"
+                  user={user}
+                  authenticated={authenticated}
+                  component={RegistrationSuccess}
+                />
 
-              {/* <AnonRoute
+                <CustomerRoute
+                  exact
+                  path="/my-bookings"
+                  user={user}
+                  authenticated={authenticated}
+                  listAll={true}
+                  clearSession={this.clearAccessToken}
+                  component={ListBookings}
+                />
+
+                {/* <AnonRoute
               exact
               path="/"
               user={user}
@@ -255,19 +254,19 @@ class App extends React.Component {
               setCottageSearchRes={this.setCottageSearchRes}
               component={CustomerHome}
             /> */}
-              <CustomerRoute
-                exact
-                path="/home"
-                user={user}
-                authenticated={authenticated}
-                setCottageSearchRes={this.setCottageSearchRes}
-                component={CustomerHome}
-              />
-              <Route exact path="/" component={HomePage} />
-              <Route component={NotFound} />
-            </Switch>
-          </BrowserRouter>
-          {/* </BookingData> */}
+                <CustomerRoute
+                  exact
+                  path="/home"
+                  user={user}
+                  authenticated={authenticated}
+                  setCottageSearchRes={this.setCottageSearchRes}
+                  component={CustomerHome}
+                />
+                <Route exact path="/" component={HomePage} />
+                <Route component={NotFound} />
+              </Switch>
+            </BrowserRouter>
+          </BookingStore>
         </div>
 
         <Footer addEmailSubscription={this.addEmailSubscription} />

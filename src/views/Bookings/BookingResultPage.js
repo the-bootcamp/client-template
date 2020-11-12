@@ -1,21 +1,25 @@
 import React, { useContext } from "react";
 import CottageInfo from "./../cottages/CottageInfo";
 
-// import { useBookingInfo } from "./BookingData";
+import { BookingContext } from "./BookingStore";
 
-export const BookingResultPage = ({
-  bookingResult: { bookgRes, cottageinfo },
-  user,
-}) => {
-  // console.log("Booking result page: ", bookgRes, cottageinfo, user);
-  // const { bookingInfo, setBookingInfo } = useBookingInfo();
+export const BookingResultPage = ({ user }) => {
+  const { bookingInfo, cottageinfo } = useContext(BookingContext);
+  //  console.log(
+  //   "Booking result page: -> booking info from global store ",
+  //   bookingInfo
+  // );
+  // console.log(
+  //   "Booking result page: -> cottageinfo from global store ",
+  //   cottageinfo
+  // );
 
   return (
     <div>
       <CottageInfo
         user={user}
         cottagedetails={cottageinfo}
-        bookingResult={bookgRes}
+        bookingResult={bookingInfo}
       />
     </div>
   );

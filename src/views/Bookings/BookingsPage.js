@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import CottageInfo from "../cottages/CottageInfo";
 import { addABooking } from "../../services/bookingService";
 import ResortzyAlert from "../../components/resortzy-ui/ResortzyAlert";
 
-// import { useBookingInfo } from "./BookingData";
+import { BookingContext } from "./BookingStore";
 
 function BookingsPage(props) {
-  // const { bookingInfo, setBookingInfo } = BookingData();
+  // const [bookingInfo, setBookingInfo] = useContext(BookingContext);
+  const { setBookingInfo, setCottageInfo } = useContext(BookingContext);
   // const [state, setstate] = useState(props.cottageSearchRes);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -32,10 +33,13 @@ function BookingsPage(props) {
     addABooking(bookingRecord, localStorage.getItem("accessToken"))
       .then((bookingRes) => {
         if (bookingRes.success) {
-          props.setBookingResult(bookingRes.newBooking, bookingRes.cottageinfo);
+          setBookingInfo(bookingRes.newBooking);
+          setCottageInfo(bookingRes.cottageinfo);
+          // props.setBookingResult(bookingRes.newBooking, bookingRes.cottageinfo);
           props.history.push("/open-bookings");
         }
-        // setBookingInfo(bookingRes.newBooking); // added for usecontext.
+
+        // added for usecontext.
       })
       .catch((error) => setErrorMessage(error));
   }; // end bookCottage
