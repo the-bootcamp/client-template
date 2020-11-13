@@ -5,4 +5,9 @@
 }
 
 .chkout-tbl {
+  width: 90% !important;
+  margin-left: 5%;
+  justify-content: center;
+  border: 5px solid orange;
+  text-align: center;
 }

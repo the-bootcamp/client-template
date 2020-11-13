@@ -7,7 +7,7 @@ import {
 import BookingsChekoutTable from "./BookingsChekoutTable";
 import ResortzyAlert from "../../components/resortzy-ui/ResortzyAlert";
 import ResortzyButton from "../../components/resortzy-ui/ResortzyButton";
-
+import "./ManagerCheckout.css";
 function ManagerCheckout() {
   const [categoryChosen, setCategoryChosen] = useState("");
   const [cottageNumchosen, setCottageNumchosen] = useState("");
