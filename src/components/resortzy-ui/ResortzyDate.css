@@ -1,12 +1,14 @@
 .react-datepicker {
   padding: 3px;
   display: inline-block;
-  background-color: #42cfc7f7;
+  /* background-color: #42cfc7f7; */
+  background-color: hsl(207deg 62% 69% / 91%);
   border: 3px solid #ff9800;
 }
 
 .react-datepicker__header {
-  background-color: #009688;
+  background-color: hsl(207deg 85% 52% / 91%);
+  /* background-color: #009688; */
 }
 
 .react-datepicker__day--keyboard-selected {

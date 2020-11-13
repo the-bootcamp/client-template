@@ -29,26 +29,27 @@ import BookingStore from "./views/Bookings/BookingStore";
 
 class App extends React.Component {
   /** STATE: */
-  // constructor() {
-  //   super();
-  //   this.state = {
-  //     authenticated: false,
-  //     user: {},
-  //     cottageSearchRes: {},
-  //     // bookingResult: {},
-  //     isLoading: true,
-  //   };
-  //   this.checkAuthentication();
-  // }
+  constructor() {
+    super();
+    this.state = {
+      authenticated: false,
+      user: {},
+      cottageSearchRes: {},
+      // bookingResult: {},
+      isLoading: true,
+    };
+    this.checkAuthentication();
+    // const { setBookingInfo, setCottageInfo } = useContext(BookingContext);
+  }
 
-  state = {
-    authenticated: false,
-    user: {},
-    cottageSearchRes: {},
-    // bookingResult: {},
-    isLoading: true,
-    errorMessage: "",
-  };
+  // state = {
+  //   authenticated: false,
+  //   user: {},
+  //   cottageSearchRes: {},
+  //   // bookingResult: {},
+  //   isLoading: true,
+  //   errorMessage: "",
+  // };
 
   checkAuthentication() {
     setTimeout(
@@ -69,6 +70,7 @@ class App extends React.Component {
       validateSession(accessToken)
         .then((response) => {
           if (response.accessToken) {
+            // set the token from local storage ...
             this.authenticate(response.userId);
           } else {
             localStorage.removeItem("accessToken");
@@ -88,6 +90,7 @@ class App extends React.Component {
 
   setCottageSearchRes = (cottageSearchRes) => {
     this.setState({ cottageSearchRes });
+    localStorage.setItem("cottageSearchRes", JSON.stringify(cottageSearchRes));
   };
 
   // setBookingResult = (bookgRes, cottageinfo) => {
@@ -102,15 +105,22 @@ class App extends React.Component {
       authenticated: true,
       user,
       isLoading: false,
+      cottageSearchRes: JSON.parse(localStorage.getItem("cottageSearchRes")),
     });
+    // setBookingInfo(JSON.parse(localStorage.getItem("bookingResult")));
+    // setCottageInfo(JSON.parse(localStorage.getItem("bookedCottageResult")));
   };
 
   clearAccessToken = () => {
+    // const { setBookingInfo, setCottageInfo } = useContext(BookingContext);
     localStorage.clear();
     this.setState({
       authenticated: false,
       user: {},
+      cottageSearchRes: {},
     });
+    // setBookingInfo({});
+    // setCottageInfo({});
   };
 
   /**
@@ -145,9 +155,9 @@ class App extends React.Component {
    * render()
    */
   render() {
-    // if (this.state.isLoading) {
-    //   return <div> </div>;
-    // }
+    if (this.state.isLoading) {
+      return <div> </div>;
+    }
 
     const { authenticated, user } = this.state;
     return (

@@ -37,10 +37,16 @@ function RegistrationSuccess(props) {
         <div>
           {membership && (
             <div>
-              <MembershipCard showChooseBtn={false} eachMemShip={membership} />
-
               <div className="form-group row">
-                <div className="col-md-5"></div>
+                <div className="col-md-3"></div>
+                <MembershipCard
+                  showChooseBtn={false}
+                  eachMemShip={membership}
+                />
+                <div className="col-md-3"></div>
+              </div>
+              <div className="form-group row">
+                <div className="col-md-4"></div>
                 <ResortzyButton
                   clickapi={() => props.history.push("/home")}
                   style="btn btn-default  membership-btn "

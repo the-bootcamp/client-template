@@ -67,7 +67,7 @@ export const uploadCottagePictures = (
  * @param {*} token
  */
 export const addNewCottage = (cottageInfo, token) => {
-  console.log("cottageservice -> uploadCottagePictures", cottageInfo);
+  // console.log("cottageservice -> uploadCottagePictures", cottageInfo);
   const headers = {
     accessToken: token,
   };
@@ -83,7 +83,7 @@ export const addNewCottage = (cottageInfo, token) => {
  * @param {*} token
  */
 export const removeSingleCottage = (id, token) => {
-  console.log("cottageservice -> removeCottage", id);
+  // console.log("cottageservice -> removeCottage", id);
   const headers = {
     accessToken: token,
   };
@@ -99,7 +99,7 @@ export const removeSingleCottage = (id, token) => {
  * @param {*} token
  */
 export const deleteCottageCategeory = (id, token) => {
-  console.log("cottageservice -> deleteCottageCategeory", id);
+  // console.log("cottageservice -> deleteCottageCategeory", id);
   const headers = {
     accessToken: token,
   };
@@ -110,7 +110,7 @@ export const deleteCottageCategeory = (id, token) => {
 };
 
 export const removeCottageImg = () => {
-  console.log("cottageservice -> removeCottageImg");
+  // console.log("cottageservice -> removeCottageImg");
   // const headers = {
   //   accessToken: token,
   // };
@@ -126,7 +126,7 @@ export const removeCottageImg = () => {
  * @param {*} token
  */
 export const getallCottages = (token) => {
-  console.log("cottageservice -> getallCottages");
+  // console.log("cottageservice -> getallCottages");
   const headers = {
     accessToken: token,
   };
@@ -142,7 +142,7 @@ export const getallCottages = (token) => {
  * @param {*} token
  */
 export const updateCottageInfo = (id, cottageInfo, token) => {
-  console.log("cottageservice -> updateCottageInfo", cottageInfo);
+  // console.log("cottageservice -> updateCottageInfo", cottageInfo);
   const headers = {
     accessToken: token,
   };
@@ -158,7 +158,7 @@ export const updateCottageInfo = (id, cottageInfo, token) => {
  * @param {*} token
  */
 export const searchAvailabilty = (searchDetails, token) => {
-  console.log("cottageservice -> searchAvailabilty", searchDetails);
+  // console.log("cottageservice -> searchAvailabilty", searchDetails);
   const headers = {
     accessToken: token,
   };
@@ -174,7 +174,7 @@ export const searchAvailabilty = (searchDetails, token) => {
  * @param {*} token
  */
 export const getCottageDetails = (cottagetype, token) => {
-  console.log("cottageservice -> getCottageDetails", cottagetype);
+  // console.log("cottageservice -> getCottageDetails", cottagetype);
   const headers = {
     accessToken: token,
   };

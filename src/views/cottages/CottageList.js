@@ -94,7 +94,7 @@ class CottageList extends Component {
   render() {
     const { cottagesList } = this.state;
     let allCottagesTbl = cottagesList.map((eachCottage, idx) => (
-      <div>
+      <div key={idx}>
         <CottageCategory
           cottagedetails={eachCottage}
           updateCottageDetails={this.updateCottageDetails}

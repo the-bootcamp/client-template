@@ -1,5 +1,5 @@
 .search-form {
-  height: 500px;
+  height: 800px;
   background-size: cover;
   background-repeat: no-repeat;
   background-image: url("/images/ResortCommon_1.jpg");
@@ -9,14 +9,6 @@
   padding: 50px;
   margin: auto;
   border-radius: 5px;
-}
-
-.input-container {
-  background-color: #1aafa1db;
-  margin: 0 10% 0 10%;
-  border-radius: 20px;
-  border-style: ridge;
-  border: 5px solid #11d8c69c;
 }
 
 media (min-width: 992px) .search-form {
@@ -35,7 +27,7 @@ media (min-width: 992px) .search-form {
 }
 
 .chkout-tbl > thead {
-  background-color: #0096889e;
+  background-color: #e67f30d6;
 }
 
 .booking-info {

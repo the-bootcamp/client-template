@@ -61,12 +61,11 @@ const CottageInfo = ({ bookCottage, user, cottagedetails, bookingResult }) => {
             You are entitled to book {cottagedetails.cottagetype} cottages
             <p> Cost per day and Night:{cottagedetails.costperday} € </p>
             <p> {cottagedetails.description} </p>
-            {/* <button onClick={props.bookCottage}> Book </button> */}
             {bookCottage && (
               <ResortzyButton
                 style="membership-btn"
-                // clickapi={() => enablePayment(true)}
-                clickapi={() => bookCottage(cottagedetails._id)}
+                clickapi={() => enablePayment(true)}
+                // clickapi={() => bookCottage(cottagedetails._id)}
                 btntext="Book"
               />
             )}
@@ -98,7 +97,7 @@ const CottageInfo = ({ bookCottage, user, cottagedetails, bookingResult }) => {
                 token={handleToken}
                 stripeKey={process.env.REACT_APP_PAYMENT_PUBLIC_KEY}
                 email={user.email}
-                // amount={cottagedetails.costperday * 100}
+                amount={cottagedetails.costperday * 100}
               />
             )}
           </div>

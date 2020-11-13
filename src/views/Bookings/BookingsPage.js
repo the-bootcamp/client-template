@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import CottageInfo from "../cottages/CottageInfo";
 import { addABooking } from "../../services/bookingService";
 import ResortzyAlert from "../../components/resortzy-ui/ResortzyAlert";
@@ -35,6 +35,14 @@ function BookingsPage(props) {
         if (bookingRes.success) {
           setBookingInfo(bookingRes.newBooking);
           setCottageInfo(bookingRes.cottageinfo);
+          localStorage.setItem(
+            "bookingResult",
+            JSON.stringify(bookingRes.newBooking)
+          );
+          localStorage.setItem(
+            "bookedCottageResult",
+            JSON.stringify(bookingRes.cottageinfo)
+          );
           // props.setBookingResult(bookingRes.newBooking, bookingRes.cottageinfo);
           props.history.push("/open-bookings");
         }
