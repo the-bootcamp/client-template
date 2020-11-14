@@ -32,9 +32,11 @@ function BookingsChekoutTable(props) {
                 <option key={"open" + booking._id} value="open">
                   open
                 </option>
-                <option key={"cancel" + booking._id} value="cancel">
-                  cancel
-                </option>
+                {new Date(booking.checkoutdate) > new Date() && (
+                  <option key={"cancel" + booking._id} value="cancel">
+                    cancel
+                  </option>
+                )}
                 {/* can CheckOutDate  */}
                 {new Date(booking.checkoutdate) < new Date() && (
                   <option key={"close" + booking._id} value="close">
