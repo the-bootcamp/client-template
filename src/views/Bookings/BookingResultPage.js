@@ -50,14 +50,14 @@ export const BookingResultPage = ({ user }) => {
       jsPDF: {
         format: "a4",
       },
-      imageType: "image/jpeg",
+      imageType: "image/jpg",
       output: "./pdf/generate.pdf",
     });
   };
 
   return (
     <div>
-      {/* <button onClick={() => generatePDF()}> Generate PDF </button> */}
+      <button onClick={() => generatePDF()}> Generate PDF </button>
       {renderBookPage()}
       {/* <CottageInfo
         user={user}
