@@ -45,23 +45,25 @@ const BookingDetails = ({ bookingInfo, cancelBooking, updateBooking }) => {
         </p>
         <div className="row">
           <h5> Status: {bookingInfo.bookingstatus} </h5> &emsp;
-          {cancelBooking && bookingInfo.bookingstatus.trim() === "open" && (
-            <>
-              <ResortzyButton
-                style="membership-btn"
-                // clickapi={() => cancelBooking(bookingInfo._id)}
-                clickapi={() => showCancelConfirm(true)}
-                btntext="cancel"
-              />
-              &emsp;
-              <ResortzyButton
-                style="membership-btn"
-                clickapi={() => enableEditDialog(true)}
-                btntext="change"
-                disabled={showEditDialog ? true : false}
-              />
-            </>
-          )}
+          {cancelBooking &&
+            bookingInfo.bookingstatus.trim() === "open" &&
+            new Date(bookingInfo.checkoutdate) > new Date() && (
+              <>
+                <ResortzyButton
+                  style="membership-btn"
+                  // clickapi={() => cancelBooking(bookingInfo._id)}
+                  clickapi={() => showCancelConfirm(true)}
+                  btntext="cancel"
+                />
+                &emsp;
+                <ResortzyButton
+                  style="membership-btn"
+                  clickapi={() => enableEditDialog(true)}
+                  btntext="change"
+                  disabled={showEditDialog ? true : false}
+                />
+              </>
+            )}
           {/* <p> {console.log(showEditDialog)} </p> */}
           {bookingInfo.bookingstatus.trim() === "open" && showEditDialog && (
             <EditBooking
