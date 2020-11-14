@@ -1,7 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import CottageInfo from "./../cottages/CottageInfo";
-
 import { BookingContext } from "./BookingStore";
+
+import html2PDF from "jspdf-html2canvas";
 
 export const BookingResultPage = ({ user }) => {
   const {
@@ -31,19 +32,32 @@ export const BookingResultPage = ({ user }) => {
       Object.keys(bookingInfo).length > 0
     ) {
       return (
-        <CottageInfo
-          user={user}
-          cottagedetails={cottageinfo}
-          bookingResult={bookingInfo}
-        />
+        <div id="book-ticket">
+          <CottageInfo
+            user={user}
+            cottagedetails={cottageinfo}
+            bookingResult={bookingInfo}
+          />
+        </div>
       );
     } else {
       return <> </>;
     }
   };
 
+  const generatePDF = () => {
+    html2PDF(document.getElementById("book-ticket"), {
+      jsPDF: {
+        format: "a4",
+      },
+      imageType: "image/jpeg",
+      output: "./pdf/generate.pdf",
+    });
+  };
+
   return (
     <div>
+      {/* <button onClick={() => generatePDF()}> Generate PDF </button> */}
       {renderBookPage()}
       {/* <CottageInfo
         user={user}

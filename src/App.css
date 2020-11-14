@@ -58,6 +58,13 @@ input.form-control {
   font-size: x-large;
   margin-bottom: auto;
 }
+.nav-menuitem {
+  color: #0f3684;
+  text-decoration: none;
+  background-color: transparent;
+  font-family: Brush Script MT, cursive;
+  font-size: x-large;
+}
 .mandatory-color {
   color: red;
 }
@@ -84,4 +91,9 @@ input.form-control {
   background-color: #e67f30d6;
   border-radius: 20px;
   border: 5px solid hsl(28deg 71% 67% / 69%);
+}
+
+.carousel-text {
+  font-family: Brush Script MT, cursive;
+  font-size: xxx-large;
 }

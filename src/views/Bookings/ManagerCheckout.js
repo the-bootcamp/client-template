@@ -164,7 +164,6 @@ function ManagerCheckout() {
 
           <div className="form-group row">
             <div className="col-md-5"></div>
-            {/* <button type="submit" className="btn btn-primary col-md-2 m-3">Register</button> */}
             <ResortzyButton
               style="btn btn-primary  membership-btn"
               btntext={"Search Bookings"}

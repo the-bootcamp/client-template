@@ -12,8 +12,12 @@ const mainCarousal = () => {
             alt="First slide"
           />
           <Carousel.Caption>
-            <h2> Whatever you want. Whoever you are</h2>
-            <h3> Go happy. Go HoJo. & Go anywhere. Stay here</h3>
+            <h2 className="carousel-text">
+              Whatever you want. Whoever you are
+            </h2>
+            <h3 className="carousel-text">
+              Go happy. Go HoJo. & Go anywhere. Stay here
+            </h3>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
@@ -23,8 +27,10 @@ const mainCarousal = () => {
             alt="Third slide"
           />
           <Carousel.Caption>
-            <h2> Stay with us, feel at home </h2>
-            <h3> Twice the comfort, twice the value, twice the Hotel</h3>
+            <h2 className="carousel-text"> Stay with us, feel at home </h2>
+            <h3 className="carousel-text">
+              Twice the comfort, twice the value, twice the Hotel
+            </h3>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
@@ -34,8 +40,10 @@ const mainCarousal = () => {
             alt="Third slide"
           />
           <Carousel.Caption>
-            <h2> Welcome to your residence</h2>
-            <h3> Come In As Guests. Leave As Family.</h3>
+            <h2 className="carousel-text"> Welcome to your residence</h2>
+            <h3 className="carousel-text">
+              Come In As Guests. Leave As Family.
+            </h3>
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
