@@ -19,7 +19,7 @@ const navBar = (props) => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav ">
           <Nav className="ml-auto">
-            {props.authenticated && (
+            {props.authenticated && props.user.userrole === "customer" && (
               <Link className="nav-menuitem" to="/home">
                 Plan
               </Link>

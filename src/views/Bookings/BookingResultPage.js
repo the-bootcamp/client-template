@@ -57,7 +57,7 @@ export const BookingResultPage = ({ user }) => {
 
   return (
     <div>
-      <button onClick={() => generatePDF()}> Generate PDF </button>
+      {/* <button onClick={() => generatePDF()}> Generate PDF </button> */}
       {renderBookPage()}
       {/* <CottageInfo
         user={user}
