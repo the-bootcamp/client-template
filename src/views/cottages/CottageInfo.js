@@ -58,16 +58,22 @@ const CottageInfo = ({ bookCottage, user, cottagedetails, bookingResult }) => {
             </ul>
           </div>
           <div className="col-sm-6 cottage-info-right">
-            You are entitled to book {cottagedetails.cottagetype} cottages
-            <p> Cost per day and Night:{cottagedetails.costperday} € </p>
-            <p> {cottagedetails.description} </p>
             {bookCottage && (
-              <ResortzyButton
-                style="membership-btn"
-                clickapi={() => enablePayment(true)}
-                // clickapi={() => bookCottage(cottagedetails._id)}
-                btntext="Book"
-              />
+              <p>
+                You are entitled to book {cottagedetails.cottagetype} cottages{" "}
+              </p>
+            )}
+            <p> Cost per day and Night:{cottagedetails.costperday} € </p>
+            {bookCottage && (
+              <div>
+                <p> {cottagedetails.description} </p>
+                <ResortzyButton
+                  style="membership-btn"
+                  clickapi={() => enablePayment(true)}
+                  // clickapi={() => bookCottage(cottagedetails._id)}
+                  btntext="Book"
+                />
+              </div>
             )}
             {bookingResult && (
               <div>
