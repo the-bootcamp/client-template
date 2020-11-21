@@ -1,0 +1,21 @@
+.reg-success {
+  padding: 0 30% 0 30%;
+}
+
+.reg-success > h2 {
+  display: grid;
+  justify-content: center;
+  color: #009688;
+  font: normal 300 30px/36px HarrietDisplay, serif;
+  padding-top: 20px;
+  font-size: 2em;
+  margin-bottom: -20px;
+}
+
+.reg-success p {
+  justify-content: center;
+  color: #ff5722;
+  font: normal 300 30px/36px HarrietDisplay, serif;
+  font-size: large;
+  padding-left: 5%;
+}

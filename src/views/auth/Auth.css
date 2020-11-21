@@ -1,0 +1,14 @@
+.auth-form {
+  /* height: auto; */
+  height: 800px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url("/images/ResortCommon_1.jpg");
+}
+
+.login-container {
+  width: 80%;
+  padding-top: 15%;
+  margin: auto;
+  border-radius: 5px;
+}

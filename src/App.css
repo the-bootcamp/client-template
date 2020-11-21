@@ -1,11 +1,97 @@
-.App {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
+body {
+  font-family: "Montserrat", sans-serif;
 }
-form{
+label {
+  font-size: larger;
+}
+.page-container {
   display: flex;
   flex-direction: column;
-  
+  min-height: 100vh;
+}
+
+.content-wrap {
+  flex: 1;
+}
+
+.nav-main {
+  /* background-color: #11b2a9b5; */
+  background-color: #fc8327d6;
+  height: fit-content;
+  padding: 0px;
+}
+.nav-main img {
+  width: 50px;
+  height: 50px;
+}
+
+#responsive-navbar-nav {
+  justify-content: flex-end;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.nav-menuitem {
+  margin-right: 5%;
+}
+
+input.form-control {
+  border: 2px solid #ff9800;
+  border-radius: 10px;
+}
+
+.main-nav-menu {
+  height: auto;
+}
+#slogan {
+  font-family: Brush Script MT, cursive;
+  margin-top: -25px;
+  padding-left: 5px;
+  color: #0f3684;
+  font-size: medium;
+}
+
+#nav-title {
+  font-family: Brush Script MT, Brush Script Std, cursive;
+  color: antiquewhite;
+  font-size: x-large;
+  margin-bottom: auto;
+}
+.nav-menuitem {
+  color: #0f3684;
+  text-decoration: none;
+  background-color: transparent;
+  font-family: Brush Script MT, cursive;
+  font-size: x-large;
+}
+.mandatory-color {
+  color: red;
+}
+
+.empty-page {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.main-caraousel img {
+  height: max-content;
+}
+
+.not-found {
+  text-align: center;
+}
+
+.input-container {
+  margin: 0 10% 0 10%;
+  border-style: ridge;
+  background-color: #e67f30d6;
+  border-radius: 20px;
+  border: 5px solid hsl(28deg 71% 67% / 69%);
+}
+
+.carousel-text {
+  font-family: Brush Script MT, cursive;
+  font-size: xxx-large;
 }

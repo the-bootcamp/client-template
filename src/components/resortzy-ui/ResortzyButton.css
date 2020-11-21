@@ -1,0 +1,23 @@
+.membership-btn {
+  padding: 0 0.875rem;
+  background-image: linear-gradient(#ffc107, #ff5722);
+  font-family: Calibri-Bold;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  text-align: center;
+  color: #ffffff;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  outline: none;
+}
+.membership-btn:disabled {
+  background-image: linear-gradient(#9e9e9e, #ff57220a);
+  color: gray;
+}
+
+.form-btn {
+  border: 3px solid #ff9800;
+  background: #03a9f478;
+}

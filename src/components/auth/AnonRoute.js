@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
+
 const AnonRoute = ({
   component: Component,
   authenticated,
@@ -10,7 +11,7 @@ const AnonRoute = ({
     <Route
       render={(props) =>
         authenticated === false ? (
-          <Component {...props} authenticate={authenticate} />
+          <Component {...props} authenticate={authenticate} {...rest} />
         ) : (
           <Redirect to="/" />
         )

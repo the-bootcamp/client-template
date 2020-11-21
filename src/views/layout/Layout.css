@@ -1,0 +1,25 @@
+.main-footer {
+  border: 5px solid white;
+  padding-top: 3em;
+  position: relative;
+  color: white;
+  /* background-color: #11b2a9b5; */
+  background-color: #fc8327d6;
+  bottom: 0;
+  width: 100%;
+}
+/*  Date Picker :  changing the default values in react-date picker */
+/* .react-datepicker {
+  padding: 3px;
+  display: inline-block;
+  background-color: #11b2a9b5;
+  border: 3px solid #ff9800;
+}
+
+.react-datepicker__header {
+  background-color: #009688;
+}
+
+.react-datepicker__day--keyboard-selected {
+  background-color: #ff9800;
+} */

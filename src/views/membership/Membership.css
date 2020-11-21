@@ -1,0 +1,44 @@
+@import url(https://fonts.googleapis.com/css?family=Cinzel+Decorative:400,900);
+
+.member-layout {
+  /* display: inline; */
+}
+
+.member-layout > h2 {
+  display: grid;
+  justify-content: center;
+  color: #009688;
+  font: normal 300 30px/36px HarrietDisplay, serif;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 3em;
+}
+
+/* Member ship Page  */
+.member-card {
+  border: 5px solid #ff9800;
+  border-radius: 20px;
+  background: #607d8b2e;
+  display: inline-flex;
+  justify-content: space-evenly;
+  width: 25%;
+}
+
+.member-card {
+  margin: 15px;
+  padding: 10px;
+}
+
+.member-card ul {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  list-style: circle;
+  list-style-image: url(/images/bullet1.png);
+  columns: 2;
+  font-size: small;
+}
+
+.member-card img {
+  width: 100px;
+  margin-left: 30%;
+}

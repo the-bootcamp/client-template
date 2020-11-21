@@ -1,83 +1,285 @@
 import React from "react";
-import { BrowserRouter, Link, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
+
 import AnonRoute from "./components/auth/AnonRoute";
 import PrivateRoute from "./components/auth/PrivateRoute";
-import { validateSession } from "./services/userService";
-import Home from "./views/Home";
-import Login from "./views/Login";
-import Signup from "./views/Signup";
+import ManagerRoute from "./components/auth/ManagerRoute";
+import CustomerRoute from "./components/auth/CustomerRoute";
+import { validateSession, logout } from "./services/authService";
+import { addSubscriber } from "./services/userService";
+import CustomerHome from "./views/Bookings/CustomerHome";
+import CottageList from "./views/cottages/CottageList";
+import Login from "./views/auth/Login";
+import Signup from "./views/auth/Signup";
+import EditProfile from "./views/user/EditProfile";
+import Footer from "./views/layout/Footer";
+import MembershipPage from "./views/membership/MembershipPage";
+
+import BookingsPage from "./views/Bookings/BookingsPage";
+import ListBookings from "./views/Bookings/ListBookings";
+import ManagerCheckout from "./views/Bookings/ManagerCheckout";
+import NavBar from "./views/layout/NavBar";
+import HomePage from "./views/HomePage";
+import { NotFound } from "./views/NotFound";
+import RegistrationSuccess from "./views/user/RegistrationSuccess";
+import { BookingResultPage } from "./views/Bookings/BookingResultPage";
+
+import BookingStore from "./views/Bookings/BookingStore";
 
 class App extends React.Component {
-  state = {
-    authenticated: false,
-    user: {},
-  };
+  /** STATE: */
+  constructor() {
+    super();
+    this.state = {
+      authenticated: false,
+      user: {},
+      cottageSearchRes: {},
+      // bookingResult: {},
+      isLoading: true,
+    };
+    this.checkAuthentication();
+    // const { setBookingInfo, setCottageInfo } = useContext(BookingContext);
+  }
+
+  // state = {
+  //   authenticated: false,
+  //   user: {},
+  //   cottageSearchRes: {},
+  //   // bookingResult: {},
+  //   isLoading: true,
+  //   errorMessage: "",
+  // };
+
+  checkAuthentication() {
+    setTimeout(
+      () =>
+        this.setState({
+          isLoading: false,
+        }),
+      200
+    );
+  }
+
+  /**
+   *  componentDidMount
+   */
   componentDidMount = () => {
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
       validateSession(accessToken)
         .then((response) => {
-          console.log(response, "RESPONSE");
-          this.authenticate(response.session.userId);
+          if (response.accessToken) {
+            // set the token from local storage ...
+            this.authenticate(response.userId);
+          } else {
+            localStorage.removeItem("accessToken");
+            this.setState({
+              errorMessage: "Access Token is expired",
+            });
+          }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          this.setState({
+            errorMessage: "Access Token is expiredInvalid Access Token" + err,
+          });
+          localStorage.removeItem("accessToken");
+        });
     }
   };
 
+  setCottageSearchRes = (cottageSearchRes) => {
+    this.setState({ cottageSearchRes });
+    localStorage.setItem("cottageSearchRes", JSON.stringify(cottageSearchRes));
+  };
+
+  // setBookingResult = (bookgRes, cottageinfo) => {
+  //   this.setState({ bookingResult: { bookgRes, cottageinfo } });
+  // };
+  /**
+   *
+   * @param {*} user
+   */
   authenticate = (user) => {
     this.setState({
       authenticated: true,
       user,
+      isLoading: false,
+      cottageSearchRes: JSON.parse(localStorage.getItem("cottageSearchRes")),
     });
+    // setBookingInfo(JSON.parse(localStorage.getItem("bookingResult")));
+    // setCottageInfo(JSON.parse(localStorage.getItem("bookedCottageResult")));
   };
 
-  handleLogout = () => {
+  clearAccessToken = () => {
+    // const { setBookingInfo, setCottageInfo } = useContext(BookingContext);
     localStorage.clear();
     this.setState({
       authenticated: false,
       user: {},
+      cottageSearchRes: {},
     });
+    // setBookingInfo({});
+    // setCottageInfo({});
   };
+
+  /**
+   * when 'Logout' button clicked
+   */
+  handleLogout = () => {
+    const token = localStorage.getItem("accessToken");
+    logout(token)
+      .then((resp) => {
+        if (resp.success) {
+          this.clearAccessToken();
+        }
+      })
+      .catch((err) =>
+        this.setState({ errorMessage: `Error while logout ${err}` })
+      );
+  };
+
+  addEmailSubscription = (emailID) => {
+    addSubscriber(emailID)
+      .then((resp) =>
+        !resp
+          ? this.setState({ errorMessage: "Subscriber not added to list" })
+          : console.log("")
+      )
+      .catch((error) =>
+        this.setState({ errorMessage: `Subscriber not added to list ${error}` })
+      );
+  };
+
+  /**
+   * render()
+   */
   render() {
-    const { authenticated } = this.state;
+    if (this.state.isLoading) {
+      return <div> </div>;
+    }
+
+    const { authenticated, user } = this.state;
     return (
-      <div className="App">
-        <BrowserRouter>
-          <nav>
-            {authenticated && <Link to="/"> Home </Link>}
-            {!authenticated && <Link to="/login"> Login </Link>}
-            {!authenticated && <Link to="/signup"> Signup </Link>}
-            {authenticated && (
-              <Link to={"/"} onClick={this.handleLogout}>
-                Logout
-              </Link>
-            )}
-          </nav>
-          <Switch>
-            <PrivateRoute
+      <div className="page-container">
+        <div className="page-container content-wrap">
+          <BookingStore>
+            <BrowserRouter>
+              <NavBar
+                user={user}
+                authenticated={authenticated}
+                handleLogout={this.handleLogout}
+              />
+
+              <Switch>
+                <ManagerRoute
+                  exact
+                  path="/manager"
+                  user={user}
+                  authenticated={authenticated}
+                  component={CottageList}
+                />
+                <ManagerRoute
+                  exact
+                  path="/manager/checkout"
+                  user={user}
+                  authenticated={authenticated}
+                  component={ManagerCheckout}
+                />
+                <CustomerRoute
+                  exact
+                  path="/membership"
+                  user={user}
+                  authenticated={authenticated}
+                  authenticate={this.authenticate}
+                  component={MembershipPage}
+                />
+                <PrivateRoute
+                  exact
+                  path="/editprofile"
+                  user={user}
+                  authenticated={authenticated}
+                  authenticate={this.authenticate}
+                  component={EditProfile}
+                />
+                <AnonRoute
+                  exact
+                  path="/login"
+                  authenticated={authenticated}
+                  authenticate={this.authenticate}
+                  component={Login}
+                />
+                <AnonRoute
+                  exact
+                  path="/signup"
+                  authenticated={authenticated}
+                  authenticate={this.authenticate}
+                  component={Signup}
+                />
+
+                <CustomerRoute
+                  exact
+                  path="/bookings"
+                  user={user}
+                  authenticated={authenticated}
+                  // setBookingResult={this.setBookingResult}
+                  cottageSearchRes={this.state.cottageSearchRes}
+                  component={BookingsPage}
+                />
+
+                <CustomerRoute
+                  exact
+                  path="/open-bookings"
+                  user={user}
+                  authenticated={authenticated}
+                  listAll={false}
+                  // bookingResult={this.state.bookingResult}
+                  component={BookingResultPage}
+                  // component={ListBookings}
+                />
+
+                <CustomerRoute
+                  exact
+                  path="/signupsuccess"
+                  user={user}
+                  authenticated={authenticated}
+                  component={RegistrationSuccess}
+                />
+
+                <CustomerRoute
+                  exact
+                  path="/my-bookings"
+                  user={user}
+                  authenticated={authenticated}
+                  listAll={true}
+                  clearSession={this.clearAccessToken}
+                  component={ListBookings}
+                />
+
+                {/* <AnonRoute
               exact
               path="/"
-              user={this.state.user}
+              user={user}
               authenticated={authenticated}
-              component={Home}
-            />
-            <AnonRoute
-              exact
-              path="/login"
-              authenticated={authenticated}
-              authenticate={this.authenticate}
-              component={Login}
-            />
-            <AnonRoute
-              exact
-              path="/signup"
-              authenticated={authenticated}
-              authenticate={this.authenticate}
-              component={Signup}
-            />
-          </Switch>
-        </BrowserRouter>
+              setCottageSearchRes={this.setCottageSearchRes}
+              component={CustomerHome}
+            /> */}
+                <CustomerRoute
+                  exact
+                  path="/home"
+                  user={user}
+                  authenticated={authenticated}
+                  setCottageSearchRes={this.setCottageSearchRes}
+                  component={CustomerHome}
+                />
+                <Route exact path="/" component={HomePage} />
+                <Route component={NotFound} />
+              </Switch>
+            </BrowserRouter>
+          </BookingStore>
+        </div>
+
+        <Footer addEmailSubscription={this.addEmailSubscription} />
       </div>
     );
   }

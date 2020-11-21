@@ -1,27 +1,45 @@
 import axios from "axios";
 
+/**
+ * create base url for axios
+ */
 const service = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
 });
 
-export const validateSession = (accessToken) => {
+/**
+ *  Edit profile
+ * @param {*} editInfo
+ * @param {*} token
+ */
+export const updateuser = (editInfo, token) => {
+  const headers = {
+    accessToken: token,
+  };
   return service
-    .get(`/user/session/${accessToken}`)
-    .then((response) => response.data)
-    .catch((err) => err);
-};
-export const signup = ({ username, email, password }) => {
-  return service
-    .post("/user/signup", { username, email, password })
-    .then((response) => response.data)
-    .catch((err) => err);
+    .post("user/edit", editInfo, { headers })
+    .then((editResp) => editResp.data)
+    .catch((error) => console.log(error));
 };
 
-export const login = ({ email, password }) => {
+/**
+ *
+ * @param {*} email
+ */
+export const addSubscriber = (email) => {
   return service
-    .post("/user/login", { email, password })
-    .then((response) => response.data)
-    .catch((err) => {
-      console.log(err);
+    .post(`user/subscribe/${email}`)
+    .then((subscribeResp) => subscribeResp.data)
+    .catch((error) => console.log(error));
+};
+
+export const userPayment = (token, product) => {
+  // const product = { name: " soap", price: 200 };
+  return service
+    .post("user/payment", { token, product })
+    .then((loginResp) => loginResp.data)
+    .catch((error) => {
+      console.log(error);
+      return error;
     });
 };
